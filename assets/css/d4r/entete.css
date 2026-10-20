@@ -1,0 +1,629 @@
+/* Thème d4r — l'en-tête et le menu du téléphone.
+   Reprise de `findre-header.css` du site Render, rendue depuis la base par
+   `render_header_d4r()` (includes/layout-d4r.php). Aucune valeur littérale.
+
+   DEUX ÉTATS DE FOND, UN SEUL BALISAGE.
+   - Par défaut l'en-tête est solide (blanc, encre onyx) et COLLANT : il prend
+     sa place dans le flux, la page commence sous lui, rien ne se chevauche.
+   - `html[data-bandeau]` (posé par une page qui ouvre sur un bandeau plein
+     écran — l'accueil et les listes des lots R2 et R3) le rend transparent et
+     FIXE sur le bandeau, encre ivoire ; il redevient blanc dès que la page
+     a défilé de `--entete-seuil-fond` (classe `is-fixe`, posée par
+     `entete.js`). Sans script, il reste transparent sur le bandeau : lisible,
+     puisque les bandeaux portent un voile sombre.
+
+   Il SE RETIRE quand on descend et REVIENT quand on remonte (`is-cache`),
+   jamais quand le menu est ouvert. */
+
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-entete);
+  width: 100%;
+  background: var(--entete-fond);
+  color: var(--entete-encre);
+  box-shadow: 0 1px 0 var(--border-hairline);
+  transition:
+    background-color var(--dur-entete) var(--ease-d4r),
+    color var(--dur-entete) var(--ease-d4r),
+    transform var(--dur-entete) var(--ease-d4r),
+    box-shadow var(--dur-entete) var(--ease-d4r);
+}
+
+html[data-bandeau] .entete {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: transparent;
+  color: var(--entete-encre-sur-image);
+  box-shadow: none;
+}
+
+html[data-bandeau] .entete.is-fixe,
+.entete.is-ouvert {
+  background: var(--entete-fond);
+  color: var(--entete-encre);
+}
+
+html[data-bandeau] .entete.is-fixe {
+  box-shadow: 0 1px 0 var(--border-hairline);
+}
+
+.entete.is-ouvert {
+  box-shadow: none;
+}
+
+.entete.is-cache {
+  transform: translateY(-100%);
+}
+
+.entete__inner {
+  max-width: var(--entete-max);
+  margin: 0 auto;
+  padding: 0 var(--entete-pad-x);
+}
+
+.entete__contenu {
+  min-height: var(--entete-h);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .entete__contenu {
+    min-height: var(--entete-h-large);
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: clamp(1rem, 2.2vw, 2.75rem);
+  }
+}
+
+/* --- Logo --------------------------------------------------------------------
+   Le pictogramme du graphiste, en `currentColor` : ivoire sur bandeau, onyx
+   sur blanc. Aucun second fichier. */
+.entete__logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  color: inherit;
+}
+
+.entete__logo:hover {
+  box-shadow: none;
+  color: inherit;
+}
+
+.entete__logo svg {
+  height: var(--entete-logo-h);
+  width: auto;
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .entete__logo svg {
+    height: var(--entete-logo-h-large);
+  }
+}
+
+/* --- Navigation ---------------------------------------------------------------
+   Masquée sous 768 px : le menu du téléphone la remplace. Sans JavaScript elle
+   reste visible à toutes les largeurs, en retour à la ligne — le bouton de
+   menu ne peut rien ouvrir. */
+.entete__nav {
+  display: none;
+  align-items: center;
+  gap: var(--entete-nav-gap);
+}
+
+html:not([data-js]) .entete__nav {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  padding-bottom: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .entete__nav {
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 1100px) {
+  .entete__nav {
+    gap: var(--entete-nav-gap-large);
+  }
+}
+
+.entete__lien {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: var(--entete-nav-size);
+  font-weight: var(--weight-medium);
+  line-height: 1.25;
+  color: inherit;
+}
+
+.entete__lien:hover {
+  box-shadow: none;
+  color: inherit;
+}
+
+.entete__lien[aria-current="page"] {
+  font-weight: var(--weight-semibold);
+}
+
+@media (min-width: 768px) and (max-width: 1099.98px) {
+  .entete__lien {
+    font-size: var(--entete-nav-size-moyen);
+  }
+}
+
+@media (min-width: 1100px) {
+  .entete__lien {
+    font-size: var(--entete-nav-size-large);
+  }
+}
+
+/* Le libellé glisse vers le haut au survol et son double monte à sa place.
+   Le double est un pseudo-élément : un lecteur d'écran ne lit que le texte.
+   **La fenêtre qui coupe est le `span`, pas le bouton** : sur un bouton à
+   rembourrage, le double paraissait dans le rembourrage bas (relevé R0). */
+.entete__lien span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  transition: transform var(--dur-libelle) var(--ease-d4r);
+}
+
+.entete__lien span::after {
+  content: attr(data-text);
+  display: block;
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+}
+
+@media (pointer: fine) {
+  .entete__lien:hover span {
+    transform: translateY(-105%);
+  }
+}
+
+/* --- Bloc de droite : favoris, panier, WhatsApp, bouton de menu ------------- */
+.entete__fin {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1);
+}
+
+@media (min-width: 768px) {
+  .entete__fin {
+    justify-self: end;
+    gap: var(--entete-fin-gap);
+  }
+}
+
+@media (min-width: 1100px) {
+  .entete__fin {
+    gap: var(--entete-fin-gap-large);
+  }
+}
+
+.entete__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+@media (min-width: 768px) {
+  .entete__actions {
+    gap: var(--entete-actions-gap);
+  }
+}
+
+@media (min-width: 1100px) {
+  .entete__actions {
+    gap: var(--entete-actions-gap-large);
+  }
+}
+
+.entete__icone {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--entete-icone);
+  height: var(--entete-icone);
+  border-radius: var(--radius-pill);
+  color: inherit;
+  transition: background-color var(--dur-fast) var(--ease-brand);
+}
+
+.entete__icone:hover {
+  box-shadow: none;
+  color: inherit;
+  background: var(--entete-survol-icone);
+}
+
+html[data-bandeau] .entete:not(.is-fixe):not(.is-ouvert) .entete__icone:hover {
+  background: var(--entete-survol-icone-sur-image);
+}
+
+.entete__icone svg {
+  width: var(--icon-coll);
+  height: var(--icon-coll);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--icon-trait-w);
+}
+
+/* La pastille de compte, or sur onyx. Vide, elle n'existe pas : le script des
+   compteurs n'y écrit que le nombre. */
+.entete__badge {
+  position: absolute;
+  top: var(--space-1);
+  right: 0;
+  min-width: var(--badge-taille);
+  height: var(--badge-taille);
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--badge-fond);
+  color: var(--badge-encre);
+  font-size: var(--badge-size);
+  font-weight: var(--weight-fort);
+  line-height: var(--badge-taille);
+  text-align: center;
+}
+
+.entete__badge:empty {
+  display: none;
+}
+
+.entete__cta {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cta-pad);
+  border: var(--hairline) solid currentColor;
+  border-radius: var(--radius-pill);
+  color: inherit;
+  font-size: var(--cta-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--cta-tracking);
+  text-transform: uppercase;
+  opacity: var(--cta-opacite);
+  overflow: hidden;
+  transition: opacity var(--dur-fast) var(--ease-brand);
+}
+
+@media (min-width: 768px) {
+  .entete__cta {
+    display: inline-flex;
+  }
+}
+
+.entete__cta:hover {
+  box-shadow: none;
+  color: inherit;
+  opacity: 1;
+}
+
+.entete__cta span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  transition: transform var(--dur-libelle) var(--ease-d4r);
+}
+
+.entete__cta span::after {
+  content: attr(data-text);
+  display: block;
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+}
+
+@media (pointer: fine) {
+  .entete__cta:hover span {
+    transform: translateY(-105%);
+  }
+}
+
+/* Le bouton de menu : deux traits qui se croisent. Il n'existe qu'avec
+   JavaScript (`hidden` dans le document, retiré par `entete.js`). */
+.entete__burger {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: var(--burger-taille);
+  height: var(--burger-taille);
+  margin: 0;
+  padding: 0;
+  border: var(--hairline) solid transparent;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.entete__burger[hidden] {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .entete__burger {
+    display: none;
+  }
+}
+
+.entete__burger span {
+  position: relative;
+  top: 0;
+  display: block;
+  width: var(--burger-trait-w);
+  height: var(--burger-trait-h);
+  margin: var(--burger-trait-ecart) 0;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  transition: top var(--dur-fast) var(--dur-entete), transform var(--dur-entete) 0s;
+}
+
+.entete.is-ouvert .entete__burger span {
+  transition: top var(--dur-fast), transform var(--dur-entete) var(--dur-fast);
+}
+
+.entete.is-ouvert .entete__burger span:first-child {
+  top: var(--burger-trait-croix);
+  transform: rotate(45deg);
+}
+
+.entete.is-ouvert .entete__burger span:last-child {
+  top: calc(-1 * var(--burger-trait-croix));
+  transform: rotate(-45deg);
+}
+
+/* --- Menu du téléphone -------------------------------------------------------
+   Plein écran sous l'en-tête, rideau blanc qui descend, liens en or, tiroirs
+   (Voitures → gammes → marques ; Activités → univers ; Événements →
+   catégories) construits depuis la base. Masqué au-delà de 768 px. */
+.menu-mobile {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-entete) - 1);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  /* Lot R6 (2026-10-17) — `visibility: hidden` FERMÉ, et pas seulement
+     l'opacité : à l'opacité seule, les liens du menu restaient dans l'ordre de
+     tabulation, et le clavier entrait dans un menu invisible (relevé du pilote
+     de contrôle, à 375). La visibilité bascule après le fondu à la fermeture,
+     et avant lui à l'ouverture. */
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-brand), visibility 0s linear var(--dur-base);
+}
+
+.menu-mobile.is-ouvert {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity var(--dur-base) var(--ease-brand), visibility 0s;
+}
+
+@media (min-width: 768px) {
+  .menu-mobile {
+    display: none;
+  }
+}
+
+.menu-mobile__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--menu-fond);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform var(--dur-menu) var(--ease-d4r);
+}
+
+.menu-mobile.is-ouvert .menu-mobile__voile {
+  transform: scaleY(1);
+}
+
+.menu-mobile__contenu {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding-top: calc(var(--entete-h) + env(safe-area-inset-top, 0px));
+}
+
+.menu-mobile__barre {
+  display: flex;
+  align-items: center;
+  min-height: calc(var(--entete-rem) * 3.2);
+  padding: 0 var(--menu-pad-x);
+}
+
+.menu-mobile__retour {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-2) 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-title);
+  font: inherit;
+  font-size: var(--menu-retour-size);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+
+.menu-mobile__retour[hidden] {
+  display: none;
+}
+
+.menu-mobile__retour svg {
+  width: var(--icon-w);
+  height: var(--icon-w);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--icon-trait-w);
+}
+
+.menu-mobile__panneaux {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.menu-mobile__panneau {
+  display: none;
+  padding: 0 0 var(--menu-pad-y);
+  animation: menu-mobile-entree var(--dur-panneau) var(--ease-d4r);
+}
+
+.menu-mobile__panneau.is-actif {
+  display: block;
+}
+
+@keyframes menu-mobile-entree {
+  from {
+    opacity: 0;
+    transform: translateX(var(--menu-decalage-entree));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.menu-mobile__titre {
+  margin: 0;
+  padding: var(--entete-rem) var(--menu-pad-x) calc(var(--entete-rem) * 1.5);
+  font-size: var(--menu-titre-size);
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--menu-titre-tracking);
+  text-transform: uppercase;
+  color: var(--menu-encre-titre);
+}
+
+.menu-mobile__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--menu-item-gap);
+  padding: var(--menu-pad-y) var(--menu-pad-x);
+}
+
+.menu-mobile__panneau[data-panneau="racine"] .menu-mobile__nav {
+  padding-top: calc(var(--menu-pad-y) * 2);
+}
+
+.menu-mobile__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--menu-item-size);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  color: var(--menu-encre);
+}
+
+.menu-mobile__item a,
+.menu-mobile__tiroir {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-mobile__item a:hover,
+.menu-mobile__tiroir:hover {
+  box-shadow: none;
+  color: inherit;
+}
+
+.menu-mobile__chev {
+  flex: 0 0 auto;
+  width: var(--icon-w);
+  height: var(--icon-w);
+  fill: none;
+  stroke: var(--menu-chev);
+  stroke-width: var(--icon-trait-w);
+}
+
+.menu-mobile__actions {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  padding: var(--menu-pad-y) var(--menu-pad-x) calc(var(--menu-pad-y) * 2);
+}
+
+.menu-mobile__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  overflow: hidden;
+  padding: var(--menu-btn-pad);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+  font-size: var(--menu-btn-size);
+  font-weight: var(--weight-medium);
+  line-height: 1.5;
+}
+
+.menu-mobile__btn:hover {
+  box-shadow: none;
+  color: var(--btn-primary-fg);
+}
+
+.menu-mobile__btn span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  transition: transform var(--dur-libelle) var(--ease-d4r);
+}
+
+.menu-mobile__btn span::after {
+  content: attr(data-text);
+  display: block;
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+}
+
+@media (pointer: fine) {
+  .menu-mobile__btn:hover span {
+    transform: translateY(-105%);
+  }
+}

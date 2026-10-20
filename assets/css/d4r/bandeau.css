@@ -1,0 +1,137 @@
+/* Thème d4r — le bandeau des pages (lot R3, 2026-10-17) : vidéo ou photo,
+   titre en bas, voile. Rendu par `render_bandeau_liste_d4r()` partout où une
+   page appelle `render_bandeau()` ; chargé sur toutes les pages du thème,
+   après `site.css`. Aucune valeur littérale. */
+
+.bandeau-liste {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--surface-page);
+  line-height: 0;
+}
+
+.bandeau-liste--aplat {
+  background: var(--d4r-onyx);
+}
+
+.bandeau-liste__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: var(--liste-bandeau-max-h);
+  min-height: var(--liste-bandeau-min-h);
+  background: var(--d4r-onyx);
+}
+
+.bandeau-liste__img,
+.bandeau-liste__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bandeau-liste__video {
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-brand);
+}
+
+[data-video].est-lue .bandeau-liste__video {
+  opacity: 1;
+}
+
+.bandeau-liste__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--liste-bandeau-voile);
+  pointer-events: none;
+}
+
+.bandeau-liste__inner {
+  position: absolute;
+  left: var(--liste-bandeau-pad);
+  right: var(--liste-bandeau-pad);
+  bottom: var(--liste-bandeau-bas);
+  z-index: 2;
+  max-width: var(--liste-bandeau-titre-max);
+  margin: 0 auto;
+  text-align: center;
+  color: var(--d4r-ivoire);
+  line-height: var(--lh-body);
+}
+
+.bandeau-liste__fil {
+  margin: 0 0 var(--space-2);
+  font-size: var(--size-body-sm);
+}
+
+.bandeau-liste__fil a {
+  color: var(--d4r-ivoire);
+  text-shadow: var(--bandeau-ombre-texte);
+}
+
+.bandeau-liste__fil a:hover {
+  color: var(--d4r-or);
+  box-shadow: none;
+}
+
+.bandeau-liste__titre {
+  margin: 0;
+  font-size: var(--liste-bandeau-titre-size);
+  font-weight: var(--weight-medium);
+  line-height: 1.12;
+  color: var(--d4r-ivoire);
+  text-shadow: var(--bandeau-ombre-texte);
+  overflow-wrap: anywhere;
+}
+
+.bandeau-liste__lead {
+  margin: var(--space-2) 0 0;
+  font-size: var(--size-body);
+  color: var(--d4r-ivoire);
+  text-shadow: var(--bandeau-ombre-texte);
+}
+
+/* --- La tête « texte » (lot R5, 2026-10-17) ----------------------------------
+   Ni photo ni vidéo : sur-titre or, titre et phrase de conduite centrés sur le
+   fond de page — la tête de la page de contact sur Render. L'en-tête reste
+   blanc (pas de `data-bandeau`). Les mesures sont celles des pages de
+   service (`--serv-*`). */
+.bandeau-liste--texte {
+  line-height: var(--lh-body);
+}
+
+.bandeau-liste--texte .bandeau-liste__inner {
+  position: static;
+  max-width: var(--serv-max);
+  padding: var(--serv-hero-pad-haut) var(--serv-pad-x) var(--serv-hero-pad-bas);
+  color: var(--d4r-onyx);
+}
+
+.bandeau-liste__surtitre {
+  margin: 0 0 var(--serv-eyebrow-bas);
+  font-size: var(--serv-eyebrow-size);
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--serv-eyebrow-tracking);
+  color: var(--d4r-or-texte); /* D2 */
+}
+
+.bandeau-liste--texte .bandeau-liste__titre {
+  font-size: var(--serv-titre-size);
+  font-weight: var(--weight-fort);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-display);
+  color: var(--d4r-onyx);
+  text-shadow: none;
+}
+
+.bandeau-liste--texte .bandeau-liste__lead {
+  margin-top: var(--serv-titre-bas);
+  font-size: var(--serv-lead-size);
+  line-height: 1.55;
+  color: var(--d4r-noir-72);
+  text-shadow: none;
+}

@@ -1,0 +1,100 @@
+/* Thème d4r — le pied de page.
+   Reprise de `site-footer.css` du site Render (fond blanc, colonnes, libellés
+   en or), rendu par `render_footer_d4r()` depuis `footerPlan()` : le même plan
+   que le pied de la charte, rien d'écrit à la main. Aucune valeur littérale. */
+
+.pied {
+  background: var(--pied-fond);
+  color: var(--pied-encre);
+  margin-top: var(--section-pad-y);
+  border-top: var(--hairline) solid var(--d4r-pied-filet);
+  font-family: var(--font-sans);
+}
+
+.pied__grille {
+  max-width: var(--pied-max);
+  margin: 0 auto;
+  padding: var(--pied-pad-y) var(--pied-pad-x) var(--space-8);
+  display: grid;
+  gap: var(--pied-gap);
+}
+
+@media (min-width: 768px) {
+  .pied__grille {
+    grid-template-columns: repeat(auto-fit, minmax(var(--pied-col-min), 1fr));
+  }
+}
+
+.pied__marque {
+  color: var(--accent);
+}
+
+.pied__marque a {
+  display: inline-flex;
+  line-height: 0;
+  color: inherit;
+}
+
+.pied__marque a:hover {
+  box-shadow: none;
+  color: inherit;
+}
+
+.pied__marque svg {
+  height: var(--pied-logo-h);
+  width: auto;
+  display: block;
+}
+
+.pied__accroche {
+  margin: var(--space-4) 0 0;
+  max-width: var(--pied-accroche-max);
+  font-size: var(--pied-accroche-size);
+  line-height: 1.5;
+  color: var(--d4r-gris-doux);
+}
+
+.pied__etiquette {
+  margin: 0 0 var(--space-3);
+  font-size: var(--pied-etiquette-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--pied-etiquette-tracking);
+  text-transform: uppercase;
+  color: var(--d4r-or-texte); /* D2 : 6,0:1 sur blanc, l'or de palette faisait 2,32 */
+}
+
+.pied__etiquette a {
+  color: inherit;
+}
+
+.pied__etiquette a:hover {
+  box-shadow: none;
+  color: var(--pied-encre);
+}
+
+.pied__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pied-liste-gap);
+  font-size: var(--pied-liste-size);
+}
+
+.pied__liste a {
+  color: var(--pied-encre);
+}
+
+.pied__liste a:hover {
+  box-shadow: none;
+  color: var(--accent);
+}
+
+.pied__copie {
+  max-width: var(--pied-max);
+  margin: 0 auto;
+  padding: var(--pied-copie-pad);
+  border-top: var(--hairline) solid var(--d4r-pied-filet);
+  font-size: var(--pied-copie-size);
+  color: var(--d4r-gris-moyen);
+}

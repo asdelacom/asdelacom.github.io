@@ -1,0 +1,68 @@
+/* Thème d4r — transitions entre pages.
+   Reprise de `d4r-page-transitions.css` du site Render : View Transitions
+   entre documents, sur ordinateur seulement (au téléphone la navigation
+   native évite l'éclair de l'en-tête). L'ancienne page s'éloigne vers le
+   haut, la nouvelle se dévoile de bas en haut. Du CSS pur : aucun script
+   n'intercepte les clics. Un navigateur qui ne connaît pas `@view-transition`
+   ignore tout ce fichier. */
+
+@view-transition {
+  navigation: none;
+}
+
+@media (min-width: 1024px) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition {
+    background: var(--page-trans-fond);
+  }
+
+  ::view-transition-group(root) {
+    animation-duration: var(--page-trans-duree);
+    animation-timing-function: var(--page-trans-ease);
+  }
+
+  ::view-transition-new(root),
+  ::view-transition-old(root) {
+    animation-duration: var(--page-trans-duree);
+    animation-fill-mode: both;
+    animation-timing-function: var(--page-trans-ease);
+    backface-visibility: hidden;
+  }
+
+  ::view-transition-old(root) {
+    animation-name: page-sortie;
+    transform-origin: center top;
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: page-entree;
+    transform-origin: center top;
+    z-index: 2;
+  }
+
+  @keyframes page-sortie {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: .48;
+      transform: translateY(-6vh) scale(1.12);
+    }
+  }
+
+  @keyframes page-entree {
+    from {
+      clip-path: inset(100% 0 0 0);
+      transform: translateY(18vh) scale(.8);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+      transform: translateY(0) scale(1);
+    }
+  }
+}

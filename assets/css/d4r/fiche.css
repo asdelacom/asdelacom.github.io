@@ -1,0 +1,499 @@
+/* Thème d4r — la fiche et le parcours (lot R4, 2026-10-17).
+   Reprise de `fiche-d4r.css` du site Render — qui surchargeait déjà NOTRE fiche,
+   classes pour classes — retraduite en tokens (`assets/css/d4r/tokens.css`).
+   Chargée après `site.css` sur les fiches seulement (`render_fiche()`). Aucune
+   valeur littérale, aucun `!important` : la coquille Angular qui les imposait
+   n'existe pas ici.
+
+   Ce qui est redessiné : la colonne de la fiche, le fil d'ariane, le titre, la
+   galerie (cadre arrondi, flèches sombres, point d'or), les caractéristiques,
+   les volets, le panneau de réservation (blanc, bordé, boutons en pilule),
+   l'encadré de rappel, « Vous aimerez aussi » (cartes sombres, quatre
+   colonnes), l'affiche d'un pack, et les quatre écrans du parcours (modales
+   ivoire, cartes d'option blanches, boutons pilule, feuille basse au
+   téléphone). La structure du document ne change pas d'un élément. */
+
+/* ═══ 1. La colonne, le fil, le titre ══════════════════════════════════════ */
+main.fiche {
+  max-width: var(--fiche-max);
+  margin: 0 auto;
+  padding: var(--fiche-pad-y) var(--fiche-pad-x) var(--space-8);
+}
+
+main.fiche .breadcrumb a {
+  color: var(--d4r-onyx-60);
+}
+
+main.fiche .breadcrumb a:hover {
+  color: var(--d4r-or);
+  box-shadow: none;
+}
+
+main.fiche h1,
+main.fiche h2,
+main.fiche h3 {
+  font-weight: var(--weight-fort);
+}
+
+.fiche__title {
+  font-size: var(--fiche-titre-size);
+  line-height: 1.12;
+}
+
+.fiche__lead {
+  max-width: var(--fiche-texte-max);
+  font-size: var(--fiche-lead-size);
+  line-height: 1.55;
+  color: var(--d4r-noir-72);
+}
+
+.fiche__rule {
+  background: var(--d4r-or);
+}
+
+.fiche__text {
+  max-width: var(--fiche-texte-max);
+  font-size: var(--fiche-texte-size);
+  line-height: 1.7;
+}
+
+/* L'affiche d'un pack, en tête de fiche (le pack n'a pas de galerie). */
+.pack-hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin: 0 0 var(--space-6);
+  border-radius: var(--radius-cadre);
+  overflow: hidden;
+  background: var(--d4r-sable);
+}
+
+.pack-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ═══ 2. La galerie ════════════════════════════════════════════════════════ */
+.gallery {
+  --gallery-h: var(--fiche-galerie-h);
+  border-radius: var(--radius-cadre);
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .gallery {
+    --gallery-h: var(--fiche-galerie-h-large);
+  }
+}
+
+.gallery__frame {
+  border-radius: var(--radius-cadre);
+  background: var(--d4r-sable);
+}
+
+.gallery__agrandir {
+  border-radius: var(--radius-pill);
+  background: var(--d4r-noir-72);
+  color: var(--d4r-ivoire);
+  font-weight: var(--weight-semibold);
+  font-size: var(--size-caption);
+  letter-spacing: var(--cta-tracking);
+  text-transform: uppercase;
+}
+
+.gallery__fleche {
+  border: 0;
+  background: var(--fiche-fleche-fond);
+  color: var(--d4r-blanc);
+}
+
+.gallery__fleche:hover:not(:disabled) {
+  background: var(--d4r-or);
+  color: var(--d4r-onyx);
+}
+
+.gallery__point.is-courant {
+  background: var(--d4r-or);
+}
+
+.galerie-vue__img {
+  cursor: zoom-in;
+}
+
+/* ═══ 3. Les caractéristiques et les volets ════════════════════════════════ */
+.specs {
+  border-radius: var(--fiche-specs-rayon);
+  background: var(--fiche-specs-fond);
+}
+
+.volet {
+  border-color: var(--d4r-onyx-12);
+}
+
+/* ═══ 4. Le panneau de réservation et l'encadré ════════════════════════════ */
+.booking {
+  border-radius: var(--radius-cadre);
+  border: var(--hairline) solid var(--d4r-onyx-06);
+  background: var(--d4r-blanc);
+  box-shadow: none;
+}
+
+.booking__total-amount {
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--tracking-display);
+}
+
+.btn--gold,
+.booking__wa,
+a.btn--gold {
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--d4r-or);
+  color: var(--d4r-onyx);
+  font-weight: var(--weight-fort);
+}
+
+.btn--gold:hover,
+.booking__wa:hover,
+a.btn--gold:hover {
+  color: var(--d4r-onyx);
+  box-shadow: none;
+  filter: brightness(1.05);
+}
+
+.btn--sobre {
+  border-radius: var(--radius-pill);
+}
+
+.booking__favori {
+  border-radius: var(--radius-pill);
+}
+
+.rappel {
+  border-top: var(--hairline) solid var(--d4r-onyx-12);
+  background: var(--d4r-ivoire);
+}
+
+.rappel__cta {
+  border-radius: var(--radius-pill);
+}
+
+/* ═══ 5. « Vous aimerez aussi » en cartes sombres ══════════════════════════ */
+.bande-forte {
+  margin-top: 0;
+  padding: var(--fiche-aussi-pad) 0;
+  background: var(--d4r-sable-clair);
+}
+
+.section--aussi {
+  max-width: var(--fiche-max);
+  margin: 0 auto;
+  padding: 0 var(--fiche-pad-x);
+}
+
+.bande-forte .section--aussi > h2,
+.section--aussi h2 {
+  margin: 0 0 var(--space-5);
+  font-size: var(--fiche-aussi-titre-size);
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--tracking-display);
+  color: var(--d4r-onyx);
+}
+
+.card-grid--aussi {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  max-width: none;
+}
+
+@media (min-width: 700px) {
+  .card-grid--aussi {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1100px) {
+  .card-grid--aussi {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card-grid--aussi .card-slot {
+  margin: 0;
+}
+
+.card-grid--aussi .card {
+  position: relative;
+  display: block;
+  min-height: var(--fiche-aussi-carte-min-h);
+  aspect-ratio: 4 / 3;
+  border: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--d4r-onyx);
+  color: var(--d4r-ivoire);
+  box-shadow: none;
+}
+
+.card-grid--aussi .card:hover {
+  box-shadow: none;
+  color: var(--d4r-ivoire);
+}
+
+.card-grid--aussi .card__media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  margin: 0;
+  aspect-ratio: auto;
+  background: var(--d4r-fumee);
+  z-index: 0;
+}
+
+.card-grid--aussi .card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--fiche-aussi-voile);
+  pointer-events: none;
+}
+
+.card-grid--aussi .card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 1;
+}
+
+.card-grid--aussi .card__fallback {
+  display: flex;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--d4r-ivoire-70);
+  z-index: 1;
+}
+
+.card-grid--aussi .card:not(.card--no-photo) .card__fallback {
+  display: none;
+}
+
+.card-grid--aussi .card__meta,
+.card-grid--aussi .card__desc,
+.card-grid--aussi .card__price-prefix,
+.card-grid--aussi .card__favori {
+  display: none;
+}
+
+.card-grid--aussi .card__title {
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--fiche-aussi-nom-bas);
+  z-index: 3;
+  min-height: 0;
+  margin: 0;
+  font-size: var(--fiche-aussi-nom-size);
+  font-weight: var(--weight-fort);
+  line-height: 1.2;
+  color: var(--d4r-ivoire);
+}
+
+.card-grid--aussi .card__name {
+  color: var(--d4r-ivoire);
+  box-shadow: none;
+}
+
+.card-grid--aussi .card__footer {
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 3;
+  display: block;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.card-grid--aussi .card__prix {
+  display: block;
+  min-height: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.card-grid--aussi .card__price,
+.card-grid--aussi .card__price-note {
+  font-size: var(--fiche-aussi-prix-size);
+  font-weight: var(--weight-fort);
+  color: var(--d4r-or);
+}
+
+/* ═══ 6. Le parcours : modales, options, panneau ═══════════════════════════ */
+.modale__boite {
+  border-radius: var(--radius-cadre);
+  background: var(--d4r-ivoire);
+  max-height: var(--modale-h-sm);
+  max-height: var(--modale-h-sm-dyn);
+}
+
+.modale__tete {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: var(--hairline) solid var(--d4r-onyx-06);
+}
+
+.modale__titre {
+  font-size: var(--fiche-modale-titre-size);
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--tracking-display);
+  color: var(--d4r-onyx);
+}
+
+.modale__corps {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  min-height: 0;
+  padding: var(--space-4) var(--space-5) var(--space-2);
+}
+
+.modale__pied {
+  padding: var(--space-3) var(--space-5) calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  border-top: var(--hairline) solid var(--d4r-onyx-06);
+  background: var(--d4r-ivoire);
+}
+
+.modale__fermer {
+  border-radius: var(--radius-pill);
+}
+
+/* L'écran 1 : les formules, en cartes blanches. */
+.choix {
+  border: var(--hairline) solid var(--d4r-onyx-12);
+  border-radius: var(--radius-card);
+  background: var(--d4r-blanc);
+  box-shadow: var(--fiche-carte-ombre);
+}
+
+.choix__vignette.vignette,
+.extra__vignette.vignette {
+  border-radius: var(--fiche-vignette-rayon);
+  overflow: hidden;
+}
+
+.choix__nom {
+  font-weight: var(--weight-fort);
+}
+
+.choix__montant {
+  color: var(--d4r-or);
+  font-weight: var(--weight-fort);
+}
+
+/* L'écran 2 : le panneau, ses champs et son bouton. */
+.panneau__champ,
+.panneau__saisie input,
+.panneau__saisie select,
+.panneau__saisie textarea {
+  border-radius: var(--radius-champ);
+}
+
+.panneau__valider {
+  border-radius: var(--radius-pill);
+}
+
+.compteur__btn {
+  border-radius: var(--radius-pill);
+}
+
+/* L'écran 3 : les cartes d'option, blanches et bordées. */
+.extras--rail > .extra {
+  border: var(--hairline) solid var(--d4r-onyx-12);
+  border-radius: var(--radius-card);
+  overflow: visible;
+  padding: var(--space-3);
+  background: var(--d4r-blanc);
+  color: var(--d4r-onyx);
+  box-shadow: var(--fiche-carte-ombre);
+}
+
+.extras--rail .extra__nom {
+  font-size: var(--fiche-extra-nom-size);
+  font-weight: var(--weight-fort);
+  color: var(--d4r-onyx);
+}
+
+.extras--rail .extra__prix,
+.extras--rail .extra__montant {
+  color: var(--d4r-or);
+  font-weight: var(--weight-fort);
+}
+
+.extras--rail .extra__desc {
+  color: var(--d4r-noir-72);
+  line-height: 1.5;
+}
+
+.extras--rail .extra__vignette.vignette {
+  min-height: var(--fiche-extra-vignette-min-h);
+}
+
+.extras--rail .extra__vignette img {
+  transition: transform var(--dur-slow) var(--ease-d4r);
+}
+
+.extra:hover .extra__vignette img,
+.choix:hover .choix__vignette img {
+  transform: scale(var(--hover-image-scale));
+}
+
+.extra__pastille {
+  border-radius: var(--radius-pill);
+}
+
+/* Les deux sorties de l'écran 3 et les boutons de l'écran 4, en pilule. Toutes
+   en `btn--sobre`, à dessein : SPEC.md § 5.3 veut deux sorties également
+   visibles, refuser n'est pas un lien discret sous un gros bouton. */
+.modale__actions .btn {
+  min-height: var(--touch-min);
+  border-radius: var(--radius-pill);
+  font-weight: var(--weight-fort);
+}
+
+.modale__actions .btn--sobre {
+  border: var(--hairline) solid var(--d4r-onyx-12);
+  background: transparent;
+  color: var(--d4r-onyx);
+}
+
+@media (max-width: 640px) {
+  .modale__boite {
+    border-radius: var(--radius-cadre) var(--radius-cadre) 0 0;
+  }
+
+  .modale__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  /* Une colonne lisible : la carte voisine, réduite et estompée. */
+  .extras-rail--centre .extras--rail > .extra {
+    flex-basis: var(--fiche-extra-basis-tel);
+  }
+
+  .extras-rail--centre.est-cable .extras--rail > .extra:not(.est-courant) {
+    transform: scale(var(--fiche-extra-voisine-echelle));
+    opacity: var(--fiche-extra-voisine-opacite);
+  }
+}

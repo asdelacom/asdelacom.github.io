@@ -1,0 +1,1518 @@
+/* Thème d4r — l'accueil (lot R2, 2026-10-17).
+   Reprise des feuilles du site Render (findre-hero-scroll, d4r-splash,
+   d4r-apropos, d4r-packs-carousel, d4r-services, d4r-accueil-desktop, d4r-avis,
+   d4r-events, one-concierge « steps », faq-hostinger, d4r-motion « reveal »),
+   retraduites en tokens (`assets/css/d4r/tokens.css`). Aucune valeur littérale.
+
+   Ce qui dépend du script est sous `html[data-js]` : sans JavaScript, le
+   bandeau est ouvert sur son image d'attente, les carrousels sont des rangées
+   qui défilent au doigt, l'avion reste en haut de sa ligne, la FAQ est native. */
+
+.accueil-d4r {
+  overflow-x: clip;
+}
+
+/* ═══ 1. Le bandeau ════════════════════════════════════════════════════════ */
+.bandeau-d4r {
+  position: relative;
+  height: var(--bandeau-course);
+  margin-bottom: calc(-1 * var(--bandeau-chevauche));
+  background: var(--d4r-noir);
+  z-index: 3;
+}
+
+@media (min-width: 768px) {
+  .bandeau-d4r {
+    height: var(--bandeau-course-large);
+    margin-bottom: calc(-1 * var(--bandeau-chevauche-large));
+  }
+}
+
+.bandeau-d4r__colle {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--d4r-noir);
+}
+
+.bandeau-d4r__colle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--bandeau-sceau-h);
+  z-index: 7;
+  pointer-events: none;
+  background: var(--bandeau-sceau);
+}
+
+.bandeau-d4r__media {
+  position: absolute;
+  inset: 0;
+  background: var(--d4r-onyx);
+}
+
+.bandeau-d4r__img,
+.bandeau-d4r__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bandeau-d4r__video {
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-brand);
+}
+
+[data-video].est-lue .bandeau-d4r__video,
+[data-video].est-lue .intercalaire__video,
+[data-video].est-lue .apropos__video {
+  opacity: 1;
+}
+
+.bandeau-d4r__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--bandeau-voile);
+  pointer-events: none;
+}
+
+.bandeau-d4r__centre {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--accueil-pad-x);
+  text-align: center;
+  color: var(--d4r-blanc);
+  pointer-events: none;
+}
+
+.bandeau-d4r__titre {
+  margin: 0;
+  font-size: var(--bandeau-titre-size);
+  font-weight: var(--weight-titre);
+  line-height: 1.05;
+  color: var(--d4r-blanc);
+  text-shadow: var(--bandeau-ombre-texte);
+}
+
+.bandeau-d4r__lead {
+  margin: var(--space-3) 0 0;
+  max-width: var(--measure);
+  font-size: var(--bandeau-lead-size);
+  color: var(--d4r-blanc);
+  text-shadow: var(--bandeau-ombre-texte);
+}
+
+/* Le texte s'efface sur la seconde moitié de la course, par le défilement du
+   document — sans script quand le navigateur le sait, et rien sinon. */
+@supports (animation-timeline: scroll()) {
+  .bandeau-d4r__centre {
+    animation: bandeau-texte linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+  }
+
+  @keyframes bandeau-texte {
+    0%, 55% { opacity: 1; transform: none; }
+    100% { opacity: 0; transform: translateY(6%); }
+  }
+}
+
+/* Le bouton lecture / pause : deux barres, ou un triangle quand les vidéos
+   sont arrêtées. Formes CSS, aucune icône. */
+.bandeau-d4r__lecture {
+  position: absolute;
+  right: var(--accueil-pad-x);
+  bottom: calc(var(--space-6) + var(--bandeau-sceau-h) / 4);
+  z-index: 13;
+  width: var(--bandeau-lecture);
+  height: var(--bandeau-lecture);
+  padding: 0;
+  border: var(--hairline) solid var(--d4r-blanc-85);
+  border-radius: var(--radius-pill);
+  background: var(--bandeau-lecture-fond);
+  color: var(--d4r-blanc);
+  cursor: pointer;
+}
+
+.bandeau-d4r__lecture[hidden] {
+  display: none;
+}
+
+.bandeau-d4r__lecture::before,
+.bandeau-d4r__lecture::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: var(--rule-thick);
+  height: var(--space-4);
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.bandeau-d4r__lecture::before { left: calc(50% - var(--space-2)); }
+.bandeau-d4r__lecture::after { left: calc(50% + var(--space-1)); }
+
+.bandeau-d4r__lecture.est-arretee::after {
+  display: none;
+}
+
+.bandeau-d4r__lecture.est-arretee::before {
+  left: calc(50% - var(--space-1));
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-top: var(--space-2) solid transparent;
+  border-bottom: var(--space-2) solid transparent;
+  border-left: var(--space-3) solid currentColor;
+}
+
+/* L'ouverture : le bandeau naît réduit et masqué, s'ouvre dans le cadre. Avec
+   script seulement — sans lui, il est ouvert. */
+html[data-js] .bandeau-d4r__colle.is-intro {
+  opacity: 0.0001;
+  clip-path: inset(var(--bandeau-ouverture-inset) round var(--bandeau-ouverture-rayon));
+}
+
+html[data-js] .bandeau-d4r__colle.is-intro .bandeau-d4r__media {
+  transform: scale(var(--bandeau-ouverture-echelle));
+  transform-origin: center center;
+  opacity: .5;
+}
+
+html[data-js] .bandeau-d4r__colle.is-intro .bandeau-d4r__centre {
+  opacity: 0.0001;
+  transform: translateY(1.5vw);
+}
+
+html[data-js] .bandeau-d4r__colle.is-opening {
+  opacity: 1;
+  transition: opacity var(--dur-splash) var(--ease-d4r), clip-path var(--dur-splash) var(--ease-d4r);
+}
+
+html[data-js] .bandeau-d4r__colle.is-expanding {
+  clip-path: inset(0 round 0);
+  transition: clip-path var(--dur-ouverture) var(--ease-ouverture);
+}
+
+html[data-js] .bandeau-d4r__colle.is-expanding .bandeau-d4r__media {
+  transform: none;
+  opacity: 1;
+  transition: transform var(--dur-ouverture) var(--ease-ouverture), opacity var(--dur-ouverture) var(--ease-ouverture);
+}
+
+html[data-js] .bandeau-d4r__colle.is-expanding .bandeau-d4r__centre {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-ouverture-texte) var(--ease-d4r) .18s, transform var(--dur-ouverture-texte) var(--ease-d4r) .18s;
+}
+
+html[data-js] .bandeau-d4r__colle.is-open {
+  opacity: 1;
+  clip-path: none;
+}
+
+/* ═══ 2. Le splash ═════════════════════════════════════════════════════════ */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-splash);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--splash-fond);
+  transition: opacity var(--dur-ouverture) var(--ease-ouverture);
+}
+
+.splash[hidden] {
+  display: none;
+}
+
+html.splash-actif,
+html.splash-actif body {
+  overflow: hidden;
+}
+
+html.splash-actif .entete {
+  visibility: hidden;
+}
+
+.splash__scene {
+  position: relative;
+  width: var(--splash-scene-w);
+  aspect-ratio: 720 / 1154;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--dur-ouverture) var(--ease-ouverture);
+}
+
+@media (min-width: 810px) {
+  .splash__scene {
+    width: var(--splash-scene-w-large);
+  }
+}
+
+.splash__cadre {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.splash__logo {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: var(--splash-logo-w);
+  color: var(--d4r-or);
+  transition: opacity var(--dur-splash) var(--ease-d4r);
+}
+
+@media (min-width: 810px) {
+  .splash__logo {
+    width: var(--splash-logo-w-large);
+  }
+}
+
+.splash__logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.splash.is-done .splash__logo {
+  opacity: 0;
+}
+
+.splash.is-expanding {
+  opacity: 0;
+}
+
+.splash.is-expanding .splash__scene {
+  transform: scale(var(--splash-echelle-fin));
+}
+
+/* ═══ 3. « À propos » ══════════════════════════════════════════════════════ */
+.apropos {
+  position: relative;
+  z-index: 2;
+  height: var(--apropos-course);
+  background: var(--d4r-noir);
+  color: var(--d4r-ivoire);
+  view-timeline-name: --apropos;
+  view-timeline-axis: block;
+}
+
+@media (max-width: 900px) {
+  .apropos {
+    height: var(--apropos-course-tel);
+  }
+}
+
+.apropos::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--apropos-couture-h);
+  z-index: 9;
+  pointer-events: none;
+  background: var(--apropos-couture);
+}
+
+.apropos__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--d4r-noir);
+}
+
+.apropos__fond {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--apropos-fond);
+}
+
+.apropos__orn {
+  position: absolute;
+  z-index: 1;
+  width: var(--apropos-orn);
+  height: var(--apropos-orn);
+  opacity: .75;
+}
+
+@media (max-width: 900px) {
+  .apropos__orn {
+    width: var(--apropos-orn-tel);
+    height: var(--apropos-orn-tel);
+  }
+}
+
+.apropos__orn--hg { top: 12%; left: 6%; border-top: var(--hairline) solid var(--d4r-or-42); border-left: var(--hairline) solid var(--d4r-or-42); }
+.apropos__orn--hd { top: 12%; right: 6%; border-top: var(--hairline) solid var(--d4r-or-42); border-right: var(--hairline) solid var(--d4r-or-42); }
+.apropos__orn--bg { bottom: 14%; left: 6%; border-bottom: var(--hairline) solid var(--d4r-or-42); border-left: var(--hairline) solid var(--d4r-or-42); }
+.apropos__orn--bd { bottom: 14%; right: 6%; border-bottom: var(--hairline) solid var(--d4r-or-42); border-right: var(--hairline) solid var(--d4r-or-42); }
+
+.apropos__orn--losange {
+  top: 50%;
+  left: 50%;
+  width: var(--apropos-losange);
+  height: var(--apropos-losange);
+  margin: calc(-1 * var(--apropos-losange) / 2) 0 0 calc(-1 * var(--apropos-losange) / 2);
+  border: var(--hairline) solid var(--d4r-or);
+  transform: rotate(45deg);
+  opacity: .7;
+}
+
+.apropos__marque {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: var(--apropos-marque-w);
+  transform: translate(-50%, -50%);
+  color: var(--d4r-or);
+  opacity: var(--apropos-marque-opacite);
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .apropos__marque {
+    width: var(--apropos-marque-w-tel);
+  }
+}
+
+.apropos__marque svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.apropos__scene {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  max-width: var(--apropos-max);
+  margin: 0 auto;
+}
+
+.apropos__centre {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  width: var(--apropos-centre-w);
+  text-align: center;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .apropos__centre {
+    top: 40%;
+    width: var(--apropos-centre-w-tel);
+  }
+}
+
+.apropos__badge {
+  display: inline-flex;
+  margin: 0 0 var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border: var(--hairline) solid var(--d4r-or-75);
+  border-radius: var(--radius-pill);
+  font-size: var(--apropos-badge-size);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--d4r-blanc);
+}
+
+.apropos__titre {
+  margin: 0;
+  font-size: var(--apropos-titre-size);
+  font-weight: var(--weight-titre);
+  line-height: 1.12;
+  color: var(--d4r-blanc);
+}
+
+@media (max-width: 900px) {
+  .apropos__titre {
+    font-size: var(--apropos-titre-size-tel);
+  }
+}
+
+.apropos__lead {
+  margin: var(--space-4) auto 0;
+  max-width: 28rem;
+  font-size: var(--apropos-lead-size);
+  line-height: 1.5;
+  color: var(--d4r-blanc-72);
+}
+
+@media (max-width: 900px) {
+  .apropos__lead {
+    display: none;
+  }
+}
+
+.apropos__cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--d4r-blanc);
+  color: var(--d4r-onyx);
+  font-size: var(--apropos-cta-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--cta-tracking);
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+
+.apropos__cta:hover {
+  box-shadow: none;
+  color: var(--d4r-onyx);
+  background: var(--d4r-ivoire);
+}
+
+.apropos__carte {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  color: inherit;
+  will-change: transform;
+}
+
+.apropos__carte:hover {
+  box-shadow: none;
+  color: inherit;
+}
+
+.apropos__cadre {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--d4r-onyx);
+  box-shadow: var(--apropos-carte-ombre);
+  transition: transform var(--dur-base) var(--ease-d4r), box-shadow var(--dur-base) var(--ease-brand);
+}
+
+@media (pointer: fine) {
+  .apropos__carte:hover .apropos__cadre {
+    transform: scale(1.03);
+    box-shadow: var(--apropos-carte-ombre-survol);
+  }
+}
+
+/* Les coins d'or, en quatre points. */
+.apropos__carte::before,
+.apropos__carte::after,
+.apropos__cadre::before,
+.apropos__cadre::after {
+  content: "";
+  position: absolute;
+  width: var(--apropos-coin);
+  height: var(--apropos-coin);
+  background: var(--d4r-or);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.apropos__carte::before { top: -1px; left: -1px; }
+.apropos__carte::after { top: -1px; right: -1px; }
+.apropos__cadre::before { bottom: -1px; left: -1px; }
+.apropos__cadre::after { bottom: -1px; right: -1px; }
+
+/* D1 (2026-10-17) — l'image d'attente de la carte, sous la vidéo : c'est
+   elle qu'on voit au téléphone, où les vidéos secondaires ne partent qu'à la
+   demande, et partout tant que la vidéo n'est pas lue. */
+.apropos__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.apropos__video {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-brand);
+}
+
+.apropos__etiquette {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-3) var(--space-2);
+  background: var(--apropos-etiquette);
+}
+
+.apropos__kicker,
+.apropos__nom {
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--cta-tracking);
+  text-transform: uppercase;
+  color: var(--d4r-blanc);
+  line-height: 1.15;
+}
+
+.apropos__kicker { font-size: var(--apropos-kicker-size); }
+.apropos__nom { font-size: var(--apropos-nom-size); opacity: .92; text-align: right; }
+
+.apropos__carte--1 { top: 6%; left: 3%; width: min(280px, 22vw); aspect-ratio: 5 / 4; z-index: 3; }
+.apropos__carte--2 { top: 54%; left: 7%; width: min(340px, 28vw); aspect-ratio: 16 / 10; }
+.apropos__carte--3 { top: 58%; right: 5%; width: min(250px, 20vw); aspect-ratio: 1 / 1; z-index: 3; }
+.apropos__carte--4 { top: 8%; right: 4%; width: min(300px, 24vw); aspect-ratio: 4 / 3; }
+
+@media (max-width: 900px) {
+  .apropos__carte--1 { top: 12%; left: 9%; width: 44.5%; aspect-ratio: 174 / 217; z-index: 7; }
+  .apropos__carte--2 { top: 48%; left: 2.5%; width: 68.5%; aspect-ratio: 267 / 200; z-index: 3; }
+  .apropos__carte--3 { top: 58%; left: auto; right: -2%; width: 68.5%; aspect-ratio: 267 / 200; z-index: 4; }
+  .apropos__carte--4 { top: 72%; left: 28%; right: auto; width: 44.5%; aspect-ratio: 174 / 217; z-index: 6; }
+}
+
+/* La dérive au défilement, par le navigateur quand il le sait (le script pose
+   `data-apropos-css`) ; sinon le script écrit les transformations. */
+@supports (animation-timeline: view()) {
+  .apropos[data-apropos-css] .apropos__carte {
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: --apropos;
+    animation-range: contain 0% contain 100%;
+  }
+
+  .apropos[data-apropos-css] .apropos__carte--1 { animation-name: apropos-derive-1; }
+  .apropos[data-apropos-css] .apropos__carte--2 { animation-name: apropos-derive-2; }
+  .apropos[data-apropos-css] .apropos__carte--3 { animation-name: apropos-derive-3; }
+  .apropos[data-apropos-css] .apropos__carte--4 { animation-name: apropos-derive-4; }
+
+  @keyframes apropos-derive-1 { from { transform: translate3d(-12px, 90px, 0); } to { transform: translate3d(28px, -260px, 0); } }
+  @keyframes apropos-derive-2 { from { transform: translate3d(10px, 140px, 0); } to { transform: translate3d(-24px, -210px, 0); } }
+  @keyframes apropos-derive-3 { from { transform: translate3d(-8px, 180px, 0); } to { transform: translate3d(30px, -300px, 0); } }
+  @keyframes apropos-derive-4 { from { transform: translate3d(14px, 110px, 0); } to { transform: translate3d(-32px, -230px, 0); } }
+
+  @media (max-width: 900px) {
+    @keyframes apropos-derive-1 { from { transform: translate3d(-8px, 120px, 0); } to { transform: translate3d(18px, -380px, 0); } }
+    @keyframes apropos-derive-2 { from { transform: translate3d(6px, 180px, 0); } to { transform: translate3d(-14px, -300px, 0); } }
+    @keyframes apropos-derive-3 { from { transform: translate3d(-10px, 240px, 0); } to { transform: translate3d(22px, -460px, 0); } }
+    @keyframes apropos-derive-4 { from { transform: translate3d(8px, 280px, 0); } to { transform: translate3d(-18px, -340px, 0); } }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apropos {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .apropos__pin {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    padding: var(--space-12) 0;
+  }
+
+  .apropos__carte {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* ═══ 4. Les carrousels ════════════════════════════════════════════════════ */
+.carrou {
+  padding-top: var(--accueil-section-pad);
+  background: var(--surface-page);
+}
+
+.carrou__tete {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  max-width: var(--accueil-max);
+  margin: 0 auto var(--space-5);
+  padding: 0 var(--accueil-pad-x);
+}
+
+.carrou__titre {
+  margin: 0;
+  font-size: var(--size-h2);
+  line-height: var(--lh-h2);
+}
+
+.carrou__plus {
+  flex: 0 0 auto;
+  font-size: var(--size-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-title);
+}
+
+.carrou__fenetre {
+  position: relative;
+  width: 100%;
+  height: var(--carrou-fenetre-h);
+  min-height: var(--carrou-fenetre-min);
+  background: var(--carrou-fond);
+  overflow: hidden;
+}
+
+@media (min-width: 810px) {
+  .carrou__fenetre {
+    height: var(--carrou-fenetre-h-large);
+    min-height: var(--carrou-fenetre-min-large);
+  }
+}
+
+.carrou__scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.carrou__scene.is-glisse {
+  cursor: grabbing;
+}
+
+.carrou__carte {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--carrou-carte-w);
+  height: var(--carrou-carte-h);
+  border-radius: var(--carrou-rayon);
+  overflow: hidden;
+  background: var(--d4r-onyx);
+  box-shadow: var(--carrou-ombre);
+  transform: translate(-50%, -50%);
+  transition: transform var(--dur-carrou) var(--carrou-ease), filter var(--dur-carrou) var(--carrou-ease), box-shadow var(--dur-carrou) var(--carrou-ease), opacity var(--dur-base) var(--ease-brand);
+  cursor: pointer;
+}
+
+@media (min-width: 810px) {
+  .carrou__carte {
+    width: var(--carrou-carte-w-large);
+    height: var(--carrou-carte-h-large);
+  }
+}
+
+.carrou__carte.is-centre { box-shadow: var(--carrou-ombre-centre); }
+.carrou__carte.is-loin { filter: blur(var(--carrou-flou)); }
+.carrou__carte.is-cache { opacity: 0; pointer-events: none; }
+
+.carrou__media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carrou__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.carrou__ombre {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60%;
+  background: var(--carrou-sombre);
+  pointer-events: none;
+}
+
+.carrou__texte {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--carrou-pad);
+}
+
+@media (min-width: 810px) {
+  .carrou__texte {
+    padding: var(--carrou-pad-large);
+  }
+}
+
+.carrou__eyebrow {
+  font-size: var(--carrou-eyebrow-size);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--d4r-blanc-85);
+  line-height: 1.3;
+}
+
+.carrou__nom {
+  font-size: var(--carrou-nom-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.2;
+  color: var(--d4r-blanc);
+}
+
+@media (min-width: 810px) {
+  .carrou__eyebrow { font-size: var(--carrou-eyebrow-size-large); }
+  .carrou__nom { font-size: var(--carrou-nom-size-large); }
+}
+
+.carrou__cta {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-top: var(--space-1);
+  padding: var(--carrou-cta-pad);
+  border-radius: var(--radius-pill);
+  background: var(--d4r-blanc);
+  color: var(--d4r-onyx);
+  font-size: var(--carrou-cta-size);
+  font-weight: var(--weight-semibold);
+  transition: transform var(--dur-fast) var(--ease-brand), box-shadow var(--dur-fast) var(--ease-brand);
+}
+
+.carrou__cta:hover {
+  color: var(--d4r-onyx);
+  transform: translateY(-1px);
+  box-shadow: var(--carrou-ombre-nav-survol);
+}
+
+/* Avec script : la pilule n'est visible que sur la carte du centre. */
+html[data-js] .carrou__fenetre.est-cable .carrou__carte:not(.is-centre) .carrou__cta {
+  display: none;
+}
+
+.carrou__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+  width: var(--carrou-nav);
+  height: var(--carrou-nav);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--d4r-blanc);
+  color: var(--d4r-onyx);
+  box-shadow: var(--carrou-ombre-nav);
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.carrou__nav[hidden] {
+  display: none;
+}
+
+.carrou__nav:hover {
+  box-shadow: var(--carrou-ombre-nav-survol);
+}
+
+.carrou__nav--prec { left: var(--carrou-nav-bord); }
+.carrou__nav--suiv { right: var(--carrou-nav-bord); }
+
+@media (min-width: 810px) {
+  .carrou__nav--prec { left: var(--carrou-nav-bord-large); }
+  .carrou__nav--suiv { right: var(--carrou-nav-bord-large); }
+}
+
+/* Le chevron : deux côtés d'un carré tourné. */
+.carrou__nav::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-3);
+  height: var(--space-3);
+  border-left: var(--rule-thick) solid currentColor;
+  border-bottom: var(--rule-thick) solid currentColor;
+  transform: translate(-35%, -50%) rotate(45deg);
+}
+
+.carrou__nav--suiv::before {
+  transform: translate(-65%, -50%) rotate(-135deg);
+}
+
+/* Sans script : une rangée qui défile au doigt, toutes les pilules visibles. */
+html:not([data-js]) .carrou__fenetre {
+  height: auto;
+  min-height: 0;
+  background: transparent;
+}
+
+html:not([data-js]) .carrou__scene {
+  display: flex;
+  gap: var(--space-4);
+  padding: 0 var(--accueil-pad-x) var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  cursor: auto;
+}
+
+html:not([data-js]) .carrou__carte {
+  position: relative;
+  top: auto;
+  left: auto;
+  flex: 0 0 var(--carrou-carte-w);
+  transform: none;
+  scroll-snap-align: start;
+}
+
+/* ═══ 5. Les intercalaires et « Nos services » ═════════════════════════════ */
+.intercalaire {
+  width: 100%;
+  line-height: 0;
+  margin-top: var(--accueil-section-pad);
+}
+
+.intercalaire__cadre {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: var(--d4r-onyx);
+}
+
+@media (min-width: 900px) {
+  .intercalaire__cadre {
+    aspect-ratio: auto;
+    height: var(--intercalaire-h);
+  }
+}
+
+.intercalaire__img,
+.intercalaire__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.intercalaire__video {
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-brand);
+}
+
+.services {
+  max-width: var(--accueil-max);
+  margin: 0 auto;
+  padding: var(--accueil-section-pad) var(--accueil-pad-x) var(--space-8);
+}
+
+.services__titre {
+  margin: 0 0 var(--space-6);
+  font-size: var(--size-h2);
+  line-height: var(--lh-h2);
+}
+
+.services__grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--services-gap);
+}
+
+@media (min-width: 768px) {
+  .services__grille {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .services__grille {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--services-gap-large);
+  }
+}
+
+.services__carte {
+  position: relative;
+  display: block;
+  height: var(--services-h);
+  border-radius: var(--services-rayon);
+  overflow: hidden;
+  background: var(--d4r-onyx);
+  color: var(--d4r-blanc);
+}
+
+@media (min-width: 640px) {
+  .services__carte { height: var(--services-h-moyen); }
+}
+
+@media (min-width: 900px) {
+  .services__carte { height: var(--services-h-large); }
+}
+
+.services__carte:hover {
+  box-shadow: none;
+  color: var(--d4r-blanc);
+}
+
+.services__media {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.services__img,
+.services__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity var(--dur-slow) var(--ease-brand), transform var(--dur-slow) var(--ease-brand);
+}
+
+.services__video {
+  opacity: 0;
+}
+
+.services.is-video [data-video].est-lue .services__video { opacity: 1; }
+.services.is-video [data-video].est-lue .services__img { opacity: 0; }
+
+@media (pointer: fine) {
+  .services__carte:hover .services__img {
+    transform: scale(var(--hover-image-scale));
+  }
+}
+
+.services__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--services-voile);
+  pointer-events: none;
+}
+
+.services__bas {
+  position: absolute;
+  left: var(--space-5);
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.services__nom {
+  font-size: var(--services-nom-size-tel);
+  font-weight: var(--weight-semibold);
+  line-height: 1.2;
+  color: var(--d4r-blanc);
+}
+
+@media (min-width: 900px) {
+  .services__nom { font-size: var(--services-nom-size); }
+}
+
+.services__fleche {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--services-fleche);
+  height: var(--services-fleche);
+  border-radius: var(--radius-pill);
+  background: var(--services-fleche-fond);
+}
+
+.services__fleche::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-2);
+  height: var(--space-2);
+  border-top: var(--rule-thick) solid currentColor;
+  border-right: var(--rule-thick) solid currentColor;
+  transform: translate(-65%, -50%) rotate(45deg);
+}
+
+/* ═══ 6. Les avis — RETIRÉS (lot F1, 2026-10-20) ══════════════════════════
+   Le bloc « Ils nous ont fait confiance » (trois rangées en défilement) est
+   parti avec la section : commit 978929a pour le relire. */
+
+/* ═══ 7. Événements ════════════════════════════════════════════════════════ */
+.evenements {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: var(--evenements-h);
+  min-height: var(--evenements-h);
+  overflow: hidden;
+  background: var(--d4r-onyx);
+  color: var(--d4r-blanc);
+  isolation: isolate;
+}
+
+@media (min-width: 900px) {
+  .evenements {
+    height: var(--evenements-h-large);
+    min-height: var(--evenements-h-large);
+  }
+}
+
+.evenements:hover {
+  box-shadow: none;
+  color: var(--d4r-blanc);
+}
+
+.evenements__media {
+  position: absolute;
+  inset: 0;
+}
+
+.evenements__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.evenements__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--evenements-voile);
+}
+
+.evenements__centre {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: var(--space-8) var(--accueil-pad-x);
+  text-align: center;
+}
+
+.evenements__titre {
+  font-size: var(--evenements-titre-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.05;
+  text-shadow: var(--bandeau-ombre-texte);
+}
+
+@media (min-width: 900px) {
+  .evenements__titre { font-size: var(--evenements-titre-size-large); }
+}
+
+.evenements__cta {
+  display: inline-flex;
+  padding: var(--evenements-cta-pad);
+  border: var(--hairline) solid var(--d4r-blanc-85);
+  font-size: var(--evenements-cta-size);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--cta-tracking);
+  text-transform: uppercase;
+  transition: background var(--dur-base) var(--ease-brand), color var(--dur-base) var(--ease-brand);
+}
+
+.evenements:hover .evenements__cta,
+.evenements:focus-visible .evenements__cta {
+  background: var(--d4r-blanc);
+  color: var(--d4r-onyx);
+}
+
+/* ═══ 8. « Comment ça marche » ═════════════════════════════════════════════ */
+.etapes {
+  padding: var(--accueil-section-pad) var(--accueil-pad-x);
+  background: var(--surface-page);
+  overflow: hidden;
+}
+
+.etapes__inner {
+  max-width: var(--etapes-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-10);
+  text-align: center;
+}
+
+.etapes__eyebrow {
+  margin: 0 0 var(--space-3);
+  font-size: var(--etapes-eyebrow-size);
+  letter-spacing: var(--etapes-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--d4r-or-texte); /* D2 */
+}
+
+.etapes__titre {
+  margin: 0;
+  font-size: var(--etapes-titre-size);
+  font-weight: var(--weight-light);
+  line-height: 1.05;
+}
+
+.etapes__piste {
+  position: relative;
+  width: 100%;
+  max-width: var(--etapes-piste-max);
+  min-height: var(--etapes-piste-min-h);
+  padding: var(--etapes-piste-pad);
+}
+
+.etapes__ligne {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: var(--hairline);
+  background: var(--etapes-ligne);
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.etapes__ligne-pleine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  background: var(--etapes-ligne-pleine);
+  box-shadow: var(--etapes-ligne-halo);
+}
+
+/* Lot F2 — la pointe lumineuse au bout de la ligne pleine : un point d'or et
+   son halo, posés au bas du remplissage, qui descendent avec lui. */
+.etapes__pointe {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: var(--etapes-pointe);
+  height: var(--etapes-pointe);
+  border-radius: var(--radius-pill);
+  background: var(--d4r-or);
+  box-shadow: var(--etapes-pointe-halo);
+  transform: translate(-50%, 50%);
+}
+
+.etapes.is-sans-mouvement .etapes__pointe {
+  display: none;
+}
+
+.etapes__liste {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--etapes-gap);
+  margin: 0;
+  padding: var(--space-10) 0 var(--space-4);
+  list-style: none;
+}
+
+.etapes__item {
+  position: relative;
+  min-height: var(--etapes-picto);
+}
+
+/* Lot F2 — trois états. À venir : picto en creux (fond de page, contour onyx
+   à 12 %, image estompée). Passée : fond onyx, image blanche. Courante : fond
+   or, et l'onde — un anneau d'or qui s'ouvre une fois autour du picto. */
+.etapes__picto {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--etapes-picto);
+  height: var(--etapes-picto);
+  border-radius: var(--radius-pill);
+  background: var(--surface-page);
+  box-shadow: inset 0 0 0 var(--hairline) var(--d4r-onyx-12);
+  transform: translateX(-50%) scale(var(--etapes-echelle-attente));
+  transition: background var(--dur-base) var(--ease-brand), box-shadow var(--dur-base) var(--ease-brand), transform var(--dur-base) var(--ease-d4r);
+}
+
+.etapes__item.is-passee .etapes__picto {
+  background: var(--d4r-onyx);
+  box-shadow: inset 0 0 0 var(--hairline) var(--d4r-onyx);
+  transform: translateX(-50%) scale(1);
+}
+
+.etapes__item.is-courant .etapes__picto {
+  background: var(--d4r-or);
+  box-shadow: inset 0 0 0 var(--hairline) var(--d4r-or);
+}
+
+.etapes__onde {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  border: var(--rule-thick) solid var(--d4r-or);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.etapes__item.is-courant .etapes__onde {
+  animation: etapes-onde var(--dur-onde) var(--ease-d4r) forwards;
+}
+
+@keyframes etapes-onde {
+  from { opacity: var(--etapes-onde-opacite); transform: scale(1); }
+  to { opacity: 0; transform: scale(var(--etapes-onde-echelle)); }
+}
+
+.etapes__picto img {
+  display: block;
+  width: var(--icon-w);
+  height: var(--icon-w);
+  opacity: var(--etapes-attente-opacite);
+  filter: var(--etapes-attente-filtre);
+  transition: opacity var(--dur-base) var(--ease-brand), filter var(--dur-base) var(--ease-brand);
+}
+
+.etapes__item.is-passee .etapes__picto img {
+  opacity: 1;
+  filter: none;
+}
+
+/* Lot F2 — le texte d'une étape à venir attend en retrait, et glisse en place
+   quand la pointe l'atteint. */
+.etapes__copie {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  opacity: var(--etapes-attente-opacite);
+  transform: translateY(var(--etapes-copie-decale));
+  transition: opacity var(--dur-reveal) var(--ease-d4r), transform var(--dur-reveal) var(--ease-d4r);
+}
+
+.etapes__item.is-passee .etapes__copie {
+  opacity: 1;
+  transform: none;
+}
+
+.etapes__item:nth-child(odd) .etapes__copie {
+  align-items: flex-end;
+  text-align: right;
+  padding-right: calc(50% + var(--etapes-picto));
+}
+
+.etapes__item:nth-child(even) .etapes__copie {
+  align-items: flex-start;
+  text-align: left;
+  padding-left: calc(50% + var(--etapes-picto));
+}
+
+.etapes__num {
+  font-size: var(--etapes-num-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--d4r-or-texte); /* D2 */
+}
+
+.etapes__label {
+  font-size: var(--etapes-label-size);
+  font-weight: var(--weight-titre);
+  line-height: 1.15;
+  color: var(--text-title);
+  transition: color var(--dur-base) var(--ease-brand);
+}
+
+.etapes__item.is-courant .etapes__label {
+  color: var(--d4r-or-texte); /* D2 : 5,66:1, l'or de palette faisait 2,19 */
+}
+
+.etapes__pied p {
+  margin: 0 auto var(--space-5);
+  max-width: var(--measure);
+  color: var(--text-body);
+}
+
+.etapes__cta {
+  display: inline-flex;
+  padding: var(--etapes-cta-pad);
+  border-radius: var(--radius-pill);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+  font-weight: var(--weight-semibold);
+}
+
+.etapes__cta:hover {
+  box-shadow: none;
+  color: var(--btn-primary-fg);
+}
+
+/* ═══ 9. La FAQ ════════════════════════════════════════════════════════════ */
+.faq {
+  padding: var(--accueil-section-pad) var(--accueil-pad-x);
+  background: var(--surface-page);
+}
+
+.faq__inner {
+  max-width: var(--faq-inner-max);
+  margin: 0 auto;
+}
+
+.faq__titre {
+  margin: 0 0 var(--space-10);
+  max-width: 646px;
+  font-size: var(--faq-titre-size);
+  font-weight: var(--weight-regular);
+  line-height: 1.15;
+}
+
+.faq__liste {
+  max-width: var(--faq-max);
+  margin: 0 auto;
+}
+
+.faq__item {
+  border-top: var(--hairline) solid var(--faq-filet);
+}
+
+.faq__item:last-child {
+  border-bottom: var(--hairline) solid var(--faq-filet);
+}
+
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--faq-pad-y) 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.faq__question {
+  font-size: var(--faq-q-size);
+  line-height: 1.35;
+  color: var(--text-title);
+}
+
+.faq__icone {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--faq-icone);
+  height: var(--faq-icone);
+  border-radius: var(--faq-icone-rayon);
+  background: var(--faq-icone-fond);
+  transition: transform var(--dur-base) var(--ease-brand), background var(--dur-fast) var(--ease-brand);
+}
+
+.faq__icone::before,
+.faq__icone::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-3);
+  height: var(--rule-thick);
+  background: var(--text-title);
+  transform: translate(-50%, -50%);
+}
+
+.faq__icone::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.faq__item[open] .faq__icone {
+  transform: rotate(45deg);
+  background: var(--d4r-sable);
+}
+
+.faq__r {
+  padding: 0 calc(var(--faq-icone) + var(--space-4)) var(--faq-pad-y) 0;
+  font-size: var(--faq-r-size);
+  line-height: 1.65;
+  color: var(--text-body);
+}
+
+.faq__r p {
+  margin: 0;
+}
+
+/* ═══ 10. Les apparitions ══════════════════════════════════════════════════ */
+html[data-js] [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--reveal-decale));
+  transition: opacity var(--dur-reveal) var(--ease-d4r), transform var(--dur-reveal) var(--ease-d4r);
+}
+
+html[data-js] [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-js] [data-reveal-stagger] > * {
+  opacity: 0;
+  transform: translateY(var(--reveal-decale-petit));
+  transition: opacity var(--dur-reveal-court) var(--ease-d4r), transform var(--dur-reveal-court) var(--ease-d4r);
+}
+
+html[data-js] [data-reveal-stagger].is-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-js] [data-reveal-stagger].is-in > :nth-child(1) { transition-delay: calc(var(--reveal-pas) * 1); }
+html[data-js] [data-reveal-stagger].is-in > :nth-child(2) { transition-delay: calc(var(--reveal-pas) * 2); }
+html[data-js] [data-reveal-stagger].is-in > :nth-child(3) { transition-delay: calc(var(--reveal-pas) * 3); }
+html[data-js] [data-reveal-stagger].is-in > :nth-child(4) { transition-delay: calc(var(--reveal-pas) * 4); }
+html[data-js] [data-reveal-stagger].is-in > :nth-child(5) { transition-delay: calc(var(--reveal-pas) * 5); }
+html[data-js] [data-reveal-stagger].is-in > :nth-child(6) { transition-delay: calc(var(--reveal-pas) * 6); }
+html[data-js] [data-reveal-stagger].is-in > :nth-child(7) { transition-delay: calc(var(--reveal-pas) * 7); }
+html[data-js] [data-reveal-stagger].is-in > :nth-child(8) { transition-delay: calc(var(--reveal-pas) * 8); }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-js] [data-reveal],
+  html[data-js] [data-reveal-stagger] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

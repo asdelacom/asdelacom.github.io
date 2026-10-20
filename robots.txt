@@ -1,0 +1,3 @@
+# Copie figee de demonstration : rien a indexer.
+User-agent: *
+Disallow: /

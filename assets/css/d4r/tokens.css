@@ -1,0 +1,524 @@
+/* Dubaï For Real — thème « d4r » (direction artistique de dubaiforeal.onrender.com).
+   ─────────────────────────────────────────────────────────────────────────
+   LES VARIABLES DU THÈME, ET RIEN D'AUTRE.
+
+   Chargé APRÈS `assets/css/tokens.css` et AVANT `site.css`, quand la constante
+   `THEME` vaut `d4r` (config.php). Il ne déclare aucune règle : il REDÉFINIT
+   les tokens sémantiques que `site.css` lit déjà (polices, surfaces, rayons),
+   et il AJOUTE ceux que les composants du thème (`entete.css`, `pied.css`,
+   `base.css`) consomment. Un token qui n'existe pas dans `tokens.css` est
+   créé ici ; un token qui y existe est seulement réassigné.
+
+   Pourquoi redéfinir et non dupliquer : `site.css` reste chargée — la fiche,
+   le parcours, le panier sont les nôtres —, et c'est par ses tokens qu'elle
+   prend les polices et le fond du thème sans qu'une ligne y change. Le thème
+   `charte` revient en changeant la constante, et ce fichier n'est alors plus
+   servi : `assets/css/tokens.css` n'est jamais modifié par le thème.
+
+   Toute valeur littérale du thème vit ICI, avec son motif. Les feuilles du
+   thème n'en écrivent aucune (règle de CLAUDE.md, qui tient hors charte).
+
+   Les contrastes notés le sont sur le fond où la couleur est employée, pour
+   mémoire : la direction artistique du client emploie l'or en texte sur fond
+   clair (2,3:1 sur ivoire), en connaissance de cause (ANALYSE-FRONT-RENDER.md,
+   § 6.6). Ce fichier ne « corrige » pas ce choix. */
+
+:root {
+  /* --- Palette ajoutée par le thème ---------------------------------------
+     Le site Render écrit deux encres (#141414, l'onyx du projet, et #151717 sur
+     l'en-tête) : une seule est gardée, l'onyx. Les gris ci-dessous sont les
+     siens, nommés une fois. */
+  --d4r-gris-doux:#4A4A4A;     /* accroche du pied de page — 9,0:1 sur blanc */
+  --d4r-gris-moyen:#6E6E6E;    /* ligne de copyright — 5,2:1 sur blanc */
+  --d4r-gris-champ:#9A9A9A;    /* texte d'invite des champs — 2,8:1, décoratif */
+  --d4r-gris-filet:#E5E5E5;    /* bordure des champs et des puces */
+  --d4r-pied-filet:#EBE4D6;    /* filet du pied de page, entre sable et ivoire */
+  --d4r-blanc-12:rgba(255,255,255,.12);  /* survol d'une icône sur fond sombre */
+  --d4r-onyx-45:rgba(20,20,20,.45);       /* pastille de verre sur photo */
+  /* D2 (2026-10-17, décision du client) — L'OR DE TEXTE SUR FOND CLAIR. Render
+     écrit ses sur-titres, ses étapes, les titres du pied et les liens du menu
+     en or #C6A664 sur ivoire : 2,19:1, mesuré au lot R6 (PO-255). Ce ton le
+     remplace POUR LE TEXTE SEUL : 5,66:1 sur ivoire, 6,01 sur blanc — et 3,07
+     sur onyx, donc JAMAIS sur fond sombre, où l'or de la palette reste
+     (7,93). Boutons, filets, pictos, prix gardent `--d4r-or`. Couleur hors
+     palette, décidée par le client sur DECISIONS-THEME-D4R.md. */
+  --d4r-or-texte:#7A5F28;
+
+  /* --- Polices --------------------------------------------------------------
+     Manrope pour tout, titres compris. Render emploie Nohemi pour les titres :
+     c'est une police vendue par Pangram Pangram, gratuite pour un usage
+     personnel seulement — AUCUN DROIT pour un site marchand tant qu'une
+     licence n'est pas achetée (ANALYSE-FRONT-RENDER.md, § 2.2 ; SUIVI.md,
+     lot R0). Le jour où la licence existe : déposer le fichier dans
+     `assets/fonts/d4r/`, ajouter son `@font-face` dans `base.css`, et poser
+     « Nohemi » en tête de `--font-display`. Une seule ligne change. */
+  --font-display:"Manrope","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --font-sans:"Manrope","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --weight-light:300;
+  --weight-titre:600;          /* Render : 700 sur la fiche, 400 en Nohemi ailleurs ; 600 en Manrope tient les deux */
+  --weight-fort:700;
+  --tracking-display:-.02em;
+
+  /* --- Surfaces -------------------------------------------------------------
+     Render rend ses pages de liste et de fiche sur l'ivoire (#faf8f4), pied de
+     page et en-tête sur blanc. Le fond blanc du 2026-10-08 (charte) ne vaut
+     pas pour ce thème. */
+  --surface-page:var(--d4r-ivoire);
+  --surface-header:var(--d4r-blanc);
+
+  /* --- Rayons ---------------------------------------------------------------
+     Boutons en pilule (999 px), champs à 10 px, cartes et panneaux à 16 px.
+     `--radius-xs` sert aux champs ET aux boutons dans `site.css` : les boutons
+     prennent la pilule par `base.css`, les champs gardent 10 px. */
+  --radius-xs:10px;
+  --radius-card:16px;
+  --radius-champ:10px;
+  --radius-carte-liste:22px;   /* cartes des listes (lot R3) */
+  --radius-cadre:18px;         /* galerie, panneau de réservation (lot R4) */
+  /* Lot F3 : le survol des boutons. */
+  --btn-survol-lift:-1px;
+  --btn-survol-eclat:1.04;
+
+  /* --- Mouvement ------------------------------------------------------------
+     La courbe « sortie lente » du site Render, et ses durées. */
+  --ease-d4r:cubic-bezier(.16,1,.3,1);
+  --dur-entete:.3s;            /* fond et retrait de l'en-tête */
+  --dur-libelle:.9s;           /* glissement d'un libellé au survol */
+  --dur-menu:.45s;             /* rideau du menu du téléphone */
+  --dur-panneau:.28s;          /* arrivée d'un tiroir du menu */
+
+  /* --- En-tête --------------------------------------------------------------
+     L'échelle « rem locale » du gabarit FindRE : 10 px à 375, 12 px à 450 et
+     au-delà. L'en-tête mesure 8,4 de ces rem (84 à 101 px), 7,8 à partir de
+     768 px. `--nav-height` suit : c'est lui que `site.css` lit pour les
+     hauteurs sous l'en-tête (panneau du panier, galerie). */
+  --entete-rem:clamp(10px,2.6666667vw,12px);
+  --entete-h:calc(var(--entete-rem) * 8.4);
+  --entete-h-large:calc(var(--entete-rem) * 7.8);
+  --nav-height:var(--entete-h);
+  --entete-pad-x:clamp(1.25rem,4vw,4rem);
+  --entete-max:1920px;
+  --entete-logo-h:28px;
+  --entete-logo-h-large:40px;
+  --entete-nav-gap:clamp(.7rem,1.5vw,1.5rem);
+  --entete-nav-gap-large:clamp(1.25rem,1.8vw,2.1rem);
+  --entete-nav-size:calc(var(--entete-rem) * 1.85);
+  --entete-nav-size-large:calc(var(--entete-rem) * 2);
+  --entete-nav-size-moyen:clamp(.82rem,1.45vw,1.05rem);
+  --entete-icone:40px;
+  --entete-actions-gap:.65rem;
+  --entete-actions-gap-large:.85rem;
+  --entete-fin-gap:1rem;
+  --entete-fin-gap-large:1.15rem;
+  /* L'en-tête et le menu passent AU-DESSUS de l'encadré de rappel de la fiche
+     (`--z-rappel`, 60) et restent sous les modales (80) : vu au relevé du lot
+     R0, le menu ouvert laissait l'encadré « Réserver » par-dessus son bouton
+     WhatsApp. `tokens.css` donne 50 à `--z-entete` ; le thème le relève. */
+  --z-entete:70;
+  --entete-seuil-fond:40px;    /* défilement à partir duquel l'en-tête transparent devient blanc */
+  --entete-seuil-cache:80px;   /* défilement à partir duquel il peut se retirer */
+  --entete-fond:var(--d4r-blanc);
+  --entete-encre:var(--d4r-onyx);
+  --entete-encre-sur-image:var(--d4r-ivoire);
+  --entete-survol-icone:var(--d4r-onyx-06);
+  --entete-survol-icone-sur-image:var(--d4r-blanc-12);
+  --badge-fond:var(--d4r-or);
+  --badge-encre:var(--d4r-onyx);
+  --badge-taille:16px;
+  --badge-size:10px;
+  --cta-pad:.55rem 1.15rem;
+  --cta-size:14px;
+  --cta-tracking:.04em;
+  --cta-opacite:.9;
+  --burger-taille:2.75rem;
+  --burger-trait-w:1.15rem;
+  --burger-trait-h:1.5px;
+  --burger-trait-ecart:.28rem;
+  --burger-trait-croix:.32rem;
+
+  /* --- Menu du téléphone ----------------------------------------------------- */
+  --menu-fond:var(--d4r-blanc);
+  --menu-item-size:calc(var(--entete-rem) * 2.6);
+  --menu-item-gap:calc(var(--entete-rem) * 2.5);
+  --menu-pad-x:calc(var(--entete-rem) * 4);
+  --menu-pad-y:calc(var(--entete-rem) * 2);
+  --menu-titre-size:calc(var(--entete-rem) * 1.5);
+  --menu-titre-tracking:.08em;
+  --menu-retour-size:calc(var(--entete-rem) * 1.7);
+  --menu-encre:var(--d4r-or-texte);  /* les liens du menu : l'or de texte (D2) — 6,0:1 sur blanc ; l'or de la palette y faisait 2,3 */
+  --menu-encre-titre:var(--d4r-onyx-60);
+  --menu-chev:rgba(198,166,100,.85);
+  --menu-btn-pad:calc(var(--entete-rem) * 1.4) calc(var(--entete-rem) * 2.4);
+  --menu-btn-size:calc(var(--entete-rem) * 1.6);
+  --menu-decalage-entree:12px;
+
+  /* --- Pied de page ----------------------------------------------------------- */
+  --pied-fond:var(--d4r-blanc);
+  --pied-encre:var(--d4r-onyx);
+  --pied-max:1900px;
+  --pied-pad-y:3rem;
+  --pied-pad-x:clamp(1.25rem,4vw,5rem);
+  --pied-gap:2.5rem;
+  --pied-col-min:160px;
+  --pied-logo-h:40px;
+  --pied-accroche-max:22rem;
+  --pied-accroche-size:.875rem;
+  --pied-etiquette-size:.72rem;
+  --pied-etiquette-tracking:.12em;
+  --pied-liste-size:.875rem;
+  --pied-liste-gap:.5rem;
+  --pied-copie-size:.75rem;
+  --pied-copie-pad:1rem var(--pied-pad-x) 2rem;
+
+  /* --- Transitions de page ----------------------------------------------------- */
+  --page-trans-fond:var(--d4r-onyx);
+  --page-trans-duree:1.9s;
+  --page-trans-ease:cubic-bezier(.13,.92,.18,1);
+}
+
+/* --- L'accueil (lot R2, 2026-10-17) -------------------------------------------
+   Les mesures du site Render (ANALYSE-FRONT-RENDER.md, § 1.2 et § 2.3), nommées
+   une fois. Les dégradés sont des tokens aussi : `accueil.css` n'en écrit aucun. */
+:root {
+  --d4r-noir:#000000;            /* bandeau, « À propos », splash : le noir pur du site Render */
+  --d4r-gris-clair:#F4F4F4;      /* fond des carrousels */
+  --d4r-blanc-72:rgba(255,255,255,.72);
+  --d4r-blanc-85:rgba(255,255,255,.85);
+  --d4r-noir-28:rgba(0,0,0,.28);
+  --d4r-noir-35:rgba(20,20,20,.35);
+  --d4r-noir-55:rgba(0,0,0,.55);
+  --d4r-noir-65:rgba(0,0,0,.65);
+  --d4r-noir-72:rgba(20,20,20,.72);
+  --d4r-or-42:rgba(198,166,100,.42);
+  --d4r-or-14:rgba(198,166,100,.14);
+  --d4r-or-09:rgba(198,166,100,.09);
+  --d4r-or-20:rgba(198,166,100,.2);
+  --d4r-or-35:rgba(198,166,100,.35);
+  --d4r-or-75:rgba(198,166,100,.75);
+
+  --accueil-pad-x:clamp(1.25rem,4vw,5rem);
+  --accueil-max:1900px;
+  --accueil-section-pad:clamp(3rem,7vw,5.5rem);
+  --z-splash:1000;
+
+  /* Le bandeau : une hauteur et demie de course, collant sur un écran, scellé
+     de noir en bas pour la couture avec « À propos ». */
+  --bandeau-course:160vh;
+  --bandeau-course-large:180vh;
+  --bandeau-chevauche:80px;
+  --bandeau-chevauche-large:96px;
+  --bandeau-sceau-h:18%;
+  --bandeau-sceau:linear-gradient(180deg,rgba(0,0,0,0) 0%,var(--d4r-noir-55) 45%,var(--d4r-noir) 100%);
+  --bandeau-voile:rgba(0,0,0,.34);
+  --bandeau-titre-size:clamp(2.4rem,7vw,4.75rem);
+  --bandeau-lead-size:clamp(1rem,2vw,1.2rem);
+  --bandeau-ombre-texte:0 2px 24px rgba(0,0,0,.55),0 0 2px rgba(0,0,0,.4);
+  --bandeau-lecture:44px;
+  --bandeau-lecture-fond:var(--d4r-noir-35);
+  --bandeau-ouverture-rayon:10px;
+  --bandeau-ouverture-inset:32%;
+  --bandeau-ouverture-echelle:.6;
+
+  /* Le splash : le cadre « Dubai Frame » et le logo, puis l'ouverture. */
+  --splash-fond:var(--d4r-noir);
+  --splash-scene-w:min(78vw,360px);
+  --splash-scene-w-large:min(42vw,420px);
+  --splash-logo-w:min(22vw,88px);
+  --splash-logo-w-large:min(12vw,110px);
+  --splash-echelle-fin:3.2;
+  --dur-splash:.28s;
+  --dur-ouverture:.75s;
+  --dur-ouverture-texte:.65s;
+  --ease-ouverture:cubic-bezier(.87,0,.13,1);
+  --splash-minimum:600ms;      /* lus par accueil.js : le temps minimal du splash, et l'attente de la vidéo */
+  --splash-attente-video:900ms;
+
+  /* « À propos » : une course de 2,4 écrans, le pin d'un écran, quatre cartes. */
+  --apropos-course:240vh;
+  --apropos-course-tel:280vh;
+  --apropos-couture-h:min(22vh,160px);
+  --apropos-max:1180px;
+  --apropos-centre-w:min(34rem,88%);
+  --apropos-centre-w-tel:min(20.5rem,86%);
+  --apropos-marque-w:min(58vmin,340px);
+  --apropos-marque-w-tel:min(62vmin,260px);
+  --apropos-marque-opacite:.55;
+  --apropos-orn:52px;
+  --apropos-orn-tel:32px;
+  --apropos-losange:8px;
+  --apropos-fond:radial-gradient(ellipse 70% 45% at 50% 42%,var(--d4r-or-14) 0%,transparent 58%),radial-gradient(ellipse 40% 30% at 12% 78%,var(--d4r-or-09) 0%,transparent 70%),radial-gradient(ellipse 36% 28% at 88% 18%,var(--d4r-or-09) 0%,transparent 70%),var(--d4r-noir);
+  --apropos-couture:linear-gradient(180deg,var(--d4r-noir) 0%,var(--d4r-noir-55) 50%,rgba(0,0,0,0) 100%);
+  --apropos-etiquette:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.8) 72%);
+  --apropos-carte-ombre:0 16px 40px var(--d4r-noir-65);
+  --apropos-carte-ombre-survol:0 20px 48px rgba(0,0,0,.72);
+  --apropos-coin:7px;
+  --apropos-titre-size:clamp(1.7rem,4.6vw,3.1rem);
+  --apropos-titre-size-tel:clamp(1.55rem,7.2vw,1.95rem);
+  --apropos-lead-size:clamp(.92rem,2.1vw,1.05rem);
+  --apropos-badge-size:.65rem;
+  --apropos-kicker-size:clamp(.85rem,2vw,1.2rem);
+  --apropos-nom-size:clamp(.65rem,1.4vw,.88rem);
+  --apropos-cta-size:.78rem;
+
+  /* Les carrousels « Framer » : une carte au centre, ses voisines réduites. */
+  --carrou-fond:var(--d4r-gris-clair);
+  --carrou-carte-w:280px;
+  --carrou-carte-h:380px;
+  --carrou-decalage:238px;
+  --carrou-carte-w-large:380px;
+  --carrou-carte-h-large:520px;
+  --carrou-decalage-large:323px;
+  --carrou-rayon:6px;
+  --carrou-echelle-voisine:.6375;
+  --carrou-echelle-loin:.525;
+  --carrou-flou:2px;
+  --carrou-fenetre-h:min(78vh,640px);
+  --carrou-fenetre-min:480px;
+  --carrou-fenetre-h-large:min(86vh,760px);
+  --carrou-fenetre-min-large:620px;
+  --carrou-ombre:rgba(0,0,0,.15) 0 10px 30px -10px;
+  --carrou-ombre-centre:rgba(0,0,0,.25) 0 25px 50px -12px;
+  --carrou-ombre-nav:0 4px 12px rgba(0,0,0,.1);
+  --carrou-ombre-nav-survol:0 6px 16px rgba(0,0,0,.14);
+  --carrou-sombre:linear-gradient(to top,var(--d4r-noir-65),transparent);
+  --carrou-nav:48px;
+  --carrou-nav-bord:16px;
+  --carrou-nav-bord-large:24px;
+  --carrou-pad:22px;
+  --carrou-pad-large:28px;
+  --carrou-eyebrow-size:11px;
+  --carrou-eyebrow-size-large:12px;
+  --carrou-nom-size:20px;
+  --carrou-nom-size-large:24px;
+  --carrou-cta-pad:14px 24px;
+  --carrou-cta-size:14px;
+  --carrou-ease:cubic-bezier(.22,1,.36,1);
+  --dur-carrou:.55s;
+  --carrou-seuil-glisser:60px;  /* lu par accueil.js : la course du doigt qui change de carte */
+
+  /* Les vidéos intercalaires et les cartes « Nos services ». */
+  --intercalaire-h:min(58vh,580px);
+  --services-h:150px;
+  --services-h-moyen:200px;
+  --services-h-large:clamp(320px,30vw,440px);
+  --services-rayon:10px;
+  --services-voile:linear-gradient(180deg,rgba(31,31,31,0) 50%,rgba(31,31,31,.85) 100%);
+  --services-nom-size:clamp(1.35rem,1.9vw,1.75rem);
+  --services-nom-size-tel:.875rem;
+  --services-fleche:34px;
+  --services-fleche-fond:var(--d4r-noir-35);
+  --services-gap:1rem;
+  --services-gap-large:1.25rem;
+
+  /* Les tokens des captures d'avis (--avis-*, --dur-avis-*) sont partis avec la section, lot F1. */
+
+  /* La bande « Événements ». */
+  --evenements-h:100svh;
+  --evenements-h-large:min(78vh,720px);
+  --evenements-voile:var(--d4r-noir-28);
+  --evenements-titre-size:clamp(2.4rem,8vw,4.5rem);
+  --evenements-titre-size-large:clamp(2.4rem,4.5vw,3.6rem);
+  --evenements-cta-size:.9rem;
+  --evenements-cta-pad:.7rem 1.6rem;
+
+  /* « Comment ça marche ». */
+  --etapes-max:1100px;
+  --etapes-piste-max:720px;
+  --etapes-piste-min-h:720px;
+  --etapes-piste-pad:4rem 0 3rem;
+  --etapes-gap:clamp(5.5rem,18vh,9rem);
+  /* Lot F2 : la pointe de la ligne, l'onde du picto courant, l'attente des étapes à venir. */
+  --etapes-pointe:12px;
+  --etapes-pointe-halo:0 0 0 8px var(--d4r-or-20), 0 0 24px var(--d4r-or-42);
+  --etapes-echelle-attente:.82;
+  --etapes-attente-opacite:.38;
+  --etapes-attente-filtre:invert(1); /* les pictos sont blancs : en creux sur ivoire, ils passent en onyx */
+  --etapes-copie-decale:12px;
+  --etapes-onde-opacite:.9;
+  --etapes-onde-echelle:1.9;
+  --dur-onde:.9s;
+  --etapes-ligne:var(--d4r-onyx-12);
+  --etapes-ligne-pleine:linear-gradient(180deg,var(--d4r-or-20),var(--d4r-or) 70%,var(--d4r-or));
+  --etapes-ligne-halo:0 0 8px var(--d4r-or-35);
+  --etapes-picto:48px;
+  --etapes-titre-size:clamp(1.85rem,6.5vw,3.5rem);
+  --etapes-eyebrow-size:.8rem;
+  --etapes-eyebrow-tracking:.18em;
+  --etapes-num-size:.8rem;
+  --etapes-label-size:clamp(1.15rem,2.6vw,1.6rem);
+  --etapes-cta-pad:.85rem 1.5rem;
+
+  /* « Questions fréquentes ». */
+  --faq-max:936px;
+  --faq-inner-max:1120px;
+  --faq-filet:#E5DFD2;
+  --faq-icone-fond:#F3EEE4;
+  --faq-icone:40px;
+  --faq-icone-rayon:10px;
+  --faq-titre-size:clamp(2rem,4vw,3.25rem);
+  --faq-q-size:clamp(1.125rem,2vw,1.5rem);
+  --faq-r-size:1.05rem;
+  --faq-pad-y:1.35rem;
+
+  /* Les apparitions au défilement. */
+  --reveal-decale:28px;
+  --reveal-decale-petit:22px;
+  --dur-reveal:.9s;
+  --dur-reveal-court:.75s;
+  --reveal-pas:.07s;
+}
+
+/* --- Les pages de liste (lot R3, 2026-10-17) ----------------------------------
+   Les mesures de `flotte-assloc.css` et des cartes d'univers du site Render. */
+:root {
+  --liste-max:1440px;
+  /* Lot F3 : la carte d'univers sans photo. */
+  --univers-sans-photo-fond:radial-gradient(120% 90% at 50% 100%, var(--d4r-onyx-60) 0%, var(--d4r-noir) 70%);
+  --univers-filigrane-taille:46%;
+  --univers-filigrane-opacite:.1;
+  --univers-filigrane-survol:1.06;
+  --liste-pad-x:clamp(14px,2.5vw,32px);
+  --liste-bandeau-max-h:min(72vh,720px);
+  --liste-bandeau-min-h:220px;
+  --liste-bandeau-voile:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.55) 100%);
+  --liste-bandeau-pad:clamp(.75rem,4vw,2rem);
+  --liste-bandeau-bas:clamp(1.25rem,4vw,2.75rem);
+  --liste-bandeau-titre-max:900px;
+  --liste-bandeau-titre-size:clamp(1.45rem,5.2vw,2.75rem);
+  --liste-pilule-h:32px;
+  --liste-pilule-pad:1rem;
+  --liste-pilule-gap:.65rem;
+  --liste-pilule-size:.75rem;
+  --liste-pilule-active:linear-gradient(135deg,var(--d4r-onyx) 0%,var(--d4r-fumee) 100%);
+  --liste-grille-pad:clamp(1rem,2.5vw,1.75rem);
+  --liste-carte-gap:clamp(12px,1.6vw,20px);
+  --liste-carte-pad:clamp(14px,2.2vw,22px);
+  --liste-carte-coin:clamp(12px,2vw,18px);
+  --liste-carte-h:clamp(340px,52vw,520px);
+  --liste-carte-h-activite:clamp(340px,52vw,520px);
+  --liste-carte-h-pack:clamp(360px,54vw,540px);
+  --liste-carte-echelle-survol:.985;
+  --liste-carte-voile:linear-gradient(180deg,rgba(0,0,0,.22) 0%,transparent 30%),linear-gradient(0deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.35) 48%,transparent 72%);
+  --liste-carte-texte-max:min(88%,34rem);
+  --liste-prix-fond:var(--d4r-noir-35);
+  --liste-prix-flou:5px;
+  --liste-prix-size:clamp(.78rem,1.35vw,.95rem);
+  --liste-etiquette-size:.7rem;
+  --liste-eyebrow-size:.75rem;
+  --liste-nom-size:clamp(1.35rem,2.8vw,2rem);
+  --liste-nom-size-voiture:clamp(1.15rem,2.4vw,1.65rem);
+  --liste-desc-size:clamp(.82rem,1.35vw,.98rem);
+  --liste-fleche:32px;
+  --liste-fleche-chevron:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M9 6l6 6-6 6'/></svg>");
+  --univers-carte-h:500px;
+  --univers-carte-h-tel:min(72vw,420px);
+  --univers-voile:rgba(5,6,11,.5);
+  --univers-titre-size:clamp(1.45rem,4.5vw,1.875rem);
+}
+
+/* --- La fiche et le parcours (lot R4, 2026-10-17) ----------------------------
+   Les mesures de `fiche-d4r.css` du site Render. */
+:root {
+  --d4r-sable-clair:#F3EFE6;    /* fond de « Vous aimerez aussi » */
+  --fiche-max:1200px;
+  --fiche-pad-x:clamp(14px,2.5vw,32px);
+  --fiche-pad-y:clamp(1.25rem,3vw,2rem);
+  --fiche-titre-size:clamp(1.75rem,4vw,2.75rem);
+  --fiche-lead-size:clamp(1.05rem,2.2vw,1.25rem);
+  --fiche-texte-size:1.02rem;
+  --fiche-texte-max:40rem;
+  --fiche-galerie-h:min(62vw,480px);
+  --fiche-galerie-h-large:520px;
+  --fiche-fleche-fond:rgba(20,20,20,.78);
+  --fiche-specs-rayon:14px;
+  --fiche-specs-fond:rgba(255,255,255,.65);
+  --fiche-aussi-pad:clamp(2rem,5vw,3.5rem);
+  --fiche-aussi-titre-size:clamp(1.35rem,3vw,1.85rem);
+  --fiche-aussi-carte-min-h:220px;
+  --fiche-aussi-voile:linear-gradient(0deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.25) 55%,transparent 80%);
+  --fiche-aussi-nom-size:1.05rem;
+  --fiche-aussi-nom-bas:2.35rem;
+  --fiche-aussi-prix-size:.9rem;
+  --fiche-modale-titre-size:clamp(1.15rem,4.5vw,1.4rem);
+  --fiche-carte-ombre:0 6px 22px rgba(20,20,20,.06);
+  --fiche-vignette-rayon:12px;
+  --fiche-extra-nom-size:1.05rem;
+  --fiche-extra-vignette-min-h:140px;
+  --fiche-extra-basis-tel:86%;
+  --fiche-extra-voisine-echelle:.94;
+  --fiche-extra-voisine-opacite:.55;
+}
+
+/* --- Les pages de service (lot R5, 2026-10-17) --------------------------------
+   Les mesures de `contact.css`, `legal.css` et du style en ligne du panier
+   du site Render. */
+:root {
+  --d4r-onyx-10:rgba(20,20,20,.10);  /* filets des rangées de coordonnées et du panier */
+  --d4r-onyx-78:rgba(20,20,20,.78);  /* valeurs, texte des volets — 7,0:1 sur ivoire */
+  --d4r-onyx-82:rgba(20,20,20,.82);  /* texte de l'encadré d'avertissement */
+  --d4r-or-12:rgba(198,166,100,.12); /* fond de l'encadré d'avertissement */
+  --d4r-or-45:rgba(198,166,100,.45); /* bord d'un volet ouvert */
+  --serv-max:760px;                  /* contact, mentions, conditions, introuvable */
+  --serv-max-large:880px;            /* panier, favoris, recherche, blog, article */
+  --serv-pad-x:clamp(1.25rem,4vw,2rem);
+  --serv-hero-pad-haut:clamp(2.5rem,6vw,4.5rem);
+  --serv-hero-pad-bas:clamp(1.25rem,3vw,2rem);
+  --serv-pad-bas:clamp(3rem,7vw,5rem);
+  --serv-titre-size:clamp(2rem,5vw,3rem);
+  --serv-titre-bas:.85rem;
+  --serv-lead-size:clamp(1rem,2vw,1.125rem);
+  --serv-eyebrow-size:.75rem;
+  --serv-eyebrow-tracking:.14em;
+  --serv-eyebrow-bas:.65rem;
+  --serv-bloc-gap:clamp(1.75rem,3.5vw,2.5rem);
+  --serv-label-size:.95rem;
+  --serv-valeur-size:.98rem;
+  --serv-note-rayon:14px;
+  --serv-note-pad-x:1.15rem;
+  --serv-volet-gap:.65rem;
+  --serv-volet-pad-y:1.05rem;
+  --serv-volet-pad-x:1.15rem;
+  --serv-volet-titre-size:1.05rem;
+  --serv-chevron:.55rem;
+  --serv-chevron-trait:2px;
+  --serv-corps-min-h:12rem;
+  --serv-ligne-gap:1.1rem;
+  --serv-ligne-vignette:168px;
+  --serv-ligne-vignette-tel:120px;
+  --serv-vignette-rayon:14px;
+  --serv-vignette-rayon-tel:12px;
+  --serv-vignette-ombre:0 8px 22px rgba(20,20,20,.08);
+  --serv-glyphe:40px;
+  --serv-nom-size:clamp(1.2rem,2.4vw,1.45rem);
+  --serv-prix-size:1.05rem;
+  --serv-perimee-opacite:.72;
+  --serv-pied-pad-y:1.35rem;
+  --serv-pied-pad-x:1.4rem;
+  --serv-pied-ombre:0 10px 28px rgba(20,20,20,.04);
+  --serv-total-size:1.4rem;
+  --serv-vide-pad-y:2.75rem;
+  --serv-vide-pad-x:1.5rem;
+  --serv-champ-h:3rem;
+  --serv-champ-pad-x:1.25rem;
+  --serv-404-pad-haut:clamp(4rem,10vw,7rem);
+  --serv-404-size:clamp(2.4rem,8vw,3.75rem);
+}
+
+/* Sous « Réduire les animations », les durées propres au thème tombent à
+   zéro, comme celles de `tokens.css`. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-entete:0s;
+    --dur-libelle:0s;
+    --dur-menu:0s;
+    --dur-panneau:0s;
+    --page-trans-duree:.01ms;
+    --dur-splash:0s;
+    --dur-ouverture:0s;
+    --dur-ouverture-texte:0s;
+    --dur-carrou:0s;
+    --dur-reveal:0s;
+    --dur-reveal-court:0s;
+    --reveal-pas:0s;
+  }
+}

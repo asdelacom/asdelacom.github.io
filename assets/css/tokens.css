@@ -1,0 +1,1631 @@
+/* Dubaï For Real — fichier unique de variables.
+   Fusion des sept fichiers de design-system/tokens/. Toute couleur, police,
+   espacement et rayon du site passe par une variable déclarée ici ; aucune
+   valeur littérale ailleurs. Chargé avant tout autre style. */
+
+/* --- design-system/tokens/fonts.css ---------------------------------------
+   Titres : DM Serif Display Regular. Sous-titres : Figtree Medium. Texte
+   courant : Figtree Regular. La charte du graphiste prévoit ITC Avant Garde
+   Gothic Pro Book pour le LOGOTYPE seul — déjà vectorisé dans les SVG livrés,
+   aucune police nécessaire — et Avenir LT Pro 55/65 pour l'interface ; le brief
+   client lui substitue Figtree, confirmée le 2026-08-03 (SUIVI.md, PO-18).
+
+   **Servies par ce site depuis le 2026-08-03, plus par Google (PO-18).** Chaque
+   visite transmettait auparavant l'adresse IP du visiteur à `fonts.googleapis.com`
+   et `fonts.gstatic.com`, sans consentement, et c'était la dernière dépendance
+   externe du projet.
+
+   Les six fichiers de `assets/fonts/` sont **exactement ceux que Google servait**,
+   récupérés depuis `fonts.gstatic.com` : mêmes sous-ensembles, mêmes versions
+   (DM Serif Display v17, Figtree v9), et pour Figtree la même police variable
+   300–900. Ne pas les régénérer depuis les sources TTF : le rendu changerait, et
+   il faudrait un outil de conversion, interdit par SPEC.md §2.2.
+
+   Licence SIL Open Font 1.1 pour les deux familles. Sa condition 2 impose que
+   chaque copie redistribuée porte le copyright et la licence : c'est le rôle de
+   `assets/fonts/OFL-DM-Serif-Display.txt` et `assets/fonts/OFL-Figtree.txt`, à
+   déployer avec les polices. Les supprimer met le site en infraction.
+
+   Les italiques de DM Serif Display ne sont pas embarquées : le site n'a qu'une
+   déclaration `font-style: italic`, et elle porte sur du Figtree.
+
+   `unicode-range` n'est pas décoratif : le navigateur ne télécharge un fichier
+   que si un caractère de la page en a besoin. Le français tient entièrement dans
+   `latin` ; `latin-ext` ne pèse rien tant qu'aucun ā, ḥ, ș ou ʿ n'apparaît, et
+   sert le jour où le catalogue portera une translittération ou un nom d'Europe
+   de l'Est. `display: swap` reprend le comportement que Google appliquait déjà. */
+@font-face {
+  font-family: 'DM Serif Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/dm-serif-display-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'DM Serif Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/dm-serif-display-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('/assets/fonts/figtree-var-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('/assets/fonts/figtree-var-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('/assets/fonts/figtree-var-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('/assets/fonts/figtree-var-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* --- design-system/tokens/colors.css --- */
+:root{
+  /* --- Primaires (charte 03) --- */
+  --d4r-ivoire:#FAF8F4;      /* Blanc Ivoire  — RVB 250 248 244 */
+  --d4r-onyx:#141414;        /* Noir Onyx     — RVB 20 20 20 */
+  --d4r-or:#C6A664;          /* Or Champagne  — RVB 198 166 100 */
+
+  /* --- Secondaires --- */
+  --d4r-sable:#EDE6D6;       /* Sable         — RVB 237 230 214 */
+  --d4r-taupe:#8A7C5F;       /* Taupe doré    — RVB 138 124 95 */
+  --d4r-fumee:#2B2B2B;       /* Gris Fumée    — RVB 43 43 43 */
+  --d4r-rose:#E8B4B0;        /* Rosé (option) — RVB 232 180 176 */
+  /* LA HUITIÈME TEINTE, ET LA SEULE — ajoutée le 2026-08-29, PO-85.
+     ─────────────────────────────────────────────────────────────────────────
+     **Elle n'ouvre pas la palette, elle la prolonge** : c'est le Gris Fumée
+     mené à 65 % vers le Taupe doré, donc une teinte tirée de deux couleurs
+     déjà décidées par le graphiste, et non une couleur inventée.
+
+     **Pourquoi elle existe** : la palette n'avait aucun ton atténué mais
+     lisible. Sur ivoire, seuls l'onyx (17,37:1) et le gris fumée (13,35:1)
+     passaient 4,5:1 — tout ce qui devait être discret était donc aussi appuyé
+     que le texte courant, et il fallait inventer un signal de forme à chaque
+     fois (une italique, un filet). Cela a marché trois fois ; rien ne
+     garantissait une quatrième.
+
+     **SES DEUX LIMITES NE SE SÉPARENT PAS D'ELLE.**
+
+     - **Fonds clairs uniquement** : 5,86:1 sur ivoire, 5,00:1 sur sable, mais
+       **2,97:1 sur onyx**, sous le seuil de 3:1 des éléments d'interface. Sur
+       fond sombre le texte secondaire reste `--text-on-strong-muted`, l'ivoire.
+     - **Jamais sur le rosé** : 3,43:1, sous les 4,5 du texte courant.
+
+     Le sable est le fond contraignant, étant plus sombre que l'ivoire ; la
+     teinte y garde une demi-unité de marge au-dessus du seuil.
+
+     Un neutre de même luminance, #676767, a été calculé et écarté : 4,55:1 sur
+     sable — cinq centièmes de marge — et froid contre une palette chaude. */
+  --d4r-fumee-claire:#69604D; /* Gris Fumée clair — RVB 105 96 77 */
+  /* LE BLANC — LE FOND DE PAGE, DEPUIS LE 2026-10-08. Décision du client, sur
+     planches comparées (SUIVI.md, entrée du jour).
+     ─────────────────────────────────────────────────────────────────────────
+     **Il ne remplace pas l'ivoire, il le relaie sur un seul rôle.** L'ivoire
+     garde sa valeur et ses autres emplois — texte sur onyx, carte posée sur
+     sable, blocs de l'admin. Changer la valeur de `--d4r-ivoire` aurait passé
+     au blanc pur le texte clair sur onyx, l'admin entier, et fait mentir le
+     nom : écarté au chiffrage du 2026-10-07.
+
+     **Ratios sur blanc, calculés (WCAG) — l'outil éprouvé d'abord : il rend sur
+     ivoire les chiffres de la charte** :
+       onyx 18,42 (17,37 sur ivoire) · gris fumée 14,16 (13,35) ·
+       gris fumée clair 6,21 (5,86) · taupe 4,09 (3,86) · or 2,32 (2,19) ·
+       sable 1,24 (1,17) · filet onyx 12 % 1,28 (1,28).
+     **Aucun couple ne franchit un seuil** : le taupe reste sous 4,5 (texte de
+     24 px et plus seulement), l'or reste interdit en texte sur fond clair. */
+  --d4r-blanc:#FFFFFF;        /* Blanc         — RVB 255 255 255 */
+
+  /* --- Dérivés (transparences uniquement, aucune teinte inventée) --- */
+  --d4r-or-08:rgba(198,166,100,.08);
+  --d4r-or-16:rgba(198,166,100,.16);
+  --d4r-or-32:rgba(198,166,100,.32);
+  --d4r-or-press:#B08F4E;    /* Or assombri 8% — état pressé uniquement */
+  --d4r-onyx-06:rgba(20,20,20,.06);
+  --d4r-onyx-12:rgba(20,20,20,.12);
+  --d4r-onyx-60:rgba(20,20,20,.60);
+  /* Voile posé sur une photo pour y écrire « Voir les 8 photos ». Aplat plat,
+     jamais un dégradé (charte). 0,72 et non 0,60 : la photo est inconnue, donc
+     le calcul se fait sur le pire cas, une photo blanche. L'ivoire y donne
+     4,54:1 sous un voile à 0,60 — au-dessus du seuil de 4,5 mais sans aucune
+     marge — et 6,94:1 à 0,72. */
+  --scrim-photo:rgba(20,20,20,.72);
+  --d4r-ivoire-70:rgba(250,248,244,.70);
+
+  /* --- Surfaces --- */
+  /* Fond dominant, ~70 % de l'écran. **Blanc depuis le 2026-10-08** (ivoire
+     jusque-là) : voir `--d4r-blanc`. Le lisent aussi les fenêtres du parcours
+     de réservation, le menu déplié au téléphone et le champ de recherche. */
+  --surface-page:var(--d4r-blanc);
+  --surface-alt:var(--d4r-sable);        /* alternance de section */
+  --surface-card:var(--d4r-sable);       /* cartes, tarifs, témoignages */
+  --surface-card-quiet:var(--d4r-ivoire);/* carte posée sur fond sable */
+  --surface-strong:var(--d4r-onyx);      /* sections fortes, footer, menu */
+  /* Bande d'en-tête, sable depuis le 2026-08-19. Elle était en ivoire, donc du
+     même ton que les pages de section : rien ne la détachait, et le filet seul
+     n'y suffisait pas — mesuré à **1,281:1** sur son propre fond, c'est-à-dire
+     à la limite du perceptible.
+
+     Le sable est déjà le fond des cartes, il n'introduit aucune couleur. Ce que
+     le changement rapporte : le bord sable/ivoire porte **1,172:1** à lui seul,
+     et surtout le filet, qui donnait 1,281 sur ivoire, passe à **1,494** contre
+     la page ivoire qui le suit. La séparation est donc portée par deux signaux
+     au lieu d'un, ce qui est exactement la demande.
+
+     Tout le texte de l'en-tête reste très au-dessus du seuil : onyx 14 px sur
+     sable = **14,82:1** (17,37 sur ivoire). Aucun texte n'y descend sous 4,5. */
+  --surface-header:var(--d4r-sable);
+  /* Champs de formulaire. **Blancs depuis le 2026-10-08**, avec la page :
+     restés ivoire sur un panneau devenu blanc, ils auraient été plus sombres
+     que leur fond (1,06:1), bordés d'un filet à 1,28 — une forme qu'on
+     devine. Décision du client : champ blanc, contour `--border-field`.
+     L'admin les lit aussi (`--admin-champ-fond`) : ses champs, déjà bordés
+     de taupe, passent de l'ivoire au blanc sur leurs panneaux sable (1,24). */
+  --surface-field:var(--d4r-blanc);
+  /* Aplat rosé — étiquettes de carte et, plus tard, mentions d'offre.
+     ─────────────────────────────────────────────────────────────────────────
+     ARBITRAGE DE CHARTE, PRIS LE 2026-08-15 ET À NE PAS DÉFAIRE SANS LE RELIRE.
+     La charte porte deux lignes qui se contredisent sur ce cas précis : le rosé
+     y est désigné comme « accent ponctuel, offres spéciales », et les interdits
+     y proscrivent « les badges colorés ». Tranché en faveur de la première : le
+     second vise les couleurs de comparaison discount — rouge, vert, orange —
+     qui sont hors palette, et non une teinte que la charte nomme elle-même.
+     Le motif complet est dans SUIVI.md, entrée « Lot 9-D ».
+     Gris fumée dessus : 7,81:1, au-dessus du seuil de 4,5:1. Ivoire dessus ne
+     donnerait que 1,47:1 — ce fond ne prend jamais de texte clair. */
+  --surface-special:var(--d4r-rose);
+
+  /* --- Texte --- */
+  --text-title:var(--d4r-onyx);
+  --text-body:var(--d4r-fumee);
+  /* Audit de contraste : le taupe donne 3,86:1 sur ivoire et 3,29:1 sur sable —
+     sous le minimum de 4,5:1. Le texte secondaire passe donc en Gris Fumée (13,35:1).
+     Le taupe reste réservé aux filets, aux bordures et au texte de 24 px et plus.
+     *Page blanche depuis le 2026-10-08* : taupe 4,09:1, toujours sous 4,5 — la
+     règle ne bouge pas ; gris fumée 14,16:1. */
+  --text-muted:var(--d4r-fumee);
+  --text-muted-large:var(--d4r-taupe);   /* ≥ 24 px uniquement */
+  /* LE TEXTE VRAIMENT SECONDAIRE — PO-85, le 2026-08-29.
+     ─────────────────────────────────────────────────────────────────────────
+     **Ne pas confondre avec `--text-muted`, qui vaut le gris fumée**,
+     c'est-à-dire l'encre du texte courant : le token porte le nom « atténué »
+     et ne l'est pas. Il le reste, et ce n'est pas un oubli — il sert **21 fois**
+     (16 dans `site.css`, 5 dans `admin.css`), et le repeindre déplacerait vingt
+     et un textes d'un coup, dont beaucoup n'ont rien de secondaire.
+     **On ajoute un token, on ne repeint pas l'ancien** : même règle qu'à
+     `--border-hairline`, on change l'usage, jamais la valeur.
+
+     **Fonds clairs uniquement, jamais sur onyx ni sur rosé** — le motif chiffré
+     est sur `--d4r-fumee-claire`, plus haut. Sur fond sombre, prendre
+     `--text-on-strong-muted`. Sur la page blanche (2026-10-08) : 6,21:1. */
+  --text-secondary:var(--d4r-fumee-claire);
+  --text-on-strong:var(--d4r-ivoire);
+  /* Le taupe sur onyx mesure 4,4995:1 — juste sous 4,5:1. Le texte secondaire sur
+     fond sombre passe donc en ivoire (17,37:1) ; le taupe reste aux filets. */
+  --text-on-strong-muted:var(--d4r-ivoire);
+  --text-on-strong-quiet:var(--d4r-taupe);  /* filets et bordures uniquement */
+  /* L'or ne descend jamais en texte sur fond clair (2,19:1). Sur Onyx il donne 7,93:1. */
+  --text-accent:var(--d4r-or);           /* sur fond sombre uniquement */
+  --text-accent-on-light:var(--d4r-onyx);/* repli sur fond clair */
+
+  /* --- Accent / signature --- */
+  --accent:var(--d4r-or);
+  --accent-press:var(--d4r-or-press);
+  --accent-wash:var(--d4r-or-08);
+  --accent-special:var(--d4r-rose);      /* offres spéciales uniquement */
+
+  /* --- Traits --- */
+  --border-hairline:var(--d4r-onyx-12);
+  /* **Le filet sous la bande d'en-tête, et rien d'autre.**
+     ─────────────────────────────────────────────────────────────────────────
+     À lire avant de le « corriger » : le filet de l'en-tête n'a **jamais été
+     du taupe**. Il portait `--border-hairline`, c'est-à-dire de l'onyx à 12 %,
+     qui se compose en un gris neutre (222,221,217) sur ivoire — proche du
+     taupe à l'œil, mais sans rapport avec lui (138,124,95).
+
+     Il devient réellement taupe le 2026-08-19, sur demande du client, et le
+     taupe est autorisé en filet par la charte. Ce que cela change, mesuré :
+     **1,274 → 3,293:1** contre le sable de la bande, et **1,494 → 3,860:1**
+     contre la page ivoire qui la suit. C'est ce qui fait la différence entre
+     un bord deviné et un bord vu — et c'était la demande, « un filet seul ne
+     suffit pas ».
+     *Page blanche depuis le 2026-10-08* : le filet donne **4,09:1** contre elle.
+
+     Token séparé, et c'est le point : `--border-hairline` sert **21 fois**
+     ailleurs dans le site. Repeindre celui-là aurait marqué d'un trait taupe
+     tous les filets du projet. Revenir en arrière ne coûte qu'une ligne ici. */
+  --border-header:var(--d4r-taupe);
+  --border-gold:var(--d4r-or-32);
+  --border-on-strong:rgba(138,124,95,.45);
+  /* **Le filet des cartes de grille au repos, et rien d'autre.** Ce token existe
+     pour qu'une seule ligne suffise si le taupe est jugé trop marqué : le
+     changer ne touche que le contour des cartes. Écrire `--d4r-taupe` dans
+     `.card` aurait rendu ce réglage impossible — la teinte de palette sert aussi
+     le filet sous les titres de page, le bord des encadrés légaux, les cadres de
+     galerie vides et le trait des icônes, qui n'ont aucune raison de changer
+     avec les cartes. Le filet du survol, lui, reste sur `--accent`.
+     Contraste mesuré du taupe sur ivoire : 3,86:1, au-dessus du seuil de 3:1
+     des éléments d'interface ; 4,09:1 sur la page blanche (2026-10-08). Un remplaçant plus discret ne devrait pas passer
+     sous ce seuil, sans quoi le bord cesse d'être perceptible. */
+  --border-card:var(--d4r-taupe);
+  /* LE CONTOUR D'UN CHAMP DE SAISIE — 2026-10-08, avec le fond blanc.
+     Un champ blanc sur une page blanche n'a plus que son contour pour exister,
+     et le filet qu'il portait (`--border-hairline`, onyx à 12 %) donne 1,28:1 —
+     sous le seuil de 3:1 que WCAG exige du contour d'un élément d'interface.
+     Le taupe, remède déjà appliqué aux champs de l'admin : **4,09:1 sur
+     blanc**, 3,29 sur le sable du panneau de réservation, 4,50 sur l'onyx du
+     bandeau d'accueil — au-dessus de 3 partout où un champ est posé.
+     Token séparé de `--border-card` pour qu'un contour de champ puisse changer
+     sans toucher aux cartes, et inversement. */
+  --border-field:var(--d4r-taupe);
+  --rule-gold:var(--d4r-or);
+
+  /* --- Interactif --- */
+  --btn-primary-bg:var(--d4r-or);
+  --btn-primary-fg:var(--d4r-onyx);
+  --btn-secondary-fg:var(--d4r-onyx);
+  /* L'anneau de focus est un DOUBLE TRAIT depuis PO-113 : l'or seul donnait
+     2,19:1 sur ivoire et 1,87:1 sur sable, contre 3:1 exigés en non-texte —
+     c'est-à-dire un site inutilisable au clavier sur presque toutes ses pages.
+     `--focus-ring` reste l'anneau doré, posé en `outline` à 3 px de l'élément ;
+     `--focus-ring-2` est un filet posé CONTRE l'élément, dans l'écart.
+     Sur fond clair c'est l'onyx qui porte le contraste (17,37 sur ivoire,
+     18,42 sur la page blanche depuis le 2026-10-08, 14,82 sur sable) ; sur fond onyx c'est l'or (7,93). Le pire cas des deux
+     est donc 7,93, et les deux tons contrastent aussi entre eux : l'anneau se
+     lit comme un double filet, pas comme une bavure. */
+  --focus-ring:var(--d4r-or);
+  --focus-ring-2:var(--d4r-onyx);
+
+  /* --- Espace d'administration (SPEC.md §6, volet « Apparence ») ------------
+     ─────────────────────────────────────────────────────────────────────────
+     POURQUOI CES TOKENS EXISTENT, ET POURQUOI ILS SONT ICI.
+
+     `admin/admin.css` portait jusqu'au 2026-08-16 sa **propre palette de douze
+     couleurs écrites en dur**, sans rapport avec la charte : un or différent,
+     un vert de succès, un rouge d'erreur, un blanc pur. Elle datait d'avant la
+     charte et n'avait jamais été reprise. Ces tokens la remplacent.
+
+     Ils sont déclarés **ici et non dans `admin.css`**, parce que CLAUDE.md ne
+     souffre pas d'exception sur ce point : « toute couleur, police, espacement
+     et rayon passe par une variable CSS déclarée dans `assets/css/tokens.css`,
+     fichier unique ». Un second fichier de variables, fût-il réservé à l'admin,
+     serait exactement la dérive que cette règle empêche.
+
+     L'ADMIN A TROIS ÉTATS QUE LE SITE PUBLIC N'A JAMAIS EUS — succès, refus,
+     avertissement — parce qu'il est le seul à porter des formulaires. La charte
+     interdit le vert et le rouge sans réserve, y compris pour ces cas-là. Les
+     trois se composent donc dans la palette, et **deux d'entre eux se
+     distinguent par la forme plutôt que par la teinte** : un filet latéral de
+     2 px, or pour le succès, taupe pour l'avertissement, sur un bloc ivoire.
+
+     Le refus, lui, prend le rosé. **C'est une réaffectation de `--d4r-rose`, et
+     elle rouvre l'arbitrage du lot 9-D** qui le réservait aux offres spéciales.
+     Décision du 2026-08-16, motif : un refus d'enregistrement doit se lire en
+     un coup d'œil, et trois blocs gris qui ne diffèrent que par un filet ne le
+     permettent pas. Les deux usages ne se croisent nulle part — l'un vit dans
+     l'admin, l'autre sur les cartes du site public — mais la teinte porte
+     désormais deux sens, ce qui est inscrit en point ouvert.
+
+     Contrastes mesurés, tous au-dessus de 4,5:1 : gris fumée sur rosé 7,81 ·
+     onyx sur rosé 10,16 · gris fumée sur ivoire 13,35 · onyx sur sable 14,82 ·
+     ivoire sur onyx 17,37 · onyx sur or 7,93. */
+  --admin-page:var(--d4r-sable);         /* fond de page — les blocs s'y détachent */
+  --admin-bloc:var(--d4r-ivoire);        /* cartes, formulaire, table, encadrés */
+  /* Le refus, et lui seul : message d'erreur, page de refus anti-CSRF, bouton
+     de suppression. Gris fumée dessus en texte courant, onyx sur un libellé de
+     bouton — jamais d'ivoire, qui ne donnerait que 1,47:1. */
+  --admin-refus-bg:var(--d4r-rose);
+  --admin-refus-fg:var(--d4r-fumee);     /* 7,81:1 */
+  --admin-refus-fg-fort:var(--d4r-onyx); /* 10,16:1 — libellé de bouton */
+  /* Succès et avertissement : même fond que les autres blocs, un filet latéral
+     pour toute différence. L'or du succès compte dans les cinq touches. */
+  --admin-succes-filet:var(--d4r-or);
+  --admin-avertir-filet:var(--d4r-taupe);
+
+  /* Côté d'une case à cocher (volet C). **24 px est le minimum de cible de
+     WCAG 2.5.8**, pas une valeur de goût : les cases de l'admin en faisaient 13
+     — la taille par défaut du navigateur — et cinq d'entre elles suppriment une
+     formule ou un extra. La zone tapable, elle, est portée à `--touch-min` par
+     l'étiquette qui enveloppe la case ; la case n'a pas besoin d'être énorme
+     dès lors que le texte à côté d'elle est tapable aussi.
+     Ce n'est pas un pas d'espacement, d'où un token propre plutôt que
+     `--space-6` qui vaut la même chose pour une tout autre raison. */
+  --admin-case:24px;
+
+  /* --- Mesures de l'admin qui ne sont pas des pas d'espacement -------------
+     Volet géométrie. Ces onze valeurs vivaient en pixels dans `admin.css`, et
+     **aucune ne pouvait rejoindre l'échelle `--space-N`** : ce ne sont pas des
+     respirations mais des dimensions — trois largeurs de conteneur, cinq
+     largeurs de champ, un cadre de vignette, une hauteur minimale de zone de
+     texte. Les arrondir au pas voisin n'aurait eu aucun sens : une carte de
+     connexion ne fait pas 360 px parce que 360 est un multiple de quelque
+     chose.
+
+     **Elles sont reprises à leur valeur exacte**, sans un pixel de
+     déplacement : ce volet leur donne un nom, pas une nouvelle dimension. */
+  --admin-page-w:1080px;        /* largeur max de la colonne d'admin */
+  --admin-form-w:760px;         /* largeur max du formulaire */
+  --admin-carte-w:360px;        /* carte de connexion, d'installation et de refus */
+  /* Cadre de vignette de photo, en 3:2 — le rapport des photos préparées par
+     `outils/preparer-photos.php`, donc aucun recadrage supplémentaire. La
+     hauteur se déduit de la largeur pour que le rapport reste vrai si l'une
+     bouge un jour. Même valeur que `--galerie-vignette-w` par coïncidence, et
+     **volontairement pas le même token** : la bande de la visionneuse publique
+     et la rangée de photos de l'admin n'ont aucune raison de bouger ensemble. */
+  --admin-vue-w:84px;
+  --admin-vue-h:calc(var(--admin-vue-w) * 2 / 3);
+  /* Les champs courts du formulaire. Quatre largeurs, quatre rôles distincts —
+     à ne pas fusionner sans mesurer : chacune a été posée au lot 9-C contre un
+     débordement précis, et les motifs sont dans `admin.css`. */
+  --admin-champ-rang-w:82px;    /* position d'une formule ou d'un extra — sans emploi depuis PO-213 */
+  --admin-photo-rang-w:88px;    /* position d'une photo — sans emploi depuis PO-213 */
+  /* PO-213 (2026-10-04) — le message « Ordre enregistré » des ▲▼, posé au coin
+     de l'écran par-dessus la page : au-dessus de tout ce que l'admin empile,
+     comme une fenêtre. Le même rang que les modales du site, nommé pour son
+     rôle ici. */
+  --admin-statut-z:var(--z-modale);
+  /* Refonte de l'admin (2026-10-07) — la barre « Enregistrer » collée au bas de
+     l'écran du formulaire de fiche. Au-dessus des champs qui défilent dessous,
+     au-dessous du message « Ordre enregistré », qui doit pouvoir s'y poser.
+     `--admin-actions-reserve` est la hauteur que le navigateur garde libre au
+     bas de l'écran quand il amène un champ sous les yeux (`scroll-padding`) :
+     sans elle, un champ atteint au clavier se range SOUS la barre. Mesurée sur
+     la page rendue — la barre fait 74,8 px, à 375 comme à 1440 —, arrondie
+     au-dessus. */
+  --admin-actions-z:var(--z-entete);
+  --admin-actions-reserve:88px;
+  --admin-champ-court-w:132px;  /* prix, quantité, plancher */
+  --admin-champ-sous-w:140px;   /* plancher d'une étiquette de sous-ligne */
+  --admin-col3-w:150px;         /* troisième colonne de `.admin-row3` */
+  --admin-zone-h:70px;          /* hauteur minimale d'une zone de texte */
+  /* Fond d'un champ de saisie, posé en indirection et non en dur : la règle de
+     base d'`admin.css` nomme huit `:not()`, ce qui lui donne une spécificité
+     qu'aucune règle raisonnable ne dépasse. Un champ en lecture seule bascule
+     donc cette variable au lieu de redéclarer `background`, et il n'y a pas
+     deux énumérations de `:not()` à tenir en accord (PO-12). */
+  --admin-champ-fond:var(--surface-field);
+}
+
+/* --- design-system/tokens/typography.css --- */
+:root{
+  --font-display:"DM Serif Display",Georgia,"Times New Roman",serif;
+  --font-sans:"Figtree","Avenir Next","Segoe UI",system-ui,sans-serif;
+
+  --weight-regular:400;
+  --weight-medium:500;   /* sous-titres */
+  --weight-semibold:600; /* labels de bouton, sur-titres */
+
+  /* Échelle d'affichage — DM Serif Display, toujours en Regular.
+     Ces tailles viennent de l'export design-system, calibré sur un canevas de
+     1440 px : ce sont des valeurs fixes, pas des clamp(). --size-display-1 à
+     76px tient sur grand écran mais donne un titre de 237px de haut à 375px de
+     large, mesuré. D'où le palier ci-dessous, appelé sous 640px — un token,
+     pas une valeur écrite en dur dans site.css. */
+  /* 76px à l'origine (valeur de l'export). Ramené à 60 : combiné à la hauteur
+     du bandeau, le titre y prenait trop de place sur ordinateur. Seul
+     .hero__title appelle ce token, la réduction ne touche rien d'autre. */
+  --size-display-1:60px;  --lh-display-1:1.04;
+  --size-display-1-sm:40px;  /* = --size-display-3, la taille de h1 des autres pages */
+  --size-display-2:56px;  --lh-display-2:1.08;
+  --size-display-3:40px;  --lh-display-3:1.14;
+  --size-display-4:30px;  --lh-display-4:1.2;
+
+  /* LES TITRES DE SECTION, ET L'INTERLIGNE DES TITRES — lot M2 (2026-09-28),
+     sur la note du client relevée à l'iPhone : « Comment nous travaillons » et
+     « Notre sélection du moment » passaient sur deux lignes, très espacées.
+
+     **Deux écarts à la charte, et c'est eux que ce bloc ferme.**
+     (1) La charte donne h2 en `clamp(1.75rem, 3.5vw, 2.5rem)` — 28 px au
+     téléphone, 40 au-delà de 1 143 px. Le site les tenait à 40 px à toutes les
+     largeurs, par --size-display-3.
+     (2) La charte donne un interligne à chaque titre ; la règle de base de
+     h1–h4 (bas de ce fichier) n'en posait aucun, et tout titre qui n'écrivait
+     pas le sien **héritait de celui du corps, 1,8** : 40 px de titre sur 72 px
+     de ligne. Mesuré à 375 px avant ce lot : les quatre titres de section de
+     l'accueil, « Vous aimerez aussi » sur les fiches, le h1 de sept pages
+     (`.page h1`, 40/72) et les titres de contact et des mentions (30/54).
+
+     **--size-display-3 N'EST PAS MODIFIÉ, ET C'EST DÉLIBÉRÉ** : il porte aussi
+     le montant total du panneau de réservation, qui n'est pas un titre, et le
+     titre du bandeau de section au téléphone. D'où un token propre aux titres
+     de section, appelé par `.section h2` seul.
+
+     À 28 px, le plus long des titres actuels — « Notre sélection du moment » —
+     mesure 325 px pour 343 disponibles à 375 : **une ligne**. À 30 il en
+     demandait 348. *Un titre plus long saisi dans l'admin repassera sur deux
+     lignes : c'est un titre long, pas un défaut.*
+
+     Valeurs en px et non en rem, comme toute l'échelle de ce fichier : la
+     charte écrit 1.75rem et 2.5rem pour une racine de 16 px. */
+  --size-h2:clamp(28px, 3.5vw, 40px);
+  --lh-h1:1.1;
+  --lh-h2:1.2;
+  --lh-h3:1.3;
+  --size-title-card:22px; --lh-title-card:1.28;
+  /* Le nom d'une carte de grille, et lui seul. Distinct de --size-title-card,
+     qui garde ses 22px et ses deux autres usages — le titre « Compris » de la
+     fiche et le nom de ligne du panier — lesquels ne vivent pas dans une carte
+     de 242px et n'ont aucune raison de rétrécir avec elle.
+     19 et non 18 : mesuré sur les 21 noms du catalogue repliés dans les 210px
+     de texte d'une carte, les deux tailles font passer le même nombre de noms
+     sur une ligne (10 contre 7 à 22px). Entre deux valeurs au même rendement on
+     garde la plus lisible. Et pas en dessous de 18 : les empattements fins de
+     DM Serif Display souffrent, et à 16px le nom aurait la taille du texte
+     courant, donc plus de hiérarchie. */
+  --size-card-name:19px;
+  --size-price-card:20px;
+
+  /* Le pied d'une carte de grille : son prix, sa mention « Prix sur demande »
+     et sa durée. **Trois tokens propres à la carte**, et non un réglage des
+     tokens généraux : --size-price-card garde ses 20px pour la ligne de panier
+     et --size-body-sm ses 14px pour tout le texte secondaire du site, aucun des
+     deux ne vivant dans une carte de 242px.
+
+     --lh-card-footer est en PIXELS, et c'est la correction du défaut
+     d'alignement mesuré au lot cartes : le filet du pied ne tombait pas à la
+     même hauteur d'une carte à l'autre. La cause n'était pas le bloc titre —
+     `margin-top:auto` colle déjà le pied au bas de la carte, vérifié sur un nom
+     de trois lignes — mais la hauteur du pied lui-même. Un prix de 20px et une
+     mention de 14px multipliés par le même interlignage de 1,8 donnent deux
+     boîtes de ligne de 36 et 25,2px, soit **10,8px d'écart mesuré** entre
+     `/activites` carte 5 et carte 6 de la troisième rangée. Un multiple suit la
+     taille de police ; une valeur en pixels ne la suit pas, et c'est
+     exactement ce qu'on veut ici — toutes les lignes du pied occupent la même
+     hauteur quelle que soit leur taille de texte. 26px : la plus grande des
+     deux boîtes utiles (18px de DM Serif) tient dedans sans être serrée. */
+  --size-card-price:18px;
+  --size-card-meta:13px;
+  --lh-card-footer:26px;
+  /* Sur-titre « à partir de », posé au-dessus du montant. Même corps que le
+     libellé équivalent du panneau de réservation (--size-caption), et un
+     interligne en pixels pour la même raison que --lh-card-footer : c'est ce qui
+     rend la hauteur du pied indépendante des tailles de texte qu'il porte.
+
+     --h-card-prix fige la hauteur du bloc de prix, sur-titre compris. **Sans
+     lui, le défaut d'alignement des filets reviendrait par une autre porte** :
+     une carte tarifée porte deux lignes (sur-titre + montant), une carte « Prix
+     sur demande » n'en porte qu'une — 18 px d'écart, soit exactement le genre
+     de différence que le lot « densité et alignement » a fermé. Le bloc garde
+     donc la hauteur des deux lignes dans les deux cas, et la mention se cale en
+     bas, là où le montant se serait trouvé. */
+  --lh-card-prefix:18px;
+  --h-card-prix:calc(var(--lh-card-prefix) + var(--lh-card-footer));
+
+  /* Échelle de texte — Figtree */
+  --size-lead:20px;       --lh-lead:1.75;
+  /* --lh-body : 1,8 jusqu'au lot M2 (2026-09-28), **1,7 depuis — la valeur de
+     la charte**, décision du client (« le resserrement partout, fiches
+     comprises »). L'écart datait de l'export design-system. Il touche tout le
+     texte courant et, par héritage, l'admin — où liens et boutons bougent
+     ensemble, `admin.css` les calant tous deux sur ce token. Les pieds de
+     carte n'en dépendent pas : leur interligne est en pixels
+     (--lh-card-footer).
+     *Écart restant, non traité* : la charte donne 1,6 au texte secondaire,
+     --lh-body-sm vaut 1,7. Le client n'a demandé que le corps.
+
+     **+1 PX SUR LE TEXTE COURANT, LE 2026-10-04 — DÉROGATION À LA CHARTE,
+     DÉCIDÉE PAR LE CLIENT.** 16/14/12 → 17/15/13. La charte donne 1rem au corps
+     et 0,875rem au secondaire ; le client a demandé une police un peu plus
+     grande et l'assume (demande ④ de la passation du 2026-10-03). La dérogation
+     est écrite dans la charte, section Typographie : *ne pas « rétablir »
+     16 px en croyant réparer un écart*.
+     **Les trois tokens du corps, et eux seuls** — la variante chiffrée et
+     validée. Titres, sur-titres, textes des cartes (--size-card-*), chapô
+     (--size-lead) ne bougent pas. **Attention, ces trois tokens ne portent pas
+     que des paragraphes** : les liens de la bande et du pied, le bouton
+     « Menu », les boutons (`.btn`), les filtres et les champs les lisent aussi,
+     et prennent donc 1 px avec le corps — c'est l'état mesuré au chiffrage du
+     2026-10-03. Chiffré avant d'être fait : +2 % de hauteur de page au
+     téléphone, aucun débordement. **Le contraste ne bouge pas** —
+     mêmes couleurs ; la règle des 4,5:1 sous 24 px reste entière.
+     **La dérogation tient en un token, `--size-texte-plus`** : les trois tailles
+     de la charte restent écrites (`--size-*-charte`), le site leur ajoute 1 px.
+     Revenir à la charte = mettre ce token à 0px.
+     **L'admin garde 16/14/12** — le client n'a parlé que du site : la règle
+     `.admin-shell, .admin-auth-page`, en fin de fichier, y reprend les tailles
+     de la charte. */
+  --size-body-charte:16px;
+  --size-body-sm-charte:14px;
+  --size-caption-charte:12px;
+  --size-texte-plus:1px;
+  --size-body:calc(var(--size-body-charte) + var(--size-texte-plus));       --lh-body:1.7;
+  --size-body-sm:calc(var(--size-body-sm-charte) + var(--size-texte-plus)); --lh-body-sm:1.7;
+  --size-caption:calc(var(--size-caption-charte) + var(--size-texte-plus)); --lh-caption:1.5;
+
+  /* Sur-titre / eyebrow — Figtree Semibold, capitales espacées */
+  --size-eyebrow:11px;
+  --tracking-eyebrow:.22em;
+  --tracking-nav:.06em;
+  /* Casse des liens de navigation — capitales réservées aux sur-titres et au logo. */
+  --nav-text-transform:none;
+  --nav-letter-spacing:.01em;
+  --nav-size-scale:1.08;
+  --tracking-button:.1em;
+  --tracking-display:-0.01em;
+
+  /* Casse des libellés de bouton. La charte impose les capitales ;
+     basculer ces trois valeurs suffit à passer tout le système en casse normale. */
+  /* La charte réserve les capitales aux sur-titres et au logo : les libellés de
+     boutons sont donc en casse normale, avec un corps agrandi de 14 % pour
+     compenser la perte de présence optique. */
+  --btn-text-transform:none;
+  --btn-letter-spacing:.01em;
+  --btn-size-scale:1.14;
+}
+
+/* --- design-system/tokens/spacing.css --- */
+:root{
+  /* Base 4 px. Les respirations éditoriales vivent au-dessus de 64. */
+  --space-1:4px;   --space-2:8px;   --space-3:12px;  --space-4:16px;
+  --space-5:20px;  --space-6:24px;  --space-8:32px;  --space-10:40px;
+  --space-12:48px; --space-16:64px; --space-20:80px; --space-24:96px;
+  --space-30:120px;--space-40:160px;--space-50:200px;
+
+  --page-max:1440px;
+  /* --page-gutter — marge latérale desktop 1440.
+     ─────────────────────────────────────────────────────────────────────────
+     **RÈGLE D'ÉCRITURE, PO-72 (b), POSÉE LE 2026-09-06 : CE TOKEN N'A PAS DE
+     VALEUR POUR LE TÉLÉPHONE.** Il vaut 100 px, et **rien ne le redéfinit sous
+     640 px.** Tout bloc qui l'emploie doit donc écrire sa propre exception dans
+     la requête média téléphone — en pratique `var(--space-4)`.
+
+     **CE QUE COÛTE L'OUBLI : LA MOITIÉ DE LA LARGEUR.** À 375 px, 2 × 100 px de
+     gouttière ne laissent que 175 px de contenu au lieu de 343. Et **l'oubli ne
+     se signale pas** : aucune erreur, aucun avertissement, une colonne étroite
+     que seul un regard sur la page attrape.
+
+     **AUCUN CAS EXISTANT NE VIOLE CETTE RÈGLE, ET C'EST MESURÉ, PAS SUPPOSÉ.**
+     Relevé du 2026-09-06 : les **sept** sélecteurs qui emploient le token —
+     `.site-header`, `.page`, `.hero`, `.section`, `.trust`, `.fiche`,
+     `.site-footer` — ont tous leur exception. Rembourrage calculé à 375 px sur
+     `/`, `/activites`, la fiche et `/contact` : **16 px partout** (0 pour
+     `.section` imbriquée dans `.fiche`), **largeur interne 343 sans exception**.
+     *Le chiffre est écrit ici pour que personne ne parte chercher un ménage qui
+     n'existe pas* — le risque est entièrement devant, pas derrière.
+
+     **Ce commentaire est le remède, et il est délibérément posé ICI plutôt que
+     dans une feuille de style** : la faute se commet au moment où l'on va
+     chercher la valeur du token, donc c'est ici qu'il faut la lire. Le rangement
+     des requêtes média — PO-72 (a) — reste différé, et ne change rien à cette
+     règle. */
+  --page-gutter:100px;
+
+  /* LES DEUX SEULES LARGEURS DE CONTENU DU SITE. Il n'y en a pas de troisième,
+     et aucune largeur de conteneur n'est écrite ailleurs : ce qui a besoin de
+     l'une des deux la lit ici, ou la dérive par calc() de ces tokens.
+
+     **CE SONT DES LARGEURS DE CONTENEUR, GOUTTIÈRES COMPRISES.** Les deux sont
+     posées en `max-width` sur un élément qui porte `--page-gutter` de chaque
+     côté, en `box-sizing: border-box` : la colonne de contenu réellement
+     obtenue vaut donc la valeur **moins 200 px**.
+
+     --content-max — le canevas standard, porté par tout le site sauf la fiche :
+     pages de liste et de catégorie, accueil, recherche, panier, favoris.
+
+     --content-max-fiche — la fiche seule, et pour une raison qu'elle est seule
+     à avoir : elle doit loger la galerie et le panneau de réservation côte à
+     côte. À 1240 de conteneur, la colonne de gauche tombait à 580px et la
+     galerie n'y tenait plus. 1440 est l'autre canevas de l'export, et la borne :
+     le site rejoint ce que le design system prévoit, il ne le dépasse pas.
+
+     **--content-max passe de 1240 à 1440 au lot gabarit (PO-57), et c'est une
+     correction autant qu'un élargissement.** Le commentaire d'origine disait
+     « calée sur le canevas 1240 de l'export » et la valeur portait
+     « 1440 - 2×100 » : elle était donc pensée comme la largeur de contenu, mais
+     appliquée comme largeur de conteneur, gouttières comprises. Les pages de
+     liste tournaient à **1 040 px de contenu**, soit 200 de moins que le canevas
+     de l'export — pendant que la fiche, elle, obtenait bien ses 1 240. À 1440,
+     les deux tokens ont enfin la même sémantique et la même valeur, et la
+     colonne de contenu du site devient partout 1 240, la valeur voulue.
+
+     Effet mesuré sur les cartes de grille : 242 → 292 px à partir de 1440 px de
+     fenêtre. **Le nombre de colonnes ne bouge pas** — il tombe de --card-min,
+     pas d'ici — et le passage de quatre à trois cartes reste au même endroit,
+     vérifié par dichotomie avant et après.
+
+     **Les deux tokens sont désormais égaux. Ne pas les fusionner** : ils portent
+     deux décisions distinctes qui coïncident aujourd'hui, et la fiche doit
+     pouvoir s'élargir seule le jour où son panneau change de largeur. Deux rôles
+     de même valeur ne sont pas une donnée écrite deux fois. */
+  --content-max:1440px;        /* colonne de contenu = 1440 - 2×100 = 1240 */
+  --content-max-fiche:1440px;
+
+  /* Le plafond de longueur de ligne du texte courant, **et le découplage qui
+     rend l'élargissement ci-dessus sans effet sur la lecture** : neuf blocs de
+     site.css le portent, des paragraphes de fiche aux pages éditoriales. Mesuré
+     avant et après le passage à 1440 : tout paragraphe long du site fait 62
+     caractères par ligne dans les deux cas. Élargir le conteneur allonge les
+     grilles, jamais les lignes de texte. */
+  --measure:62ch;           /* longueur de ligne max en texte courant */
+
+  --grid-gap:32px;
+  --section-pad-y:var(--space-30);
+  /* Ramenée de 104 à 80px le 2026-08-19. Le plus haut contenu de la bande est
+     le pictogramme, mesuré à **40px** ; 104 lui laissait 32px de marge de part
+     et d'autre, 80 lui en laisse 20 — la bande reste aérée sans occuper un
+     dixième de l'écran d'ouverture. Sert aussi de `min-height` au menu
+     téléphone déplié (site.css), qui s'écoule en dessous et n'est donc pas
+     contraint par cette valeur. */
+  --nav-height:80px;
+
+  /* LOT B (2026-09-30) — LES LISTES DE FILTRES DES VOITURES ET LE MENU QUI SE
+     DÉPLIE. Des mesures de mise en page, sans couleur : la palette est celle
+     de la charte, reprise par `site.css`.
+     `--filtres-colonne` : la colonne des gammes à gauche des cartes, au-dessus
+     de 1024px. 240 laisse « Luxe/Super Car » et son compte sur une ligne, et
+     952px aux cartes à 1440 (1240 − 240 − 48) — trois cartes de front.
+     `--nav-panneau-w` : la largeur minimale du panneau « Voitures ».
+     `--nav-bascule` : le bouton à chevron sur ordinateur ; au téléphone il
+     prend `--touch-min`.
+     `--chevron-*` : le chevron est deux côtés d'un carré tourné — une forme
+     CSS, pas une icône (le sprite est une liste fermée). */
+  --filtres-colonne:240px;
+  --nav-panneau-w:280px;
+  --nav-bascule:var(--space-8);
+  --chevron-taille:7px;
+  --chevron-trait:1.5px;
+
+  /* LOT C (2026-10-01) — LE PANIER, LES FAVORIS, LE PANNEAU. Des mesures de mise
+     en page, sans couleur.
+     `--ligne-vignette` : la photo d'une ligne de panier ou de favori, en 3/2.
+     132 px donnent 88 de haut — la hauteur de trois lignes de détail, donc une
+     ligne ne grandit pas à cause de sa photo. `-sm` au téléphone : 96 px
+     laissent 231 px au texte à 375.
+     `--panier-recap` : la colonne du total sur ordinateur.
+     `--collection-max` : la colonne de lecture des favoris et du panneau.
+     `--panneau-h` : la hauteur du panneau du panier, « presque plein écran » ;
+     les 8 % restants sont le fond, où toucher referme. `-dyn` est la même en
+     `dvh`, pour les téléphones dont la barre d'adresse se replie. */
+  --ligne-vignette:132px;
+  --ligne-vignette-sm:96px;
+  --panier-recap:360px;
+  --collection-max:880px;
+  --panneau-h:92vh;
+  --panneau-h-dyn:92dvh;
+
+  /* SEUIL DE RETOUR DE L'EN-TÊTE COLLANT — distance cumulée vers le haut au
+     bout de laquelle l'en-tête réapparaît, sous 640px. Lu par le script du pied
+     de page, jamais écrit en dur ailleurs : même procédé que `--rappel-actif`
+     et `--volet-replie`.
+
+     **12px EST UN PARI, PAS UN RELEVÉ, et il faut que ça reste écrit.** Le
+     tremblement du doigt, le défilement par inertie et le rebond élastique
+     d'iOS — les trois choses que ce seuil doit absorber — ne se produisent sur
+     aucun poste de développement : ni doigt, ni lancer, ni décélération. La
+     valeur a été posée par raisonnement le 2026-09-06 et se corrige AU DOIGT.
+
+     **POUR L'ESSAYER AUTREMENT : changer le seul nombre de la ligne ci-dessous,
+     déposer le fichier, puis RECHARGER LA PAGE.** Rien d'autre à toucher — le
+     script lit la variable une fois, au chargement, et non à chaque défilement :
+     interroger le style calculé des dizaines de fois par seconde coûterait un
+     calcul de mise en page pour une valeur qui ne bouge pas.
+     Trop bas, l'en-tête clignote au moindre tremblement ;
+     trop haut, il ne revient plus assez tôt pour servir. 8 et 20 sont les deux
+     bornes qu'il vaut la peine d'éprouver. */
+  --entete-seuil:12px;
+
+  /* Grille de cartes. Le nombre de colonnes n'est écrit nulle part et ne
+     dépend d'aucun point de rupture : `repeat(auto-fill, minmax(--card-min,
+     1fr))` le déduit de la largeur disponible. Une rangée de n cartes réclame
+     n×236 + (n-1)×24, d'où 1 colonne à 375px, 2 à 768, 3 à 1024 et 4 dès
+     1216px de fenêtre. Changer --card-min déplace toute l'échelle d'un coup.
+     C'est aussi la seule façon de tenir la règle des tokens : une variable CSS
+     ne peut pas servir dans une condition @media. */
+  --card-min:236px;
+  --card-gap:24px;
+  /* 3/2 et non 4/3 : à 242px de large le visuel passe de 181 à 161px de haut,
+     ce qui fait tenir un rang de plus par écran. Proportion paysage franche,
+     dimensionnée pour la photo à venir (PO-15), pas pour l'aplat actuel. */
+  --card-media-ratio:3 / 2;
+  /* LE CADRE DES AFFICHES DE PACK — 9/16, lot 2 du 2026-09-07.
+     ────────────────────────────────────────────────────────────────────────
+     Les sept packs ne sont pas illustrés par une photo mais par une AFFICHE
+     verticale, dessinée par le client, qui porte déjà son titre. Elle se
+     montre entière ou pas du tout : la recadrer couperait le texte qu'elle
+     porte. D'où deux choses, et pas une seule — le rapport ici, et
+     `object-fit: contain` dans `site.css`, sans lequel `cover` rognerait
+     toute affiche qui ne tomberait pas exactement sur 9/16.
+
+     **Ce token ne s'applique nulle part par lui-même.** Il est posé sur la
+     seule grille de `/packs`, par `.card-grid--affiches`, qui redéfinit
+     `--card-media-ratio` pour ses descendants. Les trois autres sections
+     n'ont pas cette classe et gardent le 3/2 ci-dessus.
+
+     Mesuré à 375 px : le cadre passe de 341 x 227,3 à 341 x 606,2, et la
+     page de 3 941 à 6 593 px pour sept packs. C'est le prix assumé d'une
+     affiche verticale, et il est connu d'avance. */
+  --card-media-ratio-affiche:9 / 16;
+  /* « VOUS AIMEREZ AUSSI », EN CARRÉ — lot F (2026-10-02). Quatre fiches, deux
+     par deux, et un cadre de photo carré : c'est le troisième rapport du site,
+     avec le 3/2 des cartes et le 9/16 des affiches. La photo y est recadrée
+     (`cover`), comme sur la carte ordinaire — une photo de voiture ou
+     d'activité le supporte, à la différence d'une affiche qui porte du texte.
+
+     --aussi-max est la largeur du bloc. Sans cette borne, deux colonnes sur
+     1 240 px feraient des cartes de 608 px et un bloc de deux écrans de haut.
+     **560 px, et non 680** : essayé d'abord, 680 donnait une grille de 971 px
+     de haut — plus qu'un écran de 900, donc jamais « quatre fiches visibles
+     d'un coup ». À 560, deux cartes de 268 px et une grille de 851 px, qui
+     tient dans la fenêtre. Au téléphone la borne ne joue pas : la fenêtre est
+     plus étroite qu'elle. */
+  --card-media-ratio-carre:1 / 1;
+  --aussi-max:560px;
+  /* LE PLAN DU PIED DE PAGE — lot G3 (2026-10-11). Une colonne par famille
+     (Activités et ses univers, Voitures et ses gammes, Événements…).
+     `--footer-col-min` est la largeur sous laquelle une colonne passe à la
+     ligne : 130 px donnent DEUX colonnes dès 320 px (288 utiles : 2 × 130 +
+     24 d'écart), et cinq à l'ordinateur. Mesuré avec un catalogue proche de
+     la production : à 140, un écran de 320 tombait sur une colonne et un pied
+     de 1 196 px. À 320, « Parcs & Divertissement » passe sur deux lignes.
+     `--footer-plan-max` borne le plan pour qu'il reste un bloc centré sous le
+     logo, et non une rangée étirée sur 1 240 px. */
+  --footer-col-min:130px;
+  --footer-plan-max:880px;
+  /* LA VIGNETTE D'UNE OPTION, À L'ÉCRAN 3 — 2/1, PO-228 (2026-10-10).
+     Décision du client, avec le regroupement des durées (PO-231) : la carte
+     d'option gagne une ligne de pastilles, et sur un iPhone SE (375 × 553
+     visibles dans Safari) le compteur sortait déjà de l'écran de 11 à 40 px.
+     Le 2/1 rend environ 35 px à 213 px de large. **Il recadre les photos
+     d'options** (`cover`), que le client fournit au format des cartes : un
+     sujet centré le supporte. C'est le quatrième rapport du site, propre à
+     ce seul cadre. */
+  --extra-media-ratio:2 / 1;
+  /* LA MÊME VIGNETTE EN 3/2 À PARTIR DE 600 PX DE HAUTEUR VISIBLE — lot de la
+     carte d'option (2026-10-12), décision du client. La description a quitté
+     la carte (« Détails », sur la photo, retiré le même jour) : la place libérée va à la
+     photo, +33 % de hauteur, et c'est le format des photos du client — elles
+     ne sont plus recadrées. Mesuré : à 390 × 664 visibles, la carte entière
+     tient encore (+24 px). **Le 2/1 ci-dessus reste celui de l'iPhone SE**
+     (375 × 553) : chaque pixel donné à la photo y est pris au compteur (3/2 le
+     cache de 58 px). Le seuil se lit en JavaScript (`PHOTO_HAUTE_MIN`,
+     `parcours.js`), pas par une requête média : voir là-bas pourquoi. */
+  --extra-media-ratio-haut:3 / 2;
+
+  /* LE PAS DE LA GRILLE D'AFFICHES — lot du 2026-09-12, sur relevé du client
+     qui trouvait les cartes de pack trop hautes.
+     ────────────────────────────────────────────────────────────────────────
+     Une affiche 9/16 coûte le double d'une photo 3/2 en hauteur : à 375 px,
+     une colonne unique donnait une carte de 826 px et une page de 6 594 px
+     pour sept packs — soit ZÉRO carte entière par écran de 812 px. Le remède
+     retenu ne touche pas à l'affiche, qui reste entière : il rétrécit le pas
+     de la grille, donc la carte, donc l'affiche, proportionnellement.
+
+     **DEUX VALEURS, ET UNE SEULE NE PEUT PAS SUFFIRE.** Le compte de colonnes
+     tombe de `repeat(auto-fill, minmax(--card-min, 1fr))`. Deux colonnes à
+     375 px exigent 2n + 24 <= 343,2, donc n <= 159,6 ; cinq colonnes à
+     1440 px exigent 184,1 < n <= 225,8. Les deux intervalles sont disjoints :
+     il faut un point de rupture, et c'est le seul de tout le fichier. Il est
+     posé à 768 px dans `site.css`, la même limite que l'attribut `sizes` des
+     cartes.
+
+     **Ce que chaque valeur donne, mesuré sur la page servie le 2026-09-12** —
+     largeur de fenêtre vérifiée à chaque relevé, débordement horizontal
+     contrôlé (`scrollWidth` contre `innerWidth`) à 320, 375, 768, 1024 et
+     1440 : aucun.
+
+       320 px   1 colonne  (288 de conteneur : deux n'entrent pas) carte 646
+       375 px   2 colonnes affiche 158,0   carte 449-471   page 2 602
+       768 px   2 colonnes affiche 262,8   carte 604       page 3 222
+       1024 px  3 colonnes affiche 252,0   carte 585-607   page 2 580
+       1440 px  5 colonnes affiche 224,2   carte 535-567   page 1 859
+
+     **Les tablettes ne bougent pas de rang** : 210 px y donne le même compte
+     de colonnes que les 236 px d'aujourd'hui — deux à 768, trois à 1024. Seul
+     1440 passe de quatre à cinq. Six colonnes ont été mesurées puis écartées
+     par le client : les capitales du titre gravé tombent à 10,9 px, trop
+     minces sur un écran peu défini.
+
+     **Ces valeurs ne servent que sous `.card-grid--affiches`.** Les trois
+     autres sections lisent `--card-min` et gardent leur pas de 236 px. */
+  --card-min-affiche:155px;
+  --card-min-affiche-large:210px;
+
+  /* LA VIGNETTE DE LA LISTE D'ARTICLES — lot L2c, 2026-09-21.
+     ────────────────────────────────────────────────────────────────────────
+     La liste du blog n'est pas une grille de cartes : c'est une colonne de
+     rangées, image à gauche et texte à droite. Un article se choisit sur son
+     titre et son chapô, pas sur sa photo — l'inverse d'une fiche de catalogue,
+     où la photo est le produit. D'où une vignette **de côté**, et non un
+     bandeau au-dessus du texte.
+
+     280 px, et le chiffre n'est pas libre : la couverture est servie par son
+     dérivé de **400 px** (`vignetteSuggestion()`), le seul que le site
+     produise en dessous du maître. Au-delà de 280 px de logement, ce dérivé
+     serait étiré — à 400 px de large il n'aurait plus aucune réserve de
+     définition sur un écran à 1,4x, qui est le cas courant. En dessous, le
+     texte gagne peu et l'image devient un timbre.
+
+     La rangée passe en colonne sous 640 px, où la vignette prend toute la
+     largeur : ce token n'y est plus lu (`site.css`).
+
+     Le rapport de cadre n'a pas son propre token : c'est `--card-media-ratio`,
+     le 3/2 de tout le site. Une couverture d'article n'a aucune raison d'être
+     cadrée autrement qu'une photo de fiche, et un second rapport serait un
+     second endroit où la même décision se prendrait. */
+  --journal-media-w:280px;
+
+  /* Gabarit d'affichage du sprite d4r-icons-sprite.svg (usage documenté dans
+     la charte) et du filet neutre qui le remplace pour une catégorie sans
+     icône (même largeur, pour ne pas casser l'alignement de la grille). */
+  --icon-w:44px;    --icon-h:39px;
+  --icon-w-lg:56px; --icon-h-lg:50px;
+  /* Un cran en dessous, pour la carte de grille seule. Le logement d'icône
+     posait à lui seul 39px dans le bandeau de catégorie d'une carte de 242px de
+     large ; à 28 il en pose 28, soit 11px de moins par carte. Les deux tailles
+     générales ne bougent pas : elles servent aussi la vignette de formule et
+     d'extra des modales, qui n'a pas de raison de rétrécir avec la carte.
+     Le rapport 32/28 s'écarte de 1,5 % du 44/39 d'origine, ce qui ne déforme
+     rien : le sprite porte un `viewBox` et se centre dans son logement. */
+  --icon-w-card:32px; --icon-h-card:28px;
+  /* Le glyphe d'univers dans sa pastille de filtre — lot des univers
+     (2026-09-28). La taille de la carte, et non une troisième : la pastille
+     monte alors à 46 px (45 sans glyphe), au-dessus de la cible tactile de
+     44, là où la pastille de catégorie reste à 42 — mesurés à 375. C'est cet écart, avec le glyphe, qui
+     distingue les deux niveaux. */
+  --icon-w-filtre:var(--icon-w-card); --icon-h-filtre:var(--icon-h-card);
+
+  /* Icônes d'interface au trait — cœur et sac, fournies par le client le
+     2026-08-19 (SUIVI.md, « Lot accueil »). Elles ne partagent rien avec les
+     glyphes de catégorie ci-dessus, et c'est voulu : celles-ci sont dessinées
+     au trait vivant sur un viewBox normalisé `0 0 24 24`, les glyphes sont des
+     contours vectorisés en aplat sur treize viewBox hérités d'un plan de
+     montage. Mesuré au rendu avant intégration : trait de 2,27px pour les
+     nouvelles contre 2,55–2,60px pour le sprite, dans la même boîte de
+     44×39 — l'écart tient dans l'erreur de mesure sur des formes courbes.
+
+     **Le cœur garde sa taille propre et ne s'aligne pas sur les glyphes de
+     catégorie** (décision du client) : ce n'est pas une icône de rayon mais une
+     action, et qu'il s'en distingue est correct. Un glyphe de catégorie au
+     rapport 1,96 se contraint à 22,5px de haut dans la boîte de 39 ; le cœur,
+     carré, la remplit. */
+  --icon-trait-w:1.4;
+
+  /* Pastille du bouton de favori sur une carte de grille. 44px est la cible
+     tactile de référence — celle que le volet B de l'apparence a appliquée aux
+     boutons de l'admin, et celle dont PO-86 constate l'absence au pied de page.
+     Le fond ivoire détache le cœur du sable de la carte ; c'est le seul rôle de
+     `--surface-card-quiet`, déjà défini pour « carte posée sur fond sable ». */
+  --favori-pastille:44px;
+  --favori-coeur:20px;
+  /* Icônes de panier et de favoris dans l'en-tête : à hauteur de capitale du
+     libellé qu'elles doublent, pas à la taille d'un glyphe de catégorie. */
+  --icon-coll:18px;
+
+  /* Bandeau d'ouverture. La hauteur est fixée dès maintenant, alors qu'aucune
+     photo n'existe : le jour où une image est déposée dans le logement, elle
+     s'insère sans déplacer quoi que ce soit sous elle. */
+  /* Hauteur ramenée de 560 à 440 : le bandeau occupait presque tout l'écran
+     d'ouverture sur ordinateur. 440px reste une bande d'image franche, assez
+     haute pour accueillir la photo prévue en .hero__media (PO-15) sans refonte
+     — c'est la limite basse à ne pas franchir. */
+  --hero-min-h:440px;
+  --hero-min-h-sm:400px;    /* en dessous de 640px, où la hauteur d'écran est courte */
+  --hero-inner-max:680px;   /* largeur du bloc de texte du bandeau */
+  --search-max:560px;       /* le champ se réduit en proportion du bloc ci-dessus */
+  --search-h:64px;
+  --btn-h:48px;             /* bouton hors champ de recherche, et au téléphone */
+
+  /* BANDEAU DE TÊTE DE SECTION — lot L5a. Les pages de section ouvrent sur une
+     bande onyx pleine largeur, avec une photo quand une fiche en fournit une.
+     **Deux hauteurs à l'origine — une seule depuis L5a ter, celle de l'ordinateur —, et elles ne valent QUE pour la variante à photo** : sans
+     photo, le bandeau prend la hauteur de son texte, parce qu'une bande noire
+     vide gonflée à 420 px serait précisément la « page vide » qu'on retire.
+
+     LA HAUTEUR TÉLÉPHONE A UN PRIX, MESURÉ SUR UNE FENÊTRE DE 375 × 600 et
+     non sur les 844 nominaux de l'iPhone (SUIVI.md, passation du 2026-09-25,
+     § 2 b). Haut de la première carte, avant → après ce lot : `/voitures`
+     347 → 485, `/activites/mer-nautique` 407 → 551, **`/activites` 443 → 581,
+     soit 19 px de carte visibles** — cette page porte deux barres de filtres,
+     et son bandeau fait 309 px, son texte dépassant le minimum. *Une première
+     écriture de ce commentaire promettait « le haut de la première carte sans
+     défiler » : c'était vrai sur la page mesurée, faux sur la plus visitée.*
+     Le compromis photo contre première carte est au client (SUIVI.md, L5a).
+     **Tranché le 2026-09-26 (L5a bis) : moins haut**, ligne de comptage
+     gardée — 280 → 220, et les marges resserrées dans `site.css`.
+     **Puis L5a ter, le même jour : plus de hauteur minimale au téléphone**, et
+     le token `--bandeau-min-h-sm` est RETIRÉ — le bandeau y prend la hauteur
+     de son texte (`site.css`, bloc sous 640 px). `--bandeau-min-h` reste, pour
+     l'ordinateur, qui ne change pas.
+
+     Le voile est `--hero-scrim`, **le même token et non une copie** : c'est
+     lui qui porte la mesure du pire cas (sur-titre de 11 px ivoire sur une
+     photo entièrement blanche, 4,69:1). Un second voile réglé à part
+     n'aurait aucune mesure derrière lui. */
+  --bandeau-min-h:420px;
+  /* **RÉTABLI AU LOT M6 (2026-09-28), À 200 px** — retiré à L5a ter. Relevé du
+     client sur son iPhone : « on voit mal la photo derrière ». Il ne vaut, lui
+     aussi, QUE pour la variante à photo : un bandeau sans photo garde la
+     hauteur de son texte au téléphone, comme depuis L5a ter.
+
+     **Ce qu'il coûte, à 375 × 600, mesuré** (SUIVI.md, lot M6) : la première
+     carte descend d'autant que le bandeau grandit — de 0 px sur un bandeau
+     déjà plus haut que 200 à 60 px sur les plus courts.
+
+     *La photo qu'il agrandit doit valoir la peine* : sur `/activites`, c'est
+     encore le Jet Car détouré sur blanc, qui rend un gris plat sous le voile
+     (PO-207) — au client de la remplacer depuis l'admin. */
+  --bandeau-min-h-sm:200px;
+  --menu-btn-w:22px;        /* largeur des trois traits du bouton de menu */
+  --menu-btn-gap:5px;       /* écart entre deux traits */
+  /* LE MENU DU TÉLÉPHONE, POSÉ PAR-DESSUS LA PAGE — lot du 2026-10-03, sur la
+     description du client final de son site de référence : un court temps
+     mort, la liste qui se déroule de haut en bas, chaque ligne l'une après
+     l'autre, puis la même chose à l'envers à la fermeture.
+
+     --menu-delai            le temps mort avant le départ : 100 ms, le chiffre
+                             du client (« environ 0,1 s »). Le bouton, lui, part
+                             tout de suite — c'est la réponse au toucher.
+     --menu-deroule          le déroulé du panneau, de haut en bas : 550 ms.
+                             Le voile qui assombrit la page suit la même durée.
+     --menu-ligne-decalage   l'écart entre deux lignes : 70 ms. Six lignes : la
+                             dernière part à 450 ms et finit à 690.
+
+     **RALENTIS LE 2026-10-04, sur le relevé du client** (« encore trop
+     brusque ») : 320 → 550 ms et 40 → 70 ms, les chiffres proposés à la
+     passation du 2026-10-03 et validés. Ils se règlent ici, en une ligne
+     chacun ; la croix, elle, suit `--dur-base` et reste vive.
+
+     Les trois tombent à zéro sous `prefers-reduced-motion`. */
+  --menu-delai:100ms;
+  --menu-deroule:550ms;
+  --menu-ligne-decalage:70ms;
+  /* Le voile posé sur la page sous le menu ouvert — demande ② du 2026-10-04,
+     voie (a) : ASSOMBRIR, SANS FLOU. La charte interdit le flou, le client a
+     tranché pour la voie conforme. **Le même voile que les modales**
+     (`--d4r-onyx-60`), et non une seconde valeur : une page couverte par le
+     menu et une page couverte par une modale disent la même chose. Aucun texte
+     n'est écrit dessus — pas de contraste à tenir. */
+  --menu-voile:var(--d4r-onyx-60);
+  /* Côté du chevron des volets repliables de la fiche : un carré dont on ne
+     peint que deux bords, tourné de 45°. Une FORME CSS NEUTRE, comme les trois
+     traits du bouton de menu ci-dessus — le sprite est une liste fermée de
+     dix-huit dessins et la charte interdit d'en créer un dix-neuvième. */
+  --volet-chevron:8px;
+
+  /* Carrousel du bandeau et défileurs de l'accueil — lot L3.
+     ─────────────────────────────────────────────────────────────────────────
+     **LES FLÈCHES SONT DES FORMES CSS, PAS DES ICÔNES**, et ce n'est pas un
+     choix d'économie : le sprite est une liste fermée de dix-huit dessins,
+     aucun n'est une flèche, et la charte interdit d'en créer un dix-neuvième —
+     « les cas non couverts se traitent en typographie ou en formes CSS
+     neutres ». Le procédé est celui de `--volet-chevron` ci-dessus : un carré
+     dont on ne peint que deux bords, tourné de 45°.
+
+     `--fleche-taille` vaut `--touch-min`, la cible tactile minimale du projet.
+     Ce n'est pas une coïncidence à exploiter en silence : si la cible change,
+     ces boutons changent avec elle.
+
+     `--fleche-chevron` est plus grand que celui des volets — 10 contre 8 — et
+     porte un trait de `--rule-thick` : un chevron de volet est posé à côté
+     d'un texte qui le double, celui-ci est seul dans son bouton et doit se
+     lire sans lui. */
+  --fleche-taille:var(--touch-min);
+  --fleche-chevron:10px;
+  /* LA VIDÉO DU BANDEAU — PO-221 (2026-10-04).
+     --video-fondu    la vidéo paraît par-dessus son image d'attente quand elle
+                      joue : un fondu, pas une coupure. `--dur-slow` (520 ms),
+                      donc 0 sous « Réduire les animations » sans ligne de plus.
+     --lecture-icone  hauteur du dessin du bouton lecture / pause : deux barres,
+                      ou un triangle. FORMES CSS NEUTRES, comme le chevron
+                      ci-dessus — le sprite n'a ni lecture ni pause, et la
+                      charte interdit d'en dessiner. Le bouton lui-même fait
+                      `--fleche-taille`, la cible tactile du projet. */
+  --video-fondu:var(--dur-slow);
+  --lecture-icone:14px;
+
+  /* Plafond de largeur d'une carte dans un défileur — lot L3.
+     ─────────────────────────────────────────────────────────────────────────
+     **POURQUOI UNE CARTE DE DÉFILEUR GRANDIT, ALORS QU'UNE CASE DE GRILLE
+     N'EN A PAS BESOIN.** `.card-grid` met autant de colonnes que la largeur en
+     permet, et `1fr` les étire : il n'y a jamais de vide au bout. Un défileur,
+     lui, montre un nombre FIXE de cartes — quatre, décision du client — et à
+     leur largeur minimale elles s'arrêtaient **217 px avant le bord droit**,
+     mesuré sur la page rendue à 1440 px. La bande paraissait inachevée.
+
+     **LE PLAFOND EXISTE POUR LE CAS INVERSE**, qui est le vrai piège : à deux
+     cartes, une croissance libre leur donnerait **604 px chacune** — deux
+     cartes géantes au lieu d'une bande. Le cas se produit dès que moins de
+     quatre fiches remplissent la bande, et **il est devenu courant le
+     2026-09-22** : un pack sans affiche ne paraît plus sur l'accueil (PO-185),
+     donc une bande de deux ou trois packs est un état normal du site.
+
+     **C'EST UN FACTEUR, ET PAS UNE LONGUEUR — LA VERSION PRÉCÉDENTE ÉTAIT
+     FAUSSE.** Ce token a d'abord valu `calc(var(--card-min) * 1.45)`. Il
+     paraissait suivre `--card-min`, et son commentaire l'affirmait ; **il ne le
+     suivait pas.** Un `var()` écrit dans la valeur d'une variable est substitué
+     *là où la variable est déclarée*, donc ici sur `:root`, où `--card-min`
+     vaut 236. `.card-grid--affiches` le redéfinit à 210 sur la piste des packs,
+     et cette redéfinition arrivait trop tard.
+
+     **Mesuré sur la page rendue avant correction** : `--card-min` valait bien
+     210 px sur la carte de pack, et `--carte-max` y valait quand même
+     `calc(236px * 1.45)` — soit **342,2 px au lieu de 304,5**. *Rien
+     n'échouait, et les deux bandes rendaient le même chiffre* : c'est ce qui
+     rendait l'erreur invisible. Le calcul se fait donc au point d'usage
+     (`site.css`, `.defileur__piste > .card-slot`), où `--card-min` est celui de
+     la carte.
+
+     **LE FACTEUR EST DÉRIVÉ, PAS CHOISI.** La colonne de contenu est bornée par
+     `--content-max` moins deux gouttières, soit **1240 px au maximum, à toute
+     largeur de fenêtre**. Quatre cartes séparées de trois `--card-gap` y font
+     donc au plus (1240 − 72) / 4 = **292 px**. Rapporté aux deux largeurs
+     minimales du site : 292 / 236 = 1,24 pour une carte ordinaire, 292 / 210 =
+     **1,39** pour une affiche de pack. 1,45 couvre les deux avec une marge, et
+     **ne peut pas laisser une carte dépasser la largeur qu'elle aurait dans la
+     grille** — c'est la borne qu'on cherchait. */
+  --carte-max-facteur:1.45;
+
+  /* Pastilles du carrousel. Le point lui-même est petit ; sa CIBLE fait
+     `--touch-min`, obtenue par le rembourrage du bouton — un point de 10 px
+     cliquable sur 10 px serait inatteignable au doigt. */
+  --point-taille:10px;
+
+  /* Le pas de temps du carrousel vit dans `accueil.js`, pas ici : ce n'est pas
+     une valeur de style, aucune règle CSS ne la lit, et un token que personne
+     ne lit est une donnée écrite deux fois qui attend de diverger. */
+
+  /* Opacité du voile posé sur la photo du bandeau. Aplat plat, jamais un
+     dégradé (charte).
+     ─────────────────────────────────────────────────────────────────────────
+     **0,55 → 0,61 AU LOT L3 (2026-09-21), ET CE N'EST PAS UN GOÛT : C'EST
+     PO-108, MESURÉ SUR DES PHOTOS RÉELLES.**
+
+     Le commentaire d'origine disait « valeur non vérifiable aujourd'hui : il
+     n'y a rien dessous » et renvoyait la mesure au jour où une photo serait
+     déposée. **Ce lot est ce jour-là** — le carrousel met jusqu'à cinq photos
+     derrière le sur-titre du bandeau, 11 px en ivoire, seuil 4,5:1.
+
+     **CE QUI A ÉTÉ MESURÉ**, sur la page rendue à 1440 px : la photo composée
+     avec le voile, puis le rapport contre l'ivoire, **pixel par pixel sur la
+     seule bande occupée par le sur-titre**, et le pire pixel retenu.
+
+     | photo de contrôle           | à 0,55   | à 0,61 |
+     |-----------------------------|----------|--------|
+     | ciel bleu, yacht clair      | 6,22     | 7,24   |
+     | mosquée au crépuscule       | 7,28     | 8,31   |
+     | marina                      | 7,90     | 8,91   |
+     | **coque blanche au soleil** | **4,29** | 5,18   |
+     | *photo blanche (pire cas)*  | *3,84*   | *4,69* |
+
+     **Une photo réelle sur quatre échouait** : 4,29 contre 4,5 exigés. Le pire
+     cas théorique de PO-108 — une photo entièrement blanche — passe de 3,84 à
+     4,69. Le premier centième qui tienne est 0,60 (4,54) ; 0,61 est pris pour
+     garder une marge, et l'écart entre les deux ne se voit pas.
+
+     **L'INSTRUMENT A ÉTÉ ÉPROUVÉ AVANT D'ÊTRE CRU** — c'est la règle de
+     CLAUDE.md : passé sur une photo entièrement blanche il rend 3,84, le
+     chiffre calculé à la main dans PO-108 le 2026-08-26, et 18,42 sur une
+     photo entièrement noire. L'opacité employée par le calcul est **lue sur
+     la page rendue**, pas recopiée d'ici.
+
+     **NE PAS REDESCENDRE CETTE VALEUR** sans refaire la mesure sur les photos
+     que le client aura réellement déposées : sous 0,60, le sur-titre repasse
+     sous 4,5:1 dès qu'une photo claire arrive, **et rien ne le signale**. Le
+     titre (60 px) et le champ de recherche ne sont pas concernés — l'un est du
+     grand texte, l'autre porte son propre fond ivoire. */
+  --hero-scrim:.61;
+
+  /* Galerie de fiche (lot 6). Même principe que --hero-min-h : la hauteur est
+     réservée maintenant, alors qu'aucune des 21 fiches n'a de photo (PO-15).
+     Déposer les images depuis l'admin ne déplacera donc rien de ce qui suit la
+     galerie. Une hauteur fixe plutôt qu'un aspect-ratio : la galerie change de
+     mise en page selon le nombre d'images (un cadre ou une grille 2/1), et
+     seule une hauteur commune garde les deux états à la même place. */
+  /* Ramenée de 480 à 360 avec le passage de la fiche en deux colonnes : la
+     galerie vit désormais dans une colonne de 780px et non sur 1040. À 480, sa
+     grande image aurait fait 499×480 le jour des photos — presque carrée. À
+     360 elle fait 499×360 (1,4:1), les deux vignettes 249×164, et le cadre
+     unique d'aujourd'hui 780×360, une bande paysage franche. */
+  /* **LOT L4 — LA VALEUR NE BOUGE PAS, SON MOTIF CHANGE.** Il n'y a plus ni
+     grille 2/1 ni vignettes : la galerie est une piste d'une photo par vue, et
+     une seule disposition. Le raisonnement des deux paragraphes ci-dessus reste
+     celui qui a produit 360 et 280 ; ce qu'il décrit n'existe plus.
+
+     *La hauteur fixe garde toute sa raison d'être*, et même davantage : elle
+     tient la place de la photo avant qu'elle soit chargée, sur une piste où
+     toutes les vues sauf la première sont différées. Elle garde aussi le cadre
+     vide des six fiches sans photo exactement tel qu'il était.
+
+     **Une vue fait donc 780×360 sur ordinateur et 343×280 à 375 px**, recadrée
+     en `cover` — la visionneuse, elle, montre la photo entière. Ne pas passer
+     ces deux valeurs en `aspect-ratio` sans refaire la mesure : à 780 px de
+     large, un 3:2 réclamerait 520 px de haut et repousserait le panneau de
+     réservation hors du premier écran, ce que le lot de densité a précisément
+     corrigé. */
+  --gallery-h:360px;
+  --gallery-h-sm:280px;
+
+  /* **L'AMORCE DE LA PHOTO SUIVANTE — LOT L5b, 2026-09-27 (PO-196).** Quand la
+     fiche a plusieurs photos, une vue ne fait plus toute la piste : elle lui
+     laisse `--gallery-amorce`, dont `--gallery-ecart` sépare les deux photos.
+     Il reste donc **24 px de la suivante à l'écran**, à toutes les largeurs —
+     c'est ce qui dit au doigt que la piste se balaie. Une photo seule garde
+     toute la largeur : il n'y a rien à annoncer.
+
+     *Ce que ça change ailleurs* : le pas des flèches n'est plus la largeur de
+     la piste (`defileur.js`), et la vue en place ne se lit plus en divisant
+     par elle (`galerie.js`). Les deux se mesurent désormais sur l'écart entre
+     deux vues. */
+  --gallery-amorce:var(--space-8);
+  --gallery-ecart:var(--space-2);
+
+  /* **L'AMORCE D'UNE BANDE D'AFFICHES AU TÉLÉPHONE — lot M4 (2026-09-28).**
+     La part de la carte suivante visible au bord droit, et le seul signal de
+     défilement depuis que les flèches sont retirées sous 640 px (lot M3).
+
+     Mesurée avant ce token, à 375 px : **1 px**. Deux affiches de 155 px
+     (--card-min-affiche) et deux écarts de 24 remplissent l'écran au pixel
+     près, et la troisième commence à 374. Rien ne disait que la bande
+     continuait. La largeur de la case est donc calculée pour laisser cette
+     amorce (`site.css`, bloc sous 640 px), et non plus tirée du token de
+     grille.
+
+     **Appliqué à `/packs` seul.** La bande des packs de l'accueil a le même
+     défaut — mesuré, 1 px — et n'est pas touchée : le lot M4 ne devait rien
+     changer à l'accueil. PO-210.
+
+     **REMPLACÉ LE 2026-09-28 (lot affiches et pastilles) PAR UN NOMBRE
+     D'AFFICHES PAR ÉCRAN**, décision du client : des affiches plus larges, et
+     les deux bandes — accueil et `/packs` — réglées d'un coup. **1,75** : à
+     375 px, une affiche de 191,4 px et 144 px de la suivante ; la carte tient
+     dans un écran de 812 (bas à 811) et **le prix se lit sans défiler**. À
+     1,5 (223 px) il fallait défiler pour le lire : écarté pour ce motif. Le
+     tableau complet des réglages mesurés est dans `SUIVI.md`, lot des
+     univers, § 5. L'amorce n'a plus de token : elle découle de ce nombre. */
+  --affiches-par-ecran:1.75;
+
+  /* LE RAIL D'EXTRAS DE L'ÉCRAN 3 — lot M7 (2026-09-28, PO-208). Même principe
+     que la ligne ci-dessus : la largeur d'une carte est un nombre de cartes
+     par écran, donc l'amorce de la suivante est garantie. **1,75 dans la
+     boîte de 560 px** (ordinateur) ; **1,25 au téléphone**, où une carte doit
+     garder la largeur de lire une description de 25 mots — la plus longue du
+     catalogue, mesurée le 2026-09-28 sur les 24 extras du safari. Les valeurs
+     mesurées (largeur, amorce) sont dans `SUIVI.md`, lot M7. */
+  --extras-par-ecran:1.75;
+  --extras-par-ecran-sm:1.25;
+
+  /* Bande de vignettes de la visionneuse. Rapport 3:2, celui des photos
+     préparées par `outils/preparer-photos.php` : la vignette ne recadre donc
+     rien de plus que ce que la photo porte déjà. La hauteur n'est plus un token
+     depuis le lot bande : elle se déduit du rapport, la largeur étant devenue
+     variable.
+
+     --galerie-vignette-w est la largeur **souhaitée**, jamais dépassée ;
+     --galerie-vignette-w-min le plancher en dessous duquel la bande passe à la
+     ligne au lieu de rétrécir encore. Ce plancher n'est pas un chiffre rond
+     choisi au jugé : c'est **la largeur à laquelle la hauteur de la vignette
+     atteint la cible tactile de 44 px** (WCAG 2.5.5), rapport 3:2 appliqué. En
+     dessous, la vignette cesserait d'être atteignable au doigt ; mieux vaut
+     alors deux rangs de vignettes utilisables qu'un rang de timbres.
+
+     **Aucune barre de défilement, jamais** : la bande rétrécit, puis passe à la
+     ligne. Le défilement horizontal du lot précédent cachait deux vignettes sur
+     six à 1280×800 — 552 px nécessaires pour 503 disponibles, mesurés. */
+  --galerie-vignette-w:84px;
+  --galerie-vignette-w-min:calc(var(--touch-min) * 3 / 2);
+  --galerie-vignette-ratio:3 / 2;
+  /* Opacité d'une vignette non courante. 0,45 et non 0,55 : le client trouvait
+     l'écart entre les deux états trop faible. Mesuré sur un pixel de photo
+     moyen (gris 128) posé sur le panneau onyx — l'écart entre vignette courante
+     et vignette éteinte passe de **2,07:1 à 2,43:1**, et la vignette éteinte se
+     détache encore du panneau à **1,92:1**, donc reste lisible comme image.
+     Ne pas descendre plus bas : à 0,35 l'écart ne gagne que 0,45 point pendant
+     que la vignette tombe à 1,62:1 sur le panneau et commence à se confondre
+     avec lui. L'opacité n'est de toute façon pas le seul marqueur — la vignette
+     courante porte un filet ivoire à 17,37:1, signal de forme exigé par la
+     charte, qui proscrit de distinguer par la seule couleur. */
+  --galerie-vignette-repos:.45;
+
+  /* Panneau de la visionneuse (lot visionneuse). La visionneuse a cessé d'être
+     un plein écran : c'est une fenêtre posée sur la page, qui reste perceptible
+     derrière le voile de la coquille.
+
+     --galerie-photo-reserve est **tout ce que le panneau occupe en dehors de la
+     photo**, mesuré sur la page rendue et non estimé : tête et son filet (85),
+     rembourrages du cadre et compteur (76), bande de vignettes et son filet
+     (101), marge verticale de la coquille (80). C'est ce qui doit être retranché
+     de la fenêtre avant de savoir ce qui reste à la photo.
+
+     --galerie-photo-h retient **la plus petite de deux bornes** : une fraction
+     de la hauteur de fenêtre, qui tient le confort de lecture sur grand écran,
+     et la place réellement disponible, qui évite qu'une fenêtre basse ne rogne
+     la photo. Sans la seconde, un écran de 800px de haut débordait de 54px et
+     le corps de la modale, en `overflow: hidden`, coupait le bas de l'image.
+
+     --galerie-photo-w est la largeur d'une photo 3:2 à cette hauteur. Une photo
+     d'un autre rapport se centre, `object-fit: contain` s'en charge — et trois
+     des six photos du Black Boat sont en 4:3, le cas est réel.
+
+     **--galerie-panneau-w ne se règle plus sur la seule photo depuis le lot
+     bande**, et c'est ce qui étranglait la bande de vignettes : à 1280×800 le
+     panneau tombait à 687 px, la bande réclamait 552 px pour 503 disponibles,
+     et une barre de défilement cachait deux vignettes sur six. Deux termes
+     désormais :
+
+     — la photo **et la place des deux flèches**, qui l'encadrent à mi-hauteur.
+       Elles sont posées en absolu, donc invisibles au calcul de la boîte : sans
+       cette réservation explicite, elles chevaucheraient la photo. Une cible
+       tactile et un écart de chaque côté, plus les rembourrages du cadre.
+     — un plancher, --galerie-panneau-w-min, qui vaut **la largeur d'une bande de
+       huit vignettes à taille pleine** : 8 × 84 + 7 × 8 d'écart + 8 de
+       rembourrage de bande + 48 de rembourrage de pied = 784, arrondi à 800.
+       Au-delà de huit photos les vignettes rétrécissent, ce pour quoi elles sont
+       faites ; en deçà elles ne sont jamais serrées.
+
+     La plus grande des deux gagne. `width: 100%` borne le tout sur les fenêtres
+     étroites, où c'est la fenêtre qui décide.
+
+     **--galerie-photo-h est recopiée dans `assets/js/galerie.js`** (lot 9-B),
+     sous la forme `min(96vh, 150vh - 513px)` : c'est elle multipliée par 3/2,
+     et elle y sert d'attribut `sizes` pour que le navigateur choisisse la
+     bonne taille de photo. Ce n'est pas une valeur qu'il peut mesurer — il lit
+     `sizes` avant de mettre en page. Les deux se modifient ensemble, ou pas du
+     tout : trop grande, la valeur ne coûte que des octets ; trop petite, elle
+     coûte de la netteté. */
+  --galerie-photo-reserve:342px;
+  --galerie-photo-h:min(64vh, calc(100vh - var(--galerie-photo-reserve)));
+  --galerie-photo-w:calc(var(--galerie-photo-h) * 3 / 2);
+  --galerie-panneau-w-min:800px;
+  --galerie-panneau-w:max(
+    calc(var(--galerie-photo-w) + 2 * (var(--touch-min) + var(--space-5)) + 2 * var(--space-6)),
+    var(--galerie-panneau-w-min));
+
+  /* Colonne de réservation de la fiche. **380 à l'origine, largeur de l'export
+     design-system ; portée à 400 le 2026-08-09** sur retour du client, le
+     panneau étant trop étroit pour son contenu même à une seule formule :
+     « 1 000 AED · le bateau entier, à l'heure » tombait sur trois lignes.
+
+     Trois choses à connaître avant d'y toucher à nouveau.
+
+     *392px est un plafond dur, et il est mesuré, pas calculé.* Le seuil de
+     bascule en une colonne reste à 1259px (site.css), donc élargir ici rétrécit
+     la colonne de gauche au bas de la plage à deux colonnes. Le grand cadre de
+     la mosaïque y fait `2/3 × (colonne − 32)` de large pour 360 de haut : il
+     devient **portrait au-delà de 392**. Relevé dans le navigateur à 1260px de
+     fenêtre : 1,024 à 380 · 1,009 à 388 · **1,001 à 392** · 0,994 à 396 ·
+     0,987 à 400 · 0,978 à 420.
+
+     **Le calcul de tête donne 408 et il est faux** : il oublie la barre de
+     défilement verticale, qui prend 15px et n'entre pas dans la condition
+     `@media`. Une fenêtre de 1260 ne met en page que 1245. Reprendre la mesure
+     dans le navigateur plutôt que l'arithmétique — c'est l'erreur qui a fait
+     essayer 420 puis 400 avant d'arriver ici.
+
+     *La largeur seule ne suffisait pas.* Le bloc de tarif et le bloc de nom se
+     partagent la ligne en flex, et le second absorbait l'essentiel de
+     l'élargissement : à 460px de panneau, le tarif tenait encore sur trois
+     lignes. C'est `flex-shrink` sur `.formulas__aside` qui rend l'élargissement
+     effectif (site.css). Élargir sans lui ne change presque rien.
+
+     *La colonne de lecture minimale passe de 600 à 573px*, le seuil de bascule
+     ne bougeant pas. Elle reste 64 % au-dessus des 349px qui avaient imposé ce
+     seuil. */
+  --fiche-aside-w:392px;
+
+  /* Compteur de panier et de favoris dans l'en-tête (lot 8). Cette largeur est
+     réservée dans le document servi alors que le chiffre n'y est pas : il vit
+     dans le stockage du navigateur, le serveur ne peut pas le connaître. La
+     poser ici fige la géométrie de l'en-tête avant que le chiffre soit écrit,
+     donc sans saut de mise en page — même raisonnement que --hero-min-h et
+     --gallery-h, qui réservent la place d'images absentes. Deux chiffres :
+     au-delà de 99 lignes de panier, le compteur s'élargit et l'en-tête bouge,
+     ce qui est un cas d'école, pas un cas d'usage. */
+  /* Porté de 18 à 30px le 2026-08-19 : le compte s'écrit désormais entre
+     parenthèses — « Panier (4) » — et non plus en chiffre nu. Les deux
+     parenthèses et l'espace qui les précède coûtent 12px de plus à réserver.
+     Le raisonnement de la ligne ci-dessus est inchangé, seule la largeur bouge. */
+  --compte-w:30px;
+
+  /* Parcours de réservation (lot 7). */
+  --modale-w:560px;         /* largeur de la boîte de modale sur ordinateur */
+  --modale-h-sm:92vh;       /* feuille basse au téléphone, la page reste visible */
+  /* La même en `dvh` — PO-146 (2026-10-09) : sur iPhone, `vh` compte l'écran
+     sans les barres de Safari, et la feuille dépassait la zone visible. Posée
+     sous `@supports` dans `site.css`, `vh` restant le repli. */
+  --modale-h-sm-dyn:92dvh;
+  --vignette-size:72px;     /* cadre de formule et d'extra dans les modales */
+  /* Cible tactile minimale de WCAG 2.5.5. Ce n'est pas une valeur de design
+     mais une contrainte d'accessibilité : la croix de fermeture et les boutons
+     de compteur doivent rester atteignables au doigt à 375 px. */
+  --touch-min:44px;
+  /* Distance entre le texte et son soulignement. Posé le 2026-08-19 avec le
+     lien des lignes de panier et de favoris : sans écart, le trait touche les
+     jambages de DM Serif Display, dont les empattements descendent. 3px les
+     dégage sans détacher le trait du mot. */
+  --underline-offset:3px;
+  /* Panneau de suggestions : au-dessus du contenu de la page, **sous les
+     modales**. Le parcours de réservation ne s'ouvre jamais depuis un champ de
+     recherche, les deux ne peuvent donc pas se croiser ; l'ordre est posé pour
+     que la question ne se repose pas. */
+  --z-suggest:40;
+  /* Vignette d'une suggestion. 48px : assez pour reconnaître une photo dans une
+     liste, assez petit pour que six lignes tiennent. Le glyphe et le filet de
+     repli sont plus petits que le cadre — ils s'y posent au centre, ils ne le
+     remplissent pas, à la différence d'une photo en `cover`. */
+  --suggest-vignette:48px;
+  --suggest-glyphe:28px;
+  /* Hauteur du panneau de suggestions. **Corrigée le 2026-08-19 : elle valait
+     340px, pour six lignes estimées à 56px.** Les lignes en font réellement 81
+     — 109 quand le nom passe sur deux lignes — soit **512px de contenu pour six
+     suggestions**. Le panneau en montrait donc quatre et coupait les deux
+     autres, sur les deux pages, indépendamment du rognage du bandeau.
+
+     540px couvrent les six lignes mesurées avec un peu de marge. Le `min()`
+     borne le panneau à l'écran : sur un téléphone en paysage, 70vh valent
+     environ 260px, et un panneau de 540 y sortirait entièrement de la fenêtre.
+     **Il défile alors à l'intérieur** — c'est le seul comportement possible,
+     six lignes de 81px ne tenant pas dans 375px de haut. */
+  --suggest-max-h:min(540px, 70vh);
+  /* L'encadré de rappel de la fiche. **Au-dessus du contenu, sous la modale** :
+     il doit couvrir la page mais jamais le parcours de réservation, qui prend
+     l'écran entier. 60 laisse la place d'intercaler sans toucher aux deux
+     autres. */
+  /* L'en-tête collant, sous 640px. **Au-dessus du contenu et du panneau de
+     suggestions, sous l'encadré et la modale.** Il passe au-dessus des
+     suggestions parce qu'il est une chrome permanente et qu'elles s'ouvrent
+     VERS LE BAS, à l'opposé : les deux ne se recouvrent pas dans les faits,
+     l'ordre est posé pour que la question ne se repose pas. Sous l'encadré, qui
+     est l'action de vente, et sous la modale, qui prend l'écran entier. */
+  --z-entete:50;
+  --z-rappel:60;
+  --z-modale:80;
+}
+
+/* --- design-system/tokens/borders.css --- */
+:root{
+  /* La marque est éditoriale : l'angle droit est la règle, l'arrondi l'exception. */
+  --radius-none:0px;
+  --radius-xs:2px;          /* champs, boutons — arrondi quasi imperceptible */
+  --radius-card:10px;       /* cartes et blocs de réservation */
+  --radius-pill:999px;      /* pastilles de filtre uniquement */
+
+  --hairline:1px;
+  --rule-thick:2px;
+
+  /* Aucune ombre portée dans l'identité : la profondeur vient du filet et du vide. */
+  --shadow-none:none;
+  --shadow-hover:0 1px 0 0 var(--d4r-or);       /* soulignement doré au survol */
+  --shadow-lift:0 18px 40px -28px rgba(20,20,20,.28); /* cartes au survol, rare */
+}
+
+/* --- design-system/tokens/motion.css --- */
+:root{
+  --ease-brand:cubic-bezier(.22,.61,.36,1);
+  --dur-fast:140ms;
+  --dur-base:240ms;
+  --dur-slow:520ms;
+  /* **Deux agrandissements de survol, et ils ne font pas la même chose.**
+
+     --hover-image-scale est un facteur de `transform` : l'élément lui-même
+     grossit. C'est l'effet voulu sur la vignette de la visionneuse, qui doit
+     sortir du rang sous le pointeur.
+
+     --hover-image-zoom est un débord, en pourcentage, appliqué aux quatre côtés
+     d'une image posée en absolu dans un cadre à `overflow: hidden` : **le cadre
+     ne bouge pas, la photo est cadrée plus serré**. C'est ce qu'il faut sur la
+     carte de grille, et le motif est la netteté, pas la géométrie — un
+     `transform: scale` fait tramer l'élément à sa taille d'avant puis étire
+     l'image tramée, et la photo perd visiblement en définition. Un débord change
+     la boîte réelle : le navigateur retrame à la bonne taille, la photo reste
+     nette. 1,5 % de chaque côté donnent le même grossissement apparent que le
+     facteur 1,03 qu'il remplace.
+
+     Les deux tombent à leur valeur neutre sous `prefers-reduced-motion`. */
+  --hover-image-scale:1.03;
+  --hover-image-zoom:1.5%;
+  /* APPARITION AU DÉFILEMENT — lot L5a, réglée à l'option A au lot L5a quater
+     (2026-09-26) : fondu seul en --dur-base, sans déplacement ni retard. Les
+     deux tokens de L5a, --reveal-distance (16 px) et --reveal-decalage (70 ms),
+     sont RETIRÉS : mesurés au lot L5a ter, ils faisaient finir une carte 730 ms
+     après son entrée, et le client les a jugés lourds sur iPhone (PO-203).
+
+     **--reveal-actif EST L'INTERRUPTEUR, ET L'OPTION B TIENT EN UNE LIGNE** :
+     le passer à 0 retire toute apparition au défilement, sur tout le site. Le
+     script du pied de page le lit et sort sans rien cacher. Rien d'autre à
+     défaire : les deux classes ne sont posées que par ce script.
+
+     Sous `prefers-reduced-motion` le script ne cache rien, et la durée tombe
+     à zéro avec les autres. */
+  --reveal-actif:1;
+  /* LOT E (2026-10-02) — L'APPARITION REDEVIENT VISIBLE, SANS REDEVENIR CELLE DE
+     L5a. Le client final trouve l'option A trop discrète : au téléphone, la
+     fiche n'avait plus aucune animation et l'accueil une seule.
+
+     **Ce qui avait pesé en L5a n'était pas le déplacement, c'était la taille de
+     ce qu'on déplaçait** : des sections entières, jusqu'à 1 644 px de haut,
+     animées d'un seul tenant, et 730 ms entre l'entrée d'une carte et sa fin.
+     Le script du pied de page anime désormais des PIÈCES — un titre, une
+     carte, une ligne de réassurance — jamais un bloc plus haut que la fenêtre.
+
+     --reveal-distance   la montée, en plus du fondu. 16 px, la valeur de L5a.
+     --reveal-duree      400 ms : entre --dur-base (240) et --dur-slow (520).
+     --reveal-decalage   50 ms entre deux pièces entrées ensemble, plafonné à
+                         trois rangs par le script : la dernière finit **550 ms**
+                         après son entrée, contre 730 en L5a et 240 en option A.
+
+     Les trois tombent à zéro sous `prefers-reduced-motion` — où le script ne
+     cache de toute façon rien. `--reveal-actif:0` retire toujours tout. */
+  --reveal-distance:16px;
+  --reveal-duree:400ms;
+  --reveal-decalage:50ms;
+  /* TROIS GESTES DE PLUS SUR L'ACCUEIL — lot du 2026-10-03 (PO-220, choix A, B
+     et C du client). Ils s'ajoutent à l'apparition ci-dessus et suivent son
+     rythme : même départ, même rang.
+
+     --filet-duree     A. un filet qui se trace : 700 ms. Plus long que le
+                       fondu, parce qu'un trait de 48 px qui s'étire en 400 ms
+                       ne se voit pas partir.
+     --filet-delai     le départ du filet du bandeau, à l'arrivée : 200 ms,
+                       le temps que la photo et le titre soient là.
+     --masque-duree    B. un titre qui monte sous son masque : 600 ms.
+     --rideau-duree    C. une photo qui se découvre de bas en haut : 700 ms.
+
+     **Le plus long des quatre fixe la fin d'une salve** : le script du pied
+     de page rend ses classes à une pièce après lui, plus trois rangs. Un geste
+     plus long que ce délai serait coupé net à la fin.
+
+     Tous tombent à zéro sous `prefers-reduced-motion`. */
+  --filet-duree:700ms;
+  --filet-delai:200ms;
+  --masque-duree:600ms;
+  --rideau-duree:700ms;
+  /* LE CARROUSEL CENTRÉ DES PACKS, sur l'accueil — lot E. Le pack courant au
+     milieu, à sa taille ; ses voisins réduits et coupés par les bords.
+
+     --centre-carte        largeur du pack courant au téléphone, en part de la
+                           piste : 62 % laissent 19 % de chaque côté, soit à
+                           375 px un voisin visible sur ~47 px.
+     --centre-carte-large  la même au-dessus de 640 px, fixe. 300 px jusqu'au
+                           2026-10-15 (l'affiche de la bande d'avant, 304 au
+                           plus) ; **224 px depuis, décision du client
+                           (PO-245)** : la carte faisait 721 px de haut à
+                           1440 et le prix tombait sous le bord d'un écran
+                           portable. 224, c'est l'affiche de `/packs` à 1440
+                           (224,2, voir `--card-min-affiche-large`) : la même
+                           affiche à la même taille sur les deux pages. Vaut
+                           pour le carrousel (641 à 1199 px) comme pour la
+                           rangée de 5 (1200 et plus), où c'est un plafond :
+                           sous ~1416 px les affiches rétrécissent pour tenir
+                           dans la colonne. L'affiche reste entière.
+     --centre-etendue      largeur de la piste, en nombre de cartes : 2,3 — le
+                           pack courant et 65 % de chaque voisin, coupés.
+     --centre-echelle      réduction des voisins. Par `transform`, donc sans
+                           recalcul de mise en page ; l'opacité n'est pas
+                           touchée — un texte atténué passerait sous 4,5:1. */
+  --centre-carte:62%;
+  --centre-carte-large:224px;
+  --centre-etendue:2.3;
+  --centre-echelle:.86;
+  /* LE MÊME CARROUSEL SUR LES AUTRES BANDES — 2026-10-06, demande du client.
+     Seule la largeur de la carte courante change ; l'étendue de la piste et la
+     réduction des voisines sont celles des packs, pour que les trois bandes
+     se lisent comme un seul geste.
+
+     --centre-fiche        carte d'activité de l'accueil (photo 3/2, nom,
+                           prix) au téléphone, en part de la piste : 68 % —
+                           à 375 px, 233 px, la largeur de la carte de la bande
+                           d'avant (236). Plus large que l'affiche (62 %) : une
+                           carte porte du texte, une affiche n'en porte pas.
+     --centre-fiche-large  la même au-dessus de 640 px : 360 px. La bande
+                           d'avant les montrait à 248 px, quatre de front ; la
+                           carte courante est désormais LA carte qu'on lit.
+     --centre-extra        carte d'extra de l'écran 3, à toutes les largeurs,
+                           en part de la piste — la modale est déjà étroite
+                           (560 px au plus) : 72 % laissent à chaque voisin
+                           une amorce que la réduction ne fait pas disparaître. */
+  --centre-fiche:68%;
+  --centre-fiche-large:360px;
+  --centre-extra:72%;
+  /* L'ORDINATEUR — 2026-10-15, décisions du client (PO-244 puis PO-246).
+     Au-dessus de 1200 px, les packs sont en rangée (5 affiches, voir
+     `site.css`) et les activités gardent le carrousel, sur une piste plus
+     large.
+
+     --centre-etendue-large  largeur de la piste des activités au-dessus de
+                             1200 px, en nombre de cartes : 2,8 — 1 056 px,
+                             92 px de vide de chaque côté à 1440 (182 avec
+                             2,3). **Plafond dur : sous 3 cartes et 2 écarts**,
+                             sinon la 2ᵉ carte « centrée » tombe sur la
+                             position de départ et ne devient jamais courante
+                             (mesuré : à pleine colonne, 2 positions pour 4
+                             cartes).
+
+     `--centre-rangee` (4), posé le matin même pour la rangée de 4, est retiré :
+     la rangée des packs prend autant de colonnes que d'affiches. */
+  --centre-etendue-large:2.8;
+}
+@media (prefers-reduced-motion:reduce){
+  :root{
+    --ease-brand:cubic-bezier(.22,.61,.36,1);
+    --dur-fast:0ms;
+    --dur-base:0ms;
+    --dur-slow:0ms;
+    --reveal-distance:0px;
+    --reveal-duree:0ms;
+    --reveal-decalage:0ms;
+    --filet-duree:0ms;
+    --filet-delai:0ms;
+    --masque-duree:0ms;
+    --rideau-duree:0ms;
+    --menu-delai:0ms;
+    --menu-deroule:0ms;
+    --menu-ligne-decalage:0ms;
+    --hover-image-scale:1;
+    --hover-image-zoom:0%;
+  }
+}
+
+/* --- design-system/tokens/base.css --- */
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-sans);font-weight:var(--weight-regular);font-size:var(--size-body);line-height:var(--lh-body)}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:var(--weight-regular);color:var(--text-title);letter-spacing:var(--tracking-display);margin:0;text-wrap:balance}
+/* Lot M2 : un interligne par défaut à chaque titre, ceux de la charte. Sans
+   lui, un titre qui n'écrivait pas le sien héritait du corps (1,8, puis 1,7).
+   Un titre qui en écrit un — tous ceux de la fiche, le bandeau — le garde. */
+h1{line-height:var(--lh-h1)}
+h2{line-height:var(--lh-h2)}
+h3,h4{line-height:var(--lh-h3)}
+p{margin:0;text-wrap:pretty}
+a{color:var(--text-title);text-decoration:none;transition:box-shadow var(--dur-fast) var(--ease-brand),color var(--dur-fast) var(--ease-brand)}
+/* L'or en texte donne 2,19:1 sur ivoire : au survol le texte reste en onyx et la
+   signature dorée passe par un soulignement de 1 px. */
+a:hover{box-shadow:inset 0 -1px 0 0 var(--accent)}
+/* Sur fond onyx l'or en texte est valide (7,93:1) : on le conserve. */
+.on-strong a:hover,a.on-strong:hover{color:var(--accent);box-shadow:none}
+/* PO-113 — double trait. `textarea` a été ajouté à cette liste : il n'y était
+   pas, et aucune autre feuille ne le rattrapait, donc les onze zones de texte
+   du projet portaient l'anneau par défaut du navigateur. C'est une lacune de
+   la règle, pas un élargissement de périmètre.
+   L'`outline` reste le premier trait ET le repli du mode contraste forcé de
+   Windows, qui ignore `box-shadow` : sans lui, l'indicateur disparaîtrait
+   pour ceux qui en dépendent le plus. */
+/* `summary` a rejoint la liste au lot des volets repliables du 2026-09-04, et
+   l'oubli aurait été invisible à la relecture : un `<summary>` est focalisable
+   d'office, sans `tabindex`, mais il n'est ni un lien ni un bouton — il ne
+   tombait donc sous aucun des cinq sélecteurs, et recevait l'anneau du
+   navigateur au lieu de celui de la charte. Six contrôles par fiche.
+
+   MESURÉ DANS LES DEUX ÉTATS, à la tabulation réelle et non par un focus posé
+   en script — un `<summary>` focalisé par `element.focus()` ne déclenche pas
+   `:focus-visible`, contrairement à un lien, et la première mesure l'avait
+   fait croire à tort :
+
+     sans cette ligne : outline `0.8px auto`  · box-shadow `none`
+     avec cette ligne : outline `0.8px solid` à 2,4 px · box-shadow onyx 1 px
+
+   Ce n'était donc pas « pas d'anneau » mais « l'anneau du navigateur » : un
+   trait système, hors palette, qui change d'un moteur à l'autre. */
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:1px solid var(--focus-ring);outline-offset:3px;box-shadow:0 0 0 1px var(--focus-ring-2)}
+::selection{background:var(--d4r-or-32)}
+
+/* L'ADMIN GARDE LES TAILLES DE LA CHARTE — 2026-10-04. Le +1 px du texte
+   courant (`--size-texte-plus`, plus haut) est une demande du client pour le
+   SITE ; l'admin charge ce même fichier et l'aurait suivi par héritage. Les
+   trois tokens sont redéclarés sur le `<body>` des pages d'admin, qui portent
+   l'une de ces deux classes (`admin/*.php`, `adminRefus()`). Un calcul déjà
+   fait sur `:root` ne se refait pas en changeant `--size-texte-plus` plus bas :
+   il faut redéclarer les tailles elles-mêmes. */
+.admin-shell,.admin-auth-page{--size-body:var(--size-body-charte);--size-body-sm:var(--size-body-sm-charte);--size-caption:var(--size-caption-charte)}

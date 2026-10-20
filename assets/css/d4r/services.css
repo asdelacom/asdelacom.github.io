@@ -1,0 +1,551 @@
+/* Thème d4r — les pages de service (lot R5, 2026-10-17).
+   Panier, favoris, contact, blog et article, mentions légales, conditions de
+   location, page introuvable, recherche. Reprise de `contact.css`, `legal.css`
+   et du bloc de style que le site Render posait en ligne sur le panier — tous
+   trois surchargeaient déjà NOTRE balisage —, retraduite en tokens
+   (`assets/css/d4r/tokens.css`). Chargée après `site.css` sur ces pages
+   seulement (`d4rServiceHead()`). Aucune valeur littérale.
+
+   Ce qui est redessiné : la colonne de page (plus étroite, sans gouttière de
+   100 px), le titre (sans filet, en poids fort) et le sur-titre en or, la tête
+   centrée des pages légales, les listes de coordonnées en rangées, l'encadré
+   d'avertissement en or pâle, les volets des conditions en cartes blanches,
+   les rangées du panier et des favoris (vignettes arrondies, pied blanc), le
+   champ de recherche en pilule, la liste des articles et l'article. Le
+   balisage ne change pas, hors la tête « texte » du bandeau de contact et une
+   phrase de conduite sur les pages légales, toutes deux sous le thème seul.
+
+   D2 (2026-10-17) : tout texte en or de cette feuille — sur-titres, titres de
+   bloc, dates, liens de note, retour d'article — est en `--d4r-or-texte`,
+   l'or de texte lisible sur fond clair ; l'or de palette ne reste qu'en fond
+   de bouton et en bordure de champ. */
+
+/* ═══ 1. La colonne et la tête de page ═════════════════════════════════════ */
+.page {
+  max-width: var(--serv-max-large);
+  padding: var(--serv-hero-pad-haut) var(--serv-pad-x) var(--serv-pad-bas);
+}
+
+/* Les pages à tête centrée et panneau étroit : légal, conditions, contact,
+   introuvable. */
+.page.legal,
+.page.conditions,
+.page.contact,
+.page-404 {
+  max-width: var(--serv-max);
+}
+
+.page > .eyebrow {
+  margin: 0 0 var(--serv-eyebrow-bas);
+  font-size: var(--serv-eyebrow-size);
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--serv-eyebrow-tracking);
+  color: var(--d4r-or-texte);
+}
+
+.page h1 {
+  margin: 0 0 var(--serv-titre-bas);
+  padding-bottom: 0;
+  border-bottom: 0;
+  font-size: var(--serv-titre-size);
+  font-weight: var(--weight-fort);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-display);
+  color: var(--d4r-onyx);
+}
+
+/* La phrase de conduite sous le titre (pages légales, sous le thème seul). */
+.page__lead {
+  margin: 0 0 var(--serv-bloc-gap);
+  font-size: var(--serv-lead-size);
+  line-height: 1.55;
+  color: var(--d4r-noir-72);
+}
+
+.page.legal > .eyebrow,
+.page.legal > h1,
+.page.legal > .page__lead,
+.page.conditions > .eyebrow,
+.page.conditions > h1,
+.page.conditions > .page__lead,
+.page-404 > h1,
+.page-404 > p {
+  text-align: center;
+}
+
+.page.legal > .page__lead,
+.page.conditions > .page__lead,
+.page-404 > p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ═══ 2. Contact ═══════════════════════════════════════════════════════════
+   La tête est le bandeau « texte » (`bandeau.css`) ; ici, le panneau. */
+.page.contact {
+  padding-top: 0;
+}
+
+.contact__action {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 var(--serv-bloc-gap);
+}
+
+/* Les titres de bloc, en sur-titre or — contact et mentions. */
+.contact__titre,
+.legal__titre {
+  margin: var(--serv-bloc-gap) 0 var(--serv-eyebrow-bas);
+  font-size: var(--serv-eyebrow-size);
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--serv-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--d4r-or-texte);
+}
+
+.page.contact > .coordonnees:first-of-type,
+.legal__avertissement + .legal__titre {
+  margin-top: 0;
+}
+
+/* ═══ 3. Les listes de coordonnées ═════════════════════════════════════════
+   Une rangée par paire : libellé à gauche, valeur à droite, filet dessous. */
+.coordonnees {
+  max-width: none;
+  margin: 0;
+  border-top: var(--hairline) solid var(--d4r-onyx-10);
+}
+
+.coordonnees__ligne {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: var(--hairline) solid var(--d4r-onyx-10);
+}
+
+.coordonnees__label {
+  flex-shrink: 0;
+  font-size: var(--serv-label-size);
+  font-weight: var(--weight-titre);
+  line-height: 1.5;
+  color: var(--d4r-onyx);
+}
+
+.coordonnees__valeur {
+  text-align: right;
+  font-size: var(--serv-valeur-size);
+  font-weight: var(--weight-medium);
+  line-height: 1.5;
+  color: var(--d4r-onyx-78);
+}
+
+.coordonnees__valeur a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: var(--hairline) solid transparent;
+}
+
+.coordonnees__valeur a:hover {
+  color: var(--d4r-or-texte);
+  border-bottom-color: var(--d4r-or-texte);
+  box-shadow: none;
+}
+
+/* « à compléter » : italique, et un cran plus clair — onyx à 60 %, le dernier
+   ton qui tienne 4,5:1 sur ivoire. */
+.coordonnees__valeur--vide {
+  color: var(--d4r-onyx-60);
+}
+
+/* L'encadré d'avertissement des mentions : or pâle, bordé d'or, coins doux. */
+.legal__avertissement {
+  margin: 0 0 var(--serv-bloc-gap);
+  padding: var(--space-4) var(--serv-note-pad-x);
+  border: var(--hairline) solid var(--d4r-or-35);
+  border-left-width: var(--hairline);
+  border-radius: var(--serv-note-rayon);
+  background: var(--d4r-or-12);
+  font-size: var(--serv-label-size);
+  line-height: 1.5;
+  color: var(--d4r-onyx-82);
+}
+
+.legal__avertissement strong {
+  color: var(--d4r-onyx);
+  font-weight: var(--weight-fort);
+}
+
+@media (max-width: 520px) {
+  .coordonnees__ligne {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+
+  .coordonnees__valeur {
+    text-align: left;
+  }
+}
+
+/* ═══ 4. Les volets des conditions ═════════════════════════════════════════
+   Une carte blanche par volet, bordée d'or quand il est ouvert, chevron or. */
+.conditions__volets {
+  max-width: none;
+  gap: var(--serv-volet-gap);
+  margin-top: 0;
+}
+
+.volet--page {
+  overflow: hidden;
+  border: var(--hairline) solid var(--d4r-onyx-10);
+  border-radius: var(--serv-note-rayon);
+  background: var(--d4r-blanc);
+}
+
+.volet--page[open] {
+  border-color: var(--d4r-or-45);
+}
+
+.volet--page > .volet__tete,
+.volet--page:not([open]) > .volet__tete,
+.volet--page[open] > .volet__tete {
+  margin: 0;
+  padding: var(--serv-volet-pad-y) var(--serv-volet-pad-x);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.volet--page > .volet__tete::after {
+  width: var(--serv-chevron);
+  height: var(--serv-chevron);
+  border-right: var(--serv-chevron-trait) solid var(--d4r-or);
+  border-bottom: var(--serv-chevron-trait) solid var(--d4r-or);
+}
+
+.volet__titre {
+  font-size: var(--serv-volet-titre-size);
+  font-weight: var(--weight-fort);
+  line-height: 1.3;
+  color: var(--d4r-onyx);
+}
+
+.volet--page > .volet__corps {
+  padding: 0 var(--serv-volet-pad-x) var(--serv-volet-pad-x);
+}
+
+.volet--page .fiche__text {
+  max-width: none;
+  font-size: var(--serv-valeur-size);
+  line-height: 1.55;
+  color: var(--d4r-onyx-78);
+}
+
+/* ═══ 5. Panier et favoris ═════════════════════════════════════════════════
+   Scopé à `.collection` : le panneau du panier ouvert depuis l'en-tête garde
+   ses rangées serrées. */
+.collection__corps {
+  min-height: var(--serv-corps-min-h);
+}
+
+.collection .collection__liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--serv-ligne-gap);
+  margin-top: var(--space-6);
+  border-top: 0;
+}
+
+.collection .ligne {
+  gap: var(--space-4) var(--space-5);
+  align-items: stretch;
+  padding: 0 0 var(--serv-ligne-gap);
+  border-bottom: var(--hairline) solid var(--d4r-onyx-10);
+}
+
+.collection .ligne__principal {
+  grid-template-columns: var(--serv-ligne-vignette) minmax(0, 1fr);
+  column-gap: var(--serv-ligne-gap);
+  align-items: center;
+}
+
+.collection .ligne__vignette {
+  width: var(--serv-ligne-vignette);
+  border-radius: var(--serv-vignette-rayon);
+  background: var(--d4r-sable);
+  box-shadow: var(--serv-vignette-ombre);
+}
+
+.collection .ligne__vignette svg {
+  width: var(--serv-glyphe);
+  height: var(--serv-glyphe);
+  color: var(--d4r-taupe);
+}
+
+.collection .ligne__nom {
+  font-size: var(--serv-nom-size);
+  font-weight: var(--weight-titre);
+  line-height: 1.2;
+}
+
+.collection .ligne__lien .ligne__nom {
+  text-decoration: none;
+}
+
+.collection .ligne__lien:hover .ligne__nom {
+  color: var(--d4r-or-texte);
+}
+
+.collection .ligne__detail {
+  color: var(--d4r-onyx-60);
+}
+
+.collection .ligne__cote {
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-1) 0;
+}
+
+.collection .ligne__prix {
+  font-size: var(--serv-prix-size);
+  font-weight: var(--weight-titre);
+}
+
+.collection .ligne__retirer {
+  color: var(--d4r-onyx-60);
+}
+
+.collection .ligne__retirer:hover {
+  color: var(--d4r-onyx);
+}
+
+.collection .ligne--perimee {
+  opacity: var(--serv-perimee-opacite);
+}
+
+/* Le pied : une carte blanche, total et bouton d'envoi en pilule. */
+.collection__pied {
+  margin-top: var(--serv-bloc-gap);
+  padding: var(--serv-pied-pad-y) var(--serv-pied-pad-x);
+  border: var(--hairline) solid var(--d4r-onyx-06);
+  border-radius: var(--radius-cadre);
+  background: var(--d4r-blanc);
+  box-shadow: var(--serv-pied-ombre);
+}
+
+.collection__total {
+  font-size: var(--serv-total-size);
+  font-weight: var(--weight-titre);
+}
+
+.collection__envoyer {
+  display: inline-flex;
+  margin-top: var(--space-4);
+}
+
+.collection__note {
+  color: var(--d4r-onyx-60);
+}
+
+.collection__note a,
+.collection__vers-page {
+  color: var(--d4r-or-texte);
+  font-weight: var(--weight-titre);
+  text-decoration: none;
+}
+
+.collection__note a:hover,
+.collection__vers-page:hover {
+  text-decoration: underline;
+  box-shadow: none;
+}
+
+/* Vide : un cadre pointillé, centré. */
+.collection__vide {
+  margin-top: var(--space-6);
+  padding: var(--serv-vide-pad-y) var(--serv-vide-pad-x);
+  border: var(--hairline) dashed var(--d4r-onyx-12);
+  border-radius: var(--radius-cadre);
+  background: var(--d4r-blanc-72);
+  text-align: center;
+}
+
+.collection__vide-texte {
+  margin: 0 auto;
+  color: var(--d4r-onyx-78);
+  line-height: 1.55;
+}
+
+/* Sur ordinateur, `site.css` met le panier en deux colonnes (lignes à gauche,
+   pied collant à droite) : avec une vignette de 168 px, la rangée s'y étrangle
+   dans 392 px. Render le tient sur une seule colonne de 880 px : le pied
+   revient sous les lignes. */
+@media (min-width: 1024px) {
+  main.collection > [data-panier] {
+    display: block;
+  }
+
+  main.collection > [data-panier] > .collection__pied {
+    position: static;
+    padding: var(--serv-pied-pad-y) var(--serv-pied-pad-x);
+    border-color: var(--d4r-onyx-06);
+    border-radius: var(--radius-cadre);
+  }
+}
+
+@media (max-width: 720px) {
+  .collection .ligne {
+    grid-template-columns: 1fr;
+  }
+
+  .collection .ligne__principal {
+    grid-template-columns: var(--serv-ligne-vignette-tel) minmax(0, 1fr);
+    column-gap: var(--space-4);
+  }
+
+  .collection .ligne__vignette {
+    width: var(--serv-ligne-vignette-tel);
+    border-radius: var(--serv-vignette-rayon-tel);
+  }
+
+  .collection .ligne__cote {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+  }
+}
+
+/* ═══ 6. Recherche ═════════════════════════════════════════════════════════
+   Le champ en pilule ; les résultats sont les cartes de `listes.css`. */
+.search--page {
+  max-width: none;
+  margin-top: var(--space-4);
+}
+
+.search--page .search__input {
+  height: var(--serv-champ-h);
+  padding: 0 var(--serv-champ-pad-x);
+  border-color: var(--d4r-onyx-12);
+  border-radius: var(--radius-pill);
+  background: var(--d4r-blanc);
+}
+
+.search--page .search__input:focus-visible {
+  border-color: var(--d4r-or-texte);
+}
+
+.search__count {
+  color: var(--d4r-onyx-60);
+}
+
+/* ═══ 7. Blog et article ═══════════════════════════════════════════════════ */
+/* Sous le bandeau, la liste n'a pas besoin de la hauteur de tête. */
+.bandeau-liste + .page {
+  padding-top: var(--serv-hero-pad-bas);
+}
+
+.journal {
+  margin-top: 0;
+}
+
+.journal__item {
+  border-bottom-color: var(--d4r-onyx-10);
+}
+
+.journal__media {
+  border-radius: var(--serv-vignette-rayon);
+  background: var(--d4r-sable);
+}
+
+.journal__date,
+.article__date {
+  font-size: var(--serv-eyebrow-size);
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--serv-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--d4r-or-texte);
+}
+
+.journal__titre {
+  font-weight: var(--weight-fort);
+}
+
+.journal__titre a {
+  text-decoration: none;
+}
+
+.journal__chapo {
+  color: var(--d4r-noir-72);
+}
+
+.page.article .breadcrumb a {
+  color: var(--d4r-onyx-60);
+  text-decoration: none;
+}
+
+.page.article .breadcrumb a:hover {
+  color: var(--d4r-or-texte);
+  box-shadow: none;
+}
+
+.article__date {
+  margin-top: 0;
+}
+
+.article__chapo {
+  max-width: var(--fiche-texte-max);
+  font-size: var(--serv-lead-size);
+  line-height: 1.55;
+  color: var(--d4r-noir-72);
+}
+
+.article__couverture {
+  border-radius: var(--radius-cadre);
+  background: var(--d4r-sable);
+}
+
+/* Le texte courant d'un article : la mesure et le corps de la fiche. */
+.article__corps p {
+  max-width: var(--fiche-texte-max);
+  font-size: var(--fiche-texte-size);
+  line-height: 1.7;
+  color: var(--d4r-noir-72);
+}
+
+.article__retour {
+  border-top-color: var(--d4r-onyx-10);
+}
+
+.article__retour a {
+  color: var(--d4r-or-texte);
+  font-weight: var(--weight-titre);
+  text-decoration: none;
+}
+
+.article__retour a:hover {
+  text-decoration: underline;
+  box-shadow: none;
+}
+
+/* ═══ 8. Page introuvable ══════════════════════════════════════════════════ */
+.page-404 {
+  padding-top: var(--serv-404-pad-haut);
+}
+
+.page-404 > h1 {
+  font-size: var(--serv-404-size);
+}
+
+.page-404 > p {
+  font-size: var(--serv-lead-size);
+  line-height: 1.55;
+  color: var(--d4r-noir-72);
+}
+
+.page-404 > p a {
+  color: var(--d4r-or-texte);
+  font-weight: var(--weight-titre);
+}

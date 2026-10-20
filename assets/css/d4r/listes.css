@@ -1,0 +1,595 @@
+/* Thème d4r — les pages de liste (lot R3, 2026-10-17).
+   Reprise de `flotte-assloc.css`, `activites-flotte.css`, `packs-flotte.css`
+   et des cartes d'univers « One Concierge » du site Render, SUR LE BALISAGE
+   EXISTANT des listes : `.filters` (pastilles), `.card-grid` et `.card` (la
+   carte de `render_product_card()`), `.page`. Le balisage ne change pas parce
+   que `surplace.js` (les filtres sans rechargement) et le script du pied de
+   page (la pastille active amenée dans la bande) le lisent. Ce fichier est
+   chargé après `site.css` et le redessine. Aucune valeur littérale : tokens de
+   `assets/css/d4r/tokens.css`. Le bandeau, lui, est dans `bandeau.css` : toute
+   page à bandeau le porte, pas seulement les listes. */
+
+/* ═══ 2. La page et les pastilles ══════════════════════════════════════════ */
+.page {
+  max-width: var(--liste-max);
+  padding-left: var(--liste-pad-x);
+  padding-right: var(--liste-pad-x);
+}
+
+.filters,
+.type-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--liste-pilule-gap);
+  margin: 0;
+  padding: var(--space-3) 0 0;
+  list-style: none;
+  overflow: visible;
+  border: 0;
+}
+
+.filters:first-child,
+.univers + .filters {
+  padding-top: var(--space-6);
+}
+
+.filters--univers {
+  padding-top: var(--space-6);
+}
+
+.filters__item,
+.type-filters li {
+  margin: 0;
+  padding: 0;
+}
+
+.filters a,
+.type-filters a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--liste-pilule-h);
+  padding: 0 var(--liste-pilule-pad);
+  border: var(--hairline) solid var(--d4r-gris-filet);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-body);
+  font-size: var(--liste-pilule-size);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: none;
+  transition: border-color var(--dur-fast) var(--ease-brand), background var(--dur-fast) var(--ease-brand), color var(--dur-fast) var(--ease-brand);
+}
+
+.filters a:hover,
+.type-filters a:hover {
+  border-color: var(--d4r-onyx);
+  color: var(--text-title);
+  box-shadow: none;
+}
+
+.filters a.is-active,
+.type-filters a.is-active {
+  background: var(--liste-pilule-active);
+  border-color: transparent;
+  color: var(--d4r-blanc);
+}
+
+.filters__glyphe {
+  width: var(--icon-w-filtre);
+  height: var(--icon-w-filtre);
+  color: currentColor;
+  fill: currentColor;
+}
+
+.filters--rapide a {
+  background: var(--d4r-blanc);
+  color: var(--d4r-gris-moyen);
+}
+
+.filters--rapide a.is-active {
+  background: var(--liste-pilule-active);
+  color: var(--d4r-blanc);
+}
+
+/* ═══ 3. La grille et la carte ═════════════════════════════════════════════ */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--liste-carte-gap);
+  padding: var(--liste-grille-pad) 0 var(--accueil-section-pad);
+}
+
+@media (min-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card-slot {
+  position: relative;
+  margin: 0;
+}
+
+.card,
+.card.card--no-photo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  min-height: var(--liste-carte-h);
+  height: auto;
+  padding: var(--liste-carte-pad);
+  border: 0;
+  border-radius: var(--radius-carte-liste);
+  overflow: hidden;
+  background: var(--d4r-onyx);
+  color: var(--d4r-ivoire);
+  box-shadow: none;
+  isolation: isolate;
+  transition: transform var(--dur-base) var(--ease-brand);
+}
+
+@media (pointer: fine) {
+  .card:hover {
+    transform: scale(var(--liste-carte-echelle-survol));
+    box-shadow: none;
+    color: var(--d4r-ivoire);
+  }
+}
+
+.card__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  margin: 0;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: var(--d4r-onyx);
+  overflow: hidden;
+}
+
+.card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--liste-carte-voile);
+  pointer-events: none;
+}
+
+.card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow) var(--ease-brand);
+}
+
+@media (pointer: fine) {
+  .card:hover .card__img {
+    transform: scale(var(--hover-image-scale));
+  }
+}
+
+.card__fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--d4r-or-42);
+}
+
+.card:not(.card--no-photo) .card__fallback {
+  display: none;
+}
+
+.card__tag {
+  position: absolute;
+  top: var(--liste-carte-coin);
+  right: calc(var(--liste-carte-coin) + var(--favori-pastille) + var(--space-2));
+  z-index: 2;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--d4r-or);
+  color: var(--d4r-onyx);
+  font-size: var(--liste-etiquette-size);
+  font-weight: var(--weight-fort);
+  letter-spacing: var(--cta-tracking);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Le prix, en pilule de verre en haut à gauche. */
+.card__footer {
+  display: contents;
+}
+
+.card__prix {
+  position: absolute;
+  top: var(--liste-carte-coin);
+  left: var(--liste-carte-coin);
+  z-index: 2;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: var(--space-1);
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  border-radius: var(--radius-pill);
+  background: var(--liste-prix-fond);
+  backdrop-filter: blur(var(--liste-prix-flou));
+  -webkit-backdrop-filter: blur(var(--liste-prix-flou));
+  color: var(--d4r-blanc);
+  font-size: var(--liste-prix-size);
+  font-weight: var(--weight-fort);
+  line-height: 1.2;
+}
+
+.card__price-prefix,
+.card__price-note {
+  display: inline;
+  margin: 0;
+  font-weight: var(--weight-regular);
+  font-size: var(--liste-prix-size);
+  color: var(--d4r-blanc);
+  opacity: .95;
+}
+
+.card__price {
+  display: inline;
+  margin: 0;
+  line-height: 1.2;
+  font-size: var(--liste-prix-size);
+  font-weight: var(--weight-fort);
+  color: var(--d4r-blanc);
+}
+
+/* Le bloc de texte, en bas à gauche : catégorie, durée, nom, description. */
+.card__meta,
+.card__duration,
+.card__title,
+.card__desc {
+  position: relative;
+  z-index: 2;
+  max-width: var(--liste-carte-texte-max);
+}
+
+.card__meta {
+  order: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.card__meta .icone {
+  width: var(--icon-w-card);
+  height: var(--icon-w-card);
+  color: var(--d4r-or);
+  fill: var(--d4r-or);
+}
+
+.card__meta .eyebrow {
+  font-size: var(--liste-eyebrow-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--d4r-or);
+}
+
+.card__duration {
+  order: 2;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  font-size: var(--liste-eyebrow-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--d4r-or);
+}
+
+.card__duration-reserve {
+  display: none;
+}
+
+.card__title {
+  order: 3;
+  min-height: 0;
+  margin: var(--space-1) 0 0;
+  font-size: var(--liste-nom-size);
+  font-weight: var(--weight-fort);
+  line-height: 1.1;
+  color: var(--d4r-ivoire);
+}
+
+.card__name {
+  color: var(--d4r-ivoire);
+  box-shadow: none;
+}
+
+.card:hover .card__name {
+  box-shadow: none;
+}
+
+.card__desc {
+  order: 4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin: var(--space-1) 0 0;
+  min-height: 0;
+  max-height: none;
+  overflow: hidden;
+  font-size: var(--liste-desc-size);
+  line-height: 1.4;
+  color: var(--d4r-ivoire);
+}
+
+.card__desc:empty {
+  display: none;
+}
+
+/* La flèche en bas à droite, en forme CSS. */
+.card::after {
+  content: "";
+  position: absolute;
+  right: var(--liste-carte-coin);
+  bottom: var(--liste-carte-coin);
+  z-index: 2;
+  width: var(--liste-fleche);
+  height: var(--liste-fleche);
+  border-radius: var(--radius-pill);
+  background: var(--services-fleche-fond);
+  background-image: var(--liste-fleche-chevron);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: var(--space-2) var(--space-2);
+}
+
+/* Le bouton de favori reste en haut à droite, sur la photo. */
+.card__favori {
+  top: var(--liste-carte-coin);
+  right: var(--liste-carte-coin);
+  z-index: 3;
+}
+
+/* Les voitures : la hauteur de la photo native (1400 × 787), le nom en capitales. */
+main[data-surplace="voitures"] .card {
+  min-height: 0;
+  aspect-ratio: 1400 / 787;
+}
+
+main[data-surplace="voitures"] .card__title {
+  font-size: var(--liste-nom-size-voiture);
+  font-weight: var(--weight-fort);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+main[data-surplace="voitures"] .card__desc {
+  display: none;
+}
+
+/* Les packs : la grande carte, l'affiche recadrée en paysage (comme sur Render). */
+.card-grid--affiches .card {
+  min-height: var(--liste-carte-h-pack);
+}
+
+.card-grid--affiches .card__media,
+.card-grid--affiches .card__img {
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+.card-grid--affiches .card__desc {
+  -webkit-line-clamp: 2;
+}
+
+/* Les activités : plus hautes. */
+main[data-surplace="activites"] .card {
+  min-height: var(--liste-carte-h-activite);
+}
+
+/* ═══ 4. La grille des univers ═════════════════════════════════════════════ */
+.univers {
+  padding: var(--space-6) 0 var(--space-8);
+}
+
+.univers__grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .univers__grille { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 1100px) {
+  .univers__grille { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.univers__carte {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--univers-carte-h);
+  border-radius: var(--services-rayon);
+  overflow: hidden;
+  background: var(--d4r-onyx);
+  color: var(--d4r-blanc);
+  isolation: isolate;
+}
+
+@media (max-width: 480px) {
+  .univers__carte {
+    height: var(--univers-carte-h-tel);
+  }
+}
+
+.univers__carte:hover {
+  box-shadow: none;
+  color: var(--d4r-blanc);
+}
+
+/* Lot F3 (2026-10-20) — un univers SANS photo n'est plus un aplat noir : un
+   fond nuancé et le pictogramme en filigrane (le logo du graphiste, pas une
+   icône nouvelle), blanc à 10 %. La photo, dès qu'elle existe, couvre tout. */
+.univers__carte--sans-photo {
+  background: var(--univers-sans-photo-fond);
+}
+
+.univers__carte--sans-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/img/pictogramme.svg") no-repeat center / var(--univers-filigrane-taille);
+  filter: invert(1);
+  opacity: var(--univers-filigrane-opacite);
+  transition: transform var(--dur-slow) var(--ease-brand);
+  pointer-events: none;
+}
+
+@media (pointer: fine) {
+  .univers__carte--sans-photo:hover::before {
+    transform: scale(var(--univers-filigrane-survol));
+  }
+}
+
+.univers__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow) var(--ease-brand);
+}
+
+@media (pointer: fine) {
+  .univers__carte:hover .univers__img {
+    transform: scale(var(--hover-image-scale));
+  }
+}
+
+.univers__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--univers-voile);
+  pointer-events: none;
+}
+
+.univers__titre {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  text-align: center;
+  font-size: var(--univers-titre-size);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.univers__glyphe {
+  width: var(--icon-w-lg);
+  height: var(--icon-w-lg);
+  color: var(--d4r-ivoire);
+  fill: var(--d4r-ivoire);
+}
+
+.univers__barre {
+  position: absolute;
+  left: var(--space-5);
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--d4r-blanc);
+  color: var(--d4r-onyx);
+}
+
+.univers__texte {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.univers__eyebrow {
+  font-size: var(--liste-eyebrow-size);
+  letter-spacing: var(--cta-tracking);
+  text-transform: uppercase;
+  color: var(--d4r-noir-72);
+}
+
+.univers__compte {
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.univers__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 0 0 auto;
+  padding: var(--space-2) var(--space-4);
+  border: var(--hairline) solid var(--d4r-onyx-12);
+  border-radius: var(--radius-pill);
+  font-size: var(--liste-pilule-size);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  transition: background var(--dur-base) var(--ease-brand), color var(--dur-base) var(--ease-brand);
+}
+
+.univers__cta img {
+  width: var(--space-3);
+  height: var(--space-3);
+  display: block;
+  transition: filter var(--dur-base) var(--ease-brand);
+}
+
+.univers__carte:hover .univers__cta {
+  background: var(--d4r-onyx);
+  color: var(--d4r-blanc);
+}
+
+.univers__carte:hover .univers__cta img {
+  filter: invert(1);
+}
+
+/* ═══ 5. Les voitures : la colonne des gammes n'est pas rendue ─────────── */
+.voitures {
+  display: block;
+}
+
+.voitures__resultats {
+  width: 100%;
+}
