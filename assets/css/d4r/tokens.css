@@ -233,32 +233,36 @@
   --splash-minimum:600ms;      /* lus par accueil.js : le temps minimal du splash, et l'attente de la vidéo */
   --splash-attente-video:900ms;
 
-  /* « À propos » : une course de 2,4 écrans, le pin d'un écran, quatre cartes. */
-  --apropos-course:240vh;
-  --apropos-course-tel:280vh;
-  --apropos-couture-h:min(22vh,160px);
+  /* « À propos » — les volets (lot F4, 2026-10-20, décision du client sur
+     planche) : le concept en tête, quatre volets hauts ; l'ouvert prend
+     `--apropos-volet-ouvert` parts de largeur pour 1 à chaque fermé. Les
+     tokens de la dérive de Render (course, pin, filigrane, coins) sont partis
+     avec elle. */
   --apropos-max:1180px;
-  --apropos-centre-w:min(34rem,88%);
-  --apropos-centre-w-tel:min(20.5rem,86%);
-  --apropos-marque-w:min(58vmin,340px);
-  --apropos-marque-w-tel:min(62vmin,260px);
-  --apropos-marque-opacite:.55;
-  --apropos-orn:52px;
-  --apropos-orn-tel:32px;
-  --apropos-losange:8px;
-  --apropos-fond:radial-gradient(ellipse 70% 45% at 50% 42%,var(--d4r-or-14) 0%,transparent 58%),radial-gradient(ellipse 40% 30% at 12% 78%,var(--d4r-or-09) 0%,transparent 70%),radial-gradient(ellipse 36% 28% at 88% 18%,var(--d4r-or-09) 0%,transparent 70%),var(--d4r-noir);
-  --apropos-couture:linear-gradient(180deg,var(--d4r-noir) 0%,var(--d4r-noir-55) 50%,rgba(0,0,0,0) 100%);
-  --apropos-etiquette:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.8) 72%);
-  --apropos-carte-ombre:0 16px 40px var(--d4r-noir-65);
-  --apropos-carte-ombre-survol:0 20px 48px rgba(0,0,0,.72);
-  --apropos-coin:7px;
-  --apropos-titre-size:clamp(1.7rem,4.6vw,3.1rem);
-  --apropos-titre-size-tel:clamp(1.55rem,7.2vw,1.95rem);
-  --apropos-lead-size:clamp(.92rem,2.1vw,1.05rem);
-  --apropos-badge-size:.65rem;
-  --apropos-kicker-size:clamp(.85rem,2vw,1.2rem);
-  --apropos-nom-size:clamp(.65rem,1.4vw,.88rem);
-  --apropos-cta-size:.78rem;
+  --apropos-pad-y:clamp(56px,9vw,96px);
+  --apropos-pad-y-tel:64px;
+  --apropos-volets-h:min(62vh,520px);
+  --apropos-volets-gap:10px;
+  --apropos-volet-rayon:22px;
+  --apropos-volet-ouvert:3.2;
+  --apropos-volet-ombre:0 24px 60px var(--d4r-noir-65);
+  --apropos-voile-ouvert:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.78) 100%);
+  --apropos-voile-ferme:var(--d4r-noir-55);
+  --apropos-trait:rgba(255,255,255,.55);   /* contour du bouton « Découvrir » et des filets sur noir */
+  --apropos-etiquette-glisse:12px;
+  --apropos-chevron:7px;
+  --apropos-chevron-trait:2px;
+  --apropos-titre-size:clamp(2rem,5vw,3.6rem);
+  --apropos-titre-size-tel:clamp(1.75rem,8vw,2.2rem);
+  --apropos-lead-size:clamp(.95rem,1.6vw,1.1rem);
+  --apropos-eyebrow-size:.7rem;
+  --apropos-num-size:2rem;
+  --apropos-ferme-size:.8rem;
+  --apropos-nom-size:clamp(1.05rem,1.8vw,1.35rem);
+  --apropos-cta-size:.9rem;
+  --apropos-voir-size:.82rem;
+  --dur-apropos:.55s;
+  --ease-apropos:cubic-bezier(.22,.61,.36,1);
 
   /* Les carrousels « Framer » : une carte au centre, ses voisines réduites. */
   --carrou-fond:var(--d4r-gris-clair);
@@ -517,6 +521,7 @@
     --dur-ouverture:0s;
     --dur-ouverture-texte:0s;
     --dur-carrou:0s;
+    --dur-apropos:0s;
     --dur-reveal:0s;
     --dur-reveal-court:0s;
     --reveal-pas:0s;

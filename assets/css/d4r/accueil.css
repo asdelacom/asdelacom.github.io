@@ -306,248 +306,170 @@ html.splash-actif .entete {
   transform: scale(var(--splash-echelle-fin));
 }
 
-/* ═══ 3. « À propos » ══════════════════════════════════════════════════════ */
+/* ═══ 3. « À propos » — les volets (lot F4, 2026-10-20) ════════════════════
+   Le concept en tête (titre à gauche, texte et bouton à droite), puis quatre
+   volets hauts côte à côte. L'OUVERTURE EST DU CSS : un volet est « ouvert »
+   quand il est survolé, quand il porte le focus, ou — si aucun ne l'est —
+   quand il porte `is-ouvert` (le premier, posé par le PHP ; le script la
+   déplace sur le dernier survolé). Tout ce qui change avec l'état lit la
+   variable `--ouvert` (0 ou 1) : la part de largeur, le voile, l'étiquette,
+   le mot-clé vertical. Sous 900 px, grille de quatre, `--ouvert` à 1 partout.
+   Le dessin de Render (dérive, filigrane, coins d'or) est parti avec ce lot. */
 .apropos {
   position: relative;
   z-index: 2;
-  height: var(--apropos-course);
+  /* Le bandeau, au-dessus, déborde sur la section de `--bandeau-chevauche`
+     (sa marge basse négative, z-index 3 : il passe DEVANT) pour fondre la
+     couture. Le haut de la section lui est donc réservé, et le contenu
+     commence après — mesuré à 375 : sans cette part, le sur-titre « Le
+     concept » restait sous la vidéo du bandeau. */
+  padding: calc(var(--bandeau-chevauche) + var(--apropos-pad-y)) 0 var(--apropos-pad-y);
   background: var(--d4r-noir);
-  color: var(--d4r-ivoire);
-  view-timeline-name: --apropos;
-  view-timeline-axis: block;
+  color: var(--d4r-blanc);
 }
 
-@media (max-width: 900px) {
+@media (min-width: 768px) {
   .apropos {
-    height: var(--apropos-course-tel);
+    padding-top: calc(var(--bandeau-chevauche-large) + var(--apropos-pad-y));
   }
 }
 
-.apropos::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: var(--apropos-couture-h);
-  z-index: 9;
-  pointer-events: none;
-  background: var(--apropos-couture);
-}
-
-.apropos__pin {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
-  background: var(--d4r-noir);
-}
-
-.apropos__fond {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  background: var(--apropos-fond);
-}
-
-.apropos__orn {
-  position: absolute;
-  z-index: 1;
-  width: var(--apropos-orn);
-  height: var(--apropos-orn);
-  opacity: .75;
-}
-
-@media (max-width: 900px) {
-  .apropos__orn {
-    width: var(--apropos-orn-tel);
-    height: var(--apropos-orn-tel);
-  }
-}
-
-.apropos__orn--hg { top: 12%; left: 6%; border-top: var(--hairline) solid var(--d4r-or-42); border-left: var(--hairline) solid var(--d4r-or-42); }
-.apropos__orn--hd { top: 12%; right: 6%; border-top: var(--hairline) solid var(--d4r-or-42); border-right: var(--hairline) solid var(--d4r-or-42); }
-.apropos__orn--bg { bottom: 14%; left: 6%; border-bottom: var(--hairline) solid var(--d4r-or-42); border-left: var(--hairline) solid var(--d4r-or-42); }
-.apropos__orn--bd { bottom: 14%; right: 6%; border-bottom: var(--hairline) solid var(--d4r-or-42); border-right: var(--hairline) solid var(--d4r-or-42); }
-
-.apropos__orn--losange {
-  top: 50%;
-  left: 50%;
-  width: var(--apropos-losange);
-  height: var(--apropos-losange);
-  margin: calc(-1 * var(--apropos-losange) / 2) 0 0 calc(-1 * var(--apropos-losange) / 2);
-  border: var(--hairline) solid var(--d4r-or);
-  transform: rotate(45deg);
-  opacity: .7;
-}
-
-.apropos__marque {
-  position: absolute;
-  left: 50%;
-  top: 42%;
-  width: var(--apropos-marque-w);
-  transform: translate(-50%, -50%);
-  color: var(--d4r-or);
-  opacity: var(--apropos-marque-opacite);
-  z-index: 1;
-}
-
-@media (max-width: 900px) {
-  .apropos__marque {
-    width: var(--apropos-marque-w-tel);
-  }
-}
-
-.apropos__marque svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.apropos__scene {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
+.apropos__in {
   max-width: var(--apropos-max);
   margin: 0 auto;
+  padding: 0 var(--accueil-pad-x);
 }
 
-.apropos__centre {
-  position: absolute;
-  left: 50%;
-  top: 42%;
-  transform: translate(-50%, -50%);
-  z-index: 6;
-  width: var(--apropos-centre-w);
-  text-align: center;
-  pointer-events: none;
+.apropos__tete {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: end;
 }
 
-@media (max-width: 900px) {
-  .apropos__centre {
-    top: 40%;
-    width: var(--apropos-centre-w-tel);
-  }
-}
-
-.apropos__badge {
-  display: inline-flex;
+.apropos__eyebrow {
   margin: 0 0 var(--space-3);
-  padding: var(--space-2) var(--space-4);
-  border: var(--hairline) solid var(--d4r-or-75);
-  border-radius: var(--radius-pill);
-  font-size: var(--apropos-badge-size);
+  font-size: var(--apropos-eyebrow-size);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
-  color: var(--d4r-blanc);
+  color: var(--d4r-or);
 }
 
 .apropos__titre {
   margin: 0;
+  color: inherit;
   font-size: var(--apropos-titre-size);
-  font-weight: var(--weight-titre);
-  line-height: 1.12;
-  color: var(--d4r-blanc);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-display);
 }
 
-@media (max-width: 900px) {
-  .apropos__titre {
-    font-size: var(--apropos-titre-size-tel);
-  }
+.apropos__titre .titre-leger {
+  font-style: normal;
+  font-weight: var(--weight-light);
 }
 
 .apropos__lead {
-  margin: var(--space-4) auto 0;
-  max-width: 28rem;
+  margin: 0;
+  max-width: 30rem;
   font-size: var(--apropos-lead-size);
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--d4r-blanc-72);
-}
-
-@media (max-width: 900px) {
-  .apropos__lead {
-    display: none;
-  }
 }
 
 .apropos__cta {
   display: inline-flex;
   align-items: center;
-  margin-top: var(--space-5);
+  gap: var(--space-2);
+  margin-top: var(--space-6);
   padding: var(--space-3) var(--space-6);
+  border: var(--hairline) solid var(--apropos-trait);
   border-radius: var(--radius-pill);
-  background: var(--d4r-blanc);
-  color: var(--d4r-onyx);
+  color: var(--d4r-blanc);
   font-size: var(--apropos-cta-size);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--cta-tracking);
-  text-transform: uppercase;
-  pointer-events: auto;
+  font-weight: var(--weight-fort);
+}
+
+.apropos__cta::after,
+.apropos__voir::after {
+  content: "";
+  width: var(--apropos-chevron);
+  height: var(--apropos-chevron);
+  border-right: var(--apropos-chevron-trait) solid currentColor;
+  border-bottom: var(--apropos-chevron-trait) solid currentColor;
+  transform: rotate(-45deg);
 }
 
 .apropos__cta:hover {
   box-shadow: none;
   color: var(--d4r-onyx);
-  background: var(--d4r-ivoire);
+  background: var(--d4r-blanc);
 }
 
-.apropos__carte {
+/* --- Les volets ------------------------------------------------------------- */
+.apropos__volets {
+  display: flex;
+  gap: var(--apropos-volets-gap);
+  height: var(--apropos-volets-h);
+  margin: var(--space-12) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.apropos__volet {
+  --ouvert: 0;
+  position: relative;
+  flex: calc(1 + (var(--apropos-volet-ouvert) - 1) * var(--ouvert)) 1 0;
+  min-width: 0;
+  border-radius: var(--apropos-volet-rayon);
+  overflow: hidden;
+  background: var(--d4r-gris-doux);
+  box-shadow: var(--apropos-volet-ombre);
+  transition: flex-grow var(--dur-apropos) var(--ease-apropos);
+}
+
+/* L'état ouvert : survolé, focus dedans, ou `is-ouvert` quand aucun ne l'est. */
+.apropos__volet:hover,
+.apropos__volet:focus-within,
+.apropos__volets:not(:hover):not(:focus-within) .apropos__volet.is-ouvert {
+  --ouvert: 1;
+}
+
+.apropos__lien {
   position: absolute;
-  z-index: 2;
+  inset: 0;
   display: block;
   color: inherit;
-  will-change: transform;
 }
 
-.apropos__carte:hover {
+.apropos__lien:hover {
   box-shadow: none;
   color: inherit;
 }
 
+/* L'anneau de focus (PO-113) : le lien remplit un volet qui coupe ce qui
+   dépasse, donc l'anneau se pose sur le volet lui-même — même dessin que la
+   règle globale de tokens.css (filet d'or à 3 px, filet onyx contre le bord). */
+.apropos__lien:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.apropos__volet:focus-within {
+  outline: var(--hairline) solid var(--focus-ring);
+  outline-offset: 3px;
+  box-shadow: var(--apropos-volet-ombre), 0 0 0 var(--hairline) var(--focus-ring-2);
+}
+
 .apropos__cadre {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: var(--d4r-onyx);
-  box-shadow: var(--apropos-carte-ombre);
-  transition: transform var(--dur-base) var(--ease-d4r), box-shadow var(--dur-base) var(--ease-brand);
-}
-
-@media (pointer: fine) {
-  .apropos__carte:hover .apropos__cadre {
-    transform: scale(1.03);
-    box-shadow: var(--apropos-carte-ombre-survol);
-  }
-}
-
-/* Les coins d'or, en quatre points. */
-.apropos__carte::before,
-.apropos__carte::after,
-.apropos__cadre::before,
-.apropos__cadre::after {
-  content: "";
   position: absolute;
-  width: var(--apropos-coin);
-  height: var(--apropos-coin);
-  background: var(--d4r-or);
-  z-index: 4;
-  pointer-events: none;
+  inset: 0;
+  display: block;
+  overflow: hidden;
 }
 
-.apropos__carte::before { top: -1px; left: -1px; }
-.apropos__carte::after { top: -1px; right: -1px; }
-.apropos__cadre::before { bottom: -1px; left: -1px; }
-.apropos__cadre::after { bottom: -1px; right: -1px; }
-
-/* D1 (2026-10-17) — l'image d'attente de la carte, sous la vidéo : c'est
-   elle qu'on voit au téléphone, où les vidéos secondaires ne partent qu'à la
-   demande, et partout tant que la vidéo n'est pas lue. */
+/* D1 (lot R8) — l'image d'attente sous la vidéo : c'est elle qu'on voit au
+   téléphone, et partout tant que la vidéo n'est pas lue. */
 .apropos__img {
   position: absolute;
   inset: 0;
@@ -567,86 +489,154 @@ html.splash-actif .entete {
   transition: opacity var(--dur-slow) var(--ease-brand);
 }
 
-.apropos__etiquette {
+/* Le voile : un dégradé bas quand le volet est ouvert, un voile uni quand il
+   est fermé — les deux superposés, le second s'efface à l'ouverture. */
+.apropos__voile {
   position: absolute;
-  inset: auto 0 0 0;
+  inset: 0;
   z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-2);
-  padding: var(--space-8) var(--space-3) var(--space-2);
-  background: var(--apropos-etiquette);
+  pointer-events: none;
+  background: var(--apropos-voile-ouvert);
 }
 
-.apropos__kicker,
-.apropos__nom {
+.apropos__voile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--apropos-voile-ferme);
+  opacity: calc(1 - var(--ouvert));
+  transition: opacity var(--dur-apropos) var(--ease-apropos);
+}
+
+.apropos__num {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-6);
+  z-index: 3;
+  font-size: var(--apropos-num-size);
+  font-weight: var(--weight-light);
+  letter-spacing: -.03em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: var(--hairline) var(--d4r-blanc);
+  /* Le numéro ne vit que sur un volet fermé : ouvert, l'étiquette nomme
+     l'univers, et un chiffre en filet se perdait sur les reflets d'une photo. */
+  opacity: calc(1 - var(--ouvert));
+  transition: opacity var(--dur-apropos) var(--ease-apropos);
+}
+
+/* Le mot-clé à la verticale, lu de bas en haut, sur un volet fermé. */
+.apropos__ferme {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-8);
+  z-index: 3;
+  transform: translateX(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  font-size: var(--apropos-ferme-size);
   font-weight: var(--weight-medium);
-  letter-spacing: var(--cta-tracking);
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--d4r-blanc);
+  opacity: calc(1 - var(--ouvert));
+  transition: opacity var(--dur-apropos) var(--ease-apropos);
+}
+
+/* L'étiquette d'un volet ouvert : mot-clé, nom, et un bouton « Voir ». */
+.apropos__etiquette {
+  position: absolute;
+  left: var(--space-6);
+  right: var(--space-6);
+  bottom: var(--space-6);
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--space-4);
+  opacity: var(--ouvert);
+  transform: translateY(calc((1 - var(--ouvert)) * var(--apropos-etiquette-glisse)));
+  transition: opacity var(--dur-apropos) var(--ease-apropos), transform var(--dur-apropos) var(--ease-apropos);
+}
+
+.apropos__kicker {
+  display: block;
+  font-size: var(--apropos-eyebrow-size);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--d4r-or);
+}
+
+.apropos__nom {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--apropos-nom-size);
+  font-weight: var(--weight-titre);
   line-height: 1.15;
+  color: var(--d4r-blanc);
 }
 
-.apropos__kicker { font-size: var(--apropos-kicker-size); }
-.apropos__nom { font-size: var(--apropos-nom-size); opacity: .92; text-align: right; }
+.apropos__voir {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--d4r-or);
+  color: var(--d4r-onyx);
+  font-size: var(--apropos-voir-size);
+  font-weight: var(--weight-fort);
+}
 
-.apropos__carte--1 { top: 6%; left: 3%; width: min(280px, 22vw); aspect-ratio: 5 / 4; z-index: 3; }
-.apropos__carte--2 { top: 54%; left: 7%; width: min(340px, 28vw); aspect-ratio: 16 / 10; }
-.apropos__carte--3 { top: 58%; right: 5%; width: min(250px, 20vw); aspect-ratio: 1 / 1; z-index: 3; }
-.apropos__carte--4 { top: 8%; right: 4%; width: min(300px, 24vw); aspect-ratio: 4 / 3; }
-
+/* --- Sous 900 px : une grille de quatre, tous ouverts ------------------------ */
 @media (max-width: 900px) {
-  .apropos__carte--1 { top: 12%; left: 9%; width: 44.5%; aspect-ratio: 174 / 217; z-index: 7; }
-  .apropos__carte--2 { top: 48%; left: 2.5%; width: 68.5%; aspect-ratio: 267 / 200; z-index: 3; }
-  .apropos__carte--3 { top: 58%; left: auto; right: -2%; width: 68.5%; aspect-ratio: 267 / 200; z-index: 4; }
-  .apropos__carte--4 { top: 72%; left: 28%; right: auto; width: 44.5%; aspect-ratio: 174 / 217; z-index: 6; }
-}
-
-/* La dérive au défilement, par le navigateur quand il le sait (le script pose
-   `data-apropos-css`) ; sinon le script écrit les transformations. */
-@supports (animation-timeline: view()) {
-  .apropos[data-apropos-css] .apropos__carte {
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-    animation-timeline: --apropos;
-    animation-range: contain 0% contain 100%;
-  }
-
-  .apropos[data-apropos-css] .apropos__carte--1 { animation-name: apropos-derive-1; }
-  .apropos[data-apropos-css] .apropos__carte--2 { animation-name: apropos-derive-2; }
-  .apropos[data-apropos-css] .apropos__carte--3 { animation-name: apropos-derive-3; }
-  .apropos[data-apropos-css] .apropos__carte--4 { animation-name: apropos-derive-4; }
-
-  @keyframes apropos-derive-1 { from { transform: translate3d(-12px, 90px, 0); } to { transform: translate3d(28px, -260px, 0); } }
-  @keyframes apropos-derive-2 { from { transform: translate3d(10px, 140px, 0); } to { transform: translate3d(-24px, -210px, 0); } }
-  @keyframes apropos-derive-3 { from { transform: translate3d(-8px, 180px, 0); } to { transform: translate3d(30px, -300px, 0); } }
-  @keyframes apropos-derive-4 { from { transform: translate3d(14px, 110px, 0); } to { transform: translate3d(-32px, -230px, 0); } }
-
-  @media (max-width: 900px) {
-    @keyframes apropos-derive-1 { from { transform: translate3d(-8px, 120px, 0); } to { transform: translate3d(18px, -380px, 0); } }
-    @keyframes apropos-derive-2 { from { transform: translate3d(6px, 180px, 0); } to { transform: translate3d(-14px, -300px, 0); } }
-    @keyframes apropos-derive-3 { from { transform: translate3d(-10px, 240px, 0); } to { transform: translate3d(22px, -460px, 0); } }
-    @keyframes apropos-derive-4 { from { transform: translate3d(8px, 280px, 0); } to { transform: translate3d(-18px, -340px, 0); } }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
   .apropos {
-    height: auto;
-    min-height: 100vh;
+    padding-top: calc(var(--bandeau-chevauche) + var(--apropos-pad-y-tel));
+    padding-bottom: var(--apropos-pad-y-tel);
   }
 
-  .apropos__pin {
-    position: relative;
-    height: auto;
-    min-height: 100vh;
-    padding: var(--space-12) 0;
+  @media (min-width: 768px) {
+    .apropos {
+      padding-top: calc(var(--bandeau-chevauche-large) + var(--apropos-pad-y-tel));
+    }
   }
 
-  .apropos__carte {
-    animation: none;
-    transform: none;
+  .apropos__tete {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .apropos__titre {
+    font-size: var(--apropos-titre-size-tel);
+  }
+
+  .apropos__volets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--apropos-volets-gap);
+    height: auto;
+    margin-top: var(--space-10);
+  }
+
+  .apropos__volet,
+  .apropos__volet.is-ouvert {
+    --ouvert: 1;
+    flex: none;
+    aspect-ratio: 3 / 4;
+  }
+
+  .apropos__num,
+  .apropos__ferme,
+  .apropos__voir {
+    display: none;
+  }
+
+  .apropos__etiquette {
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-4);
+    grid-template-columns: 1fr;
   }
 }
 

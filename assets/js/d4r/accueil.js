@@ -89,32 +89,31 @@
     });
   })();
 
-  /* ── 3. « À propos » : la dérive, en repli ───────────────────────────── */
+  /* ── 3. « À propos » : les volets (lot F4) ───────────────────────────── */
+  /* L'ouverture au survol et au focus est du CSS (`:hover`, `:focus-within`) :
+     sans ce script, elle marche. Il fait deux choses de plus : il GARDE OUVERT
+     le dernier volet survolé ou touché quand la souris s'en va (la classe
+     `is-ouvert` suit le pointeur), et, au doigt sur un écran large (tablette),
+     le PREMIER toucher d'un volet fermé l'ouvre au lieu de suivre le lien — le
+     second le suit. Sous 900 px, tous sont ouverts : rien à faire ici. */
   (function () {
-    var section = document.querySelector('[data-apropos]');
-    if (!section || reduit) { return; }
-    var supporte = false;
-    try { supporte = CSS.supports('animation-timeline', 'view()') || CSS.supports('animation-timeline: view()'); } catch (e) {}
-    if (supporte) { section.setAttribute('data-apropos-css', '1'); return; }
-    var cartes = Array.prototype.slice.call(section.querySelectorAll('[data-apropos-carte]'));
-    var de = [[-12, 90], [10, 140], [-8, 180], [14, 110]];
-    var a = [[28, -260], [-24, -210], [30, -300], [-32, -230]];
-    var deTel = [[-8, 120], [6, 180], [-10, 240], [8, 280]];
-    var aTel = [[18, -380], [-14, -300], [22, -460], [-18, -340]];
-    function poser() {
-      var r = section.getBoundingClientRect();
-      var vh = window.innerHeight || 1;
-      var t = Math.min(1, Math.max(0, (-r.top) / Math.max(r.height - vh, 1)));
-      var tel = window.innerWidth <= 900;
-      cartes.forEach(function (carte, i) {
-        var d = (tel ? deTel : de)[i] || [0, 100];
-        var f = (tel ? aTel : a)[i] || [0, -200];
-        carte.style.transform = 'translate3d(' + (d[0] + (f[0] - d[0]) * t).toFixed(1) + 'px,' + (d[1] + (f[1] - d[1]) * t).toFixed(1) + 'px,0)';
-      });
+    var groupe = document.querySelector('[data-apropos-volets]');
+    if (!groupe) { return; }
+    var volets = Array.prototype.slice.call(groupe.querySelectorAll('[data-apropos-volet]'));
+    var tapSurFerme = false;
+    function ouvrir(v) {
+      volets.forEach(function (x) { x.classList.toggle('is-ouvert', x === v); });
     }
-    window.addEventListener('scroll', poser, { passive: true });
-    window.addEventListener('resize', poser, { passive: true });
-    poser();
+    volets.forEach(function (v) {
+      v.addEventListener('mouseenter', function () { ouvrir(v); });
+      v.addEventListener('focusin', function () { ouvrir(v); });
+      v.addEventListener('pointerdown', function (ev) {
+        tapSurFerme = ev.pointerType === 'touch' && window.innerWidth > 900 && !v.classList.contains('is-ouvert');
+      });
+      v.addEventListener('click', function (ev) {
+        if (tapSurFerme) { ev.preventDefault(); tapSurFerme = false; ouvrir(v); }
+      });
+    });
   })();
 
   /* ── 4. Les carrousels ───────────────────────────────────────────────── */
